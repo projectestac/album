@@ -1,0 +1,13 @@
+{
+  "extName": {
+    "message": "Llista imatges",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Mostra la llista de totes les imatges que es mostren a la pestanya actual",
+    "description": "Extension description"
+  },
+  "hello": {
+    "message": "Hola Manola!"
+  }
+}

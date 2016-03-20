@@ -1,0 +1,13 @@
+{
+  "extName": {
+    "message": "List images",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "List all images displayed on the current page",
+    "description": "Extension description"
+  },
+  "hello": {
+    "message": "Hello world!"
+  }
+}

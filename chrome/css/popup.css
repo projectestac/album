@@ -1,0 +1,21 @@
+/* 
+    Created on : 19/03/2016, 19:40:58
+    Author     : fbusquet
+*/
+body {
+  font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+  font-size: 100%;
+}
+#status {
+  /* avoid an excessively wide status text */
+  white-space: pre;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 400px;
+}
+#list {
+  font-size: 10pt;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+

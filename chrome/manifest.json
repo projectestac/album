@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "default_locale": "en",
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "version": "1.0",
+  "browser_action": {
+    "default_icon": "icons/icon.png",
+    "default_popup": "popup.html",
+    "default_title": "List images"
+  },
+  "permissions": [
+    "activeTab",
+    "http://*/",
+    "https://*/"
+  ]
+}

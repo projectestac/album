@@ -3,6 +3,11 @@
     Author     : fbusquet
 */
 
+body {
+	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+	font-size: 62.5%;
+}
+
 #list { list-style-type: none; margin: 0; padding: 0; width: 400px; }
 #list li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
 .imgcaption {max-width: 40px; max-height: 40px; margin:5px;}

@@ -4,7 +4,7 @@
     <title>List images</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/popup.css"/>
-    <link rel="stylesheet" type="text/css" href="lib/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/jquery-ui.min.css"/>
     <script src="lib/jquery.min.js"></script>    
     <script src="lib/jquery-ui.min.js"></script>    
     <script src="lib/clipboard.min.js"></script>    
@@ -33,15 +33,19 @@
 
         $('#stopBtn').html('stop');
 
-        var $list = $('ul#list');
+        var $list = $('ul#list')
+                .sortable({placeholder: "ui-state-highlight"})
+                .disableSelection();
 
         for (var i = 0; i < testImages.length; i++) {
           var img = testImages[i];
           var $lispan = $('<span/>');
-          $lispan.append($('<input type="checkbox" checked/>'));
+          $lispan.append($('<input class="ui-state-default" type="checkbox" checked/>'));
           $lispan.append($('<img class="imgcaption" src="' + img + '"/>'));
           $lispan.append($('<span class="urltext">' + img + '</span>'));
-          $list.append($('<li/>').data('url', img).append($lispan));
+          $list.append($('<li class="ui-state-default ui-sortable-handle"/>')
+                  .data('url', img)
+                  .append($lispan));
         };
 
         $('#copyBtn').html('copy').click(function () {
@@ -55,8 +59,8 @@
     </script>
   </head>
   <body>
-    <ul id="list"></ul>
-    <button id="stopBtn">stop</button>
-    <button id="copyBtn">copy</button>    
+    <ul id="list" class="ui-sortable"></ul>
+    <button class="ui-state-default" id="stopBtn">stop</button>
+    <button class="ui-state-default" id="copyBtn">copy</button>    
   </body>
 </html>

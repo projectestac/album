@@ -8,7 +8,12 @@ body {
 	font-size: 62.5%;
 }
 
-#list { list-style-type: none; margin: 0; padding: 0; width: 400px; }
-#list li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-.imgcaption {max-width: 40px; max-height: 40px; margin:5px;}
+#list { list-style-type: none; margin: 0; padding: 0; width: 370px; }
+#list li { margin: 0 3px 3px 3px; padding: 0.3em;}
+#list li * {vertical-align: middle;}
+
+.ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+
+.imgcaption {max-width: 20px; max-height: 20px; margin: 0px 5px; }
+
 .urltext {display: inline-block; width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}

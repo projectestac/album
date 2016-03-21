@@ -2,20 +2,8 @@
     Created on : 19/03/2016, 19:40:58
     Author     : fbusquet
 */
-body {
-  font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-  font-size: 100%;
-}
-#status {
-  /* avoid an excessively wide status text */
-  white-space: pre;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  max-width: 400px;
-}
-#list {
-  font-size: 10pt;
-  overflow-y: scroll;
-  overflow-x: scroll;
-}
 
+#list { list-style-type: none; margin: 0; padding: 0; width: 400px; }
+#list li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+.imgcaption {max-width: 40px; max-height: 40px; margin:5px;}
+.urltext {display: inline-block; width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}

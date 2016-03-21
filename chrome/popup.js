@@ -7,15 +7,29 @@ $(function () {
   $('#stopBtn').html('stop').click(function () {
     chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
   });
+  
+  var $list = $('ul#list');
 
   chrome.runtime.onMessage.addListener(
           function (request, sender, sendResponse) {
             if (request.imgurl) {
-              var txt = $('textarea#list');
-              txt.val(txt.val() + request.imgurl + '\n');
+                var $lispan = $('<span/>');
+                $lispan.append($('<input type="checkbox" checked/>'));
+                $lispan.append($('<img class="imgcaption" src="'+request.imgurl+'"/>'));
+                $lispan.append($('<span class="urltext">'+request.imgurl+'</span>'));
+                $list.append($('<li/>').data('url', request.imgurl).append($lispan));
             }
           });
-
+          
+  $('#copyBtn').html('copy').click(function () {
+      var txt='';
+      $('li').each(function(index){
+          txt=txt+($(this).data('url'))+ '\n';
+      });
+      clipboard.copy(txt);
+  });
+          
+          
   chrome.tabs.executeScript(null, {file: 'listimages.js'});
 
 });

@@ -8,7 +8,7 @@ body {
 	font-size: 62.5%;
 }
 
-#list { list-style-type: none; margin: 0; padding: 0; width: 370px; }
+#list { list-style-type: none; margin: 0; padding: 0; width: 370px; height: 500px; overflow: hidden; overflow-y: scroll;}
 #list li { margin: 0 3px 3px 3px; padding: 0.3em;}
 #list li * {vertical-align: middle;}
 
@@ -16,4 +16,4 @@ body {
 
 .imgcaption {max-width: 20px; max-height: 20px; margin: 0px 5px; }
 
-.urltext {display: inline-block; width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.urltext {display: inline-block; width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}

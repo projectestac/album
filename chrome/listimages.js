@@ -7,9 +7,16 @@ ListImages.prototype = {
   constructor: ListImages,
   allImages: null,
   scanProcess: null,
+  scanning: false,
+  reporting: false,
   SCAN_INTERVAL: 1000,
   scanImages: function () {
     
+    // Avoid re-entrant processing
+    if(this.scanning || this.reporting)
+      return;
+    
+    this.scanning=true;    
     console.log('scanning...');
     
     var imgList = [];
@@ -44,12 +51,14 @@ ListImages.prototype = {
         if (url && this.allImages.indexOf(exp) === -1 && url.protocol &&
                 (url.protocol === 'http:' || url.protocol === 'https:')) {
           this.allImages.push(exp);
-          chrome.runtime.sendMessage({imgurl: exp});          
+          // Notify plugin
+          chrome.runtime.sendMessage({imgurl: exp});
         }
       } catch (ex) {
         console.log('Error processing ' + exp + ' - ' + ex);
       }
-    }
+    }    
+    this.scanning=false;
   },
   startScanning: function(){
     if(this.scanProcess)
@@ -58,7 +67,6 @@ ListImages.prototype = {
     this.scanProcess = window.setInterval(function(){
       thisObj.scanImages();
     }, this.SCAN_INTERVAL);    
-    console.log('scanning started');
   },
   endScanning: function(){
     if(this.scanProcess){
@@ -66,13 +74,19 @@ ListImages.prototype = {
       this.scanProcess = null;
       console.log('scanning stopped!');
     }
+  },
+  listScannedImages: function(){
+    this.reporting=true;
+    for(var i=0; i<this.allImages.length; i++){
+      chrome.runtime.sendMessage({imgurl: this.allImages[i]});
+    }
+    this.reporting=false;
   }
 };
 
-console.log("Code injected!");
-
 if(typeof window.__listImages === 'undefined')
   window.__listImages = new ListImages();
+else
+  window.__listImages.listScannedImages();
 
 window.__listImages.startScanning();
-

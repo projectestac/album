@@ -4,16 +4,60 @@
 */
 
 body {
-	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
-	font-size: 62.5%;
+  font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+  font-size: 80%;
 }
 
-#list { list-style-type: none; margin: 0; padding: 0; width: 370px; height: 500px; overflow: hidden; overflow-y: scroll;}
-#list li { margin: 0 3px 3px 3px; padding: 0.3em;}
-#list li * {vertical-align: middle;}
+#list {
+  list-style-type: none; 
+  margin: 0;
+  padding: 3px;
+  border: 1px;
+  width: 370px;
+  height: 400px;
+  overflow: hidden;
+  overflow-y: scroll;
+  background-color: #ededed;
+}
 
-.ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+#list li {
+  margin: 0 3px 3px 3px;
+  padding: 0.3em;
+}
 
-.imgcaption {max-width: 20px; max-height: 20px; margin: 0px 5px; }
+#list li * {
+  vertical-align: middle;
+  font-size: 90%;
+}
 
-.urltext {display: inline-block; width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.ui-state-highlight {
+  height: 1.5em;
+  line-height: 1.2em;
+}
+
+.imgcaption {
+  max-width: 20px;
+  max-height: 20px;
+  margin: 0px 5px;
+}
+
+.urltext {
+  display: inline-block;
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.counters {
+  margin: 2pt;
+}
+
+.description {
+  margin: 2pt;
+}
+
+button {
+  padding: 2pt 8pt;
+  margin: 2pt;
+}

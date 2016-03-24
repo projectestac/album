@@ -1,4 +1,7 @@
 {
+  "language": {
+    "message": "English"
+  },  
   "extName": {
     "message": "List images",
     "description": "Extension name"
@@ -7,7 +10,36 @@
     "message": "List all images displayed on the current page",
     "description": "Extension description"
   },
-  "hello": {
-    "message": "Hello world!"
-  }
+  "extDescText": {
+    "message": "Scroll down the main document until all images are displayed. When the list is complete, select and re-arrange its elements up and down.",
+    "description": "Short message with basic instructions"
+  },
+  "numImgLb": {
+    "message": "Images detected:",
+    "description": "Label for the number of images detected"
+  },
+  "selImgLb": {
+    "message": "selected:",
+    "description": "Label for the number of images currently selected"
+  },
+  "copyListBtn": {
+    "message": "COPY LIST",
+    "description": "Caption for the 'copy list' button"
+  },
+  "copyListBtnTooltip": {
+    "message": "Copy to the clipboard the list of absolute URLs of selected images",
+    "description": "Description of the 'copy list' action"
+  },
+  "copyHtmlBtn": {
+    "message": "COPY HTML",
+    "description": "Caption for the 'copy html' button"
+  },
+  "copyHtmlBtnTooltip": {
+    "message": "Copy to the clipboard an HTML snippet with 'img' tags for all selected images",
+    "description": "Description of the 'copy list' action"
+  },
+  "msgDataCopied": {
+    "message": "The requested data has been copied to the clipboard. Use CTRL+V to paste it into your editor.",
+    "description": "Notification to be shown when the data has been copied to the clipboard"
+  }    
 }

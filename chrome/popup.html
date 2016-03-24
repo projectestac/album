@@ -3,22 +3,23 @@
   <head>
     <title>List images</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="lib/theme/jquery-ui.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/popup.css"/>
-    <link rel="stylesheet" type="text/css" href="lib/jquery-ui.min.css"/>
     <script src="lib/jquery.min.js"></script>    
     <script src="lib/jquery-ui.min.js"></script>    
     <script src="lib/clipboard.min.js"></script>    
     <script src="popup.js"></script>
   </head>
   <body>
+    <div class="description"></div>
     <ul id="list" class="ui-sortable"></ul>
     <div class="counters">
       <span id="numImgLb">Images detected:</span> <span id="numImgs">0</span>
       &nbsp;<span id="selImgLb">Selected:</span> <span id="numSel">0</span>
     </div>
     <button id="stopBtn">stop</button>
-    <button id="copyListBtn">copy list to clipboard</button>    
-    <button id="copyHtmlBtn">copy html to clipboard</button>    
+    <button id="copyListBtn">copy list</button>    
+    <button id="copyHtmlBtn">copy html</button>    
   </body>
 </html>
 

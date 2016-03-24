@@ -55,7 +55,7 @@ ListImages.prototype = {
           chrome.runtime.sendMessage({imgurl: exp});
         }
       } catch (ex) {
-        console.log('Error processing ' + exp + ' - ' + ex);
+        console.log('Error processing element ' + n + ':\n' + exp + ' - ' + ex);
       }
     }    
     this.scanning=false;

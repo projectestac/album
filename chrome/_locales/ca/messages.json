@@ -1,4 +1,7 @@
-{
+{ 
+  "language": {
+    "message": "català"    
+  },  
   "extName": {
     "message": "Llista imatges",
     "description": "Extension name"
@@ -7,7 +10,36 @@
     "message": "Mostra la llista de totes les imatges que es mostren a la pestanya actual",
     "description": "Extension description"
   },
-  "hello": {
-    "message": "Hola Manola!"
-  }
+  "extDescText": {
+    "message": "Feu lliscar verticalment el document principal fins que s'hi hagin mostrat totes les imatges. Quan la llista estigui completa, seleccioneu i reordeneu els elements arrossegant les files amunt o avall.",
+    "description": "Short message with basic instructions"
+  },
+  "numImgLb": {
+    "message": "Imatges detectades:",
+    "description": "Label for the number of images detected"
+  },
+  "selImgLb": {
+    "message": "seleccionades:",
+    "description": "Label for the number of images currently selected"
+  },
+  "copyListBtn": {
+    "message": "COPIA LA LLISTA",
+    "description": "Caption for the 'copy list' button"
+  },
+  "copyListBtnTooltip": {
+    "message": "Copia al porta-retalls la llista dels URL absoluts de les imatges seleccionades",
+    "description": "Description of the 'copy list' action"
+  },
+  "copyHtmlBtn": {
+    "message": "COPIA EL CODI HTML",
+    "description": "Caption for the 'copy html' button"
+  },
+  "copyHtmlBtnTooltip": {
+    "message": "Copia al porta-retalls un fragmentd e codi HTML amb etiquetes 'img' per a les imatges seleccionades",
+    "description": "Description of the 'copy list' action"
+  },
+  "msgDataCopied": {
+    "message": "Les dades sol·licitades han estat copiades al porta-retalls. Utilitzeu CTRL+V per enganxar-les al vostre editor.",
+    "description": "Notification to be shown when the data has been copied to the clipboard"
+  }  
 }

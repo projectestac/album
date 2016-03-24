@@ -12,6 +12,7 @@
   "permissions": [
     "activeTab",
     "http://*/",
-    "https://*/"
+    "https://*/",
+    "notifications"
   ]
 }

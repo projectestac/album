@@ -1,0 +1,99 @@
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<style type="text/css">
+  #slideshow {
+    background-color: red;
+  }
+  #slides {
+    background-color: yellowgreen;
+    display: inline-block;
+    zzmargin: 50px auto; 
+    position: relative; 
+    width: 420px; 
+    height: 267px; 
+    padding: 10px; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.4); 
+  }
+  #slides > div { 
+    position: absolute; 
+    top: 10px; 
+    left: 10px; 
+    right: 10px; 
+    bottom: 10px;
+  }
+  #slides > div > img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+  }
+  .ssBtn {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    background-color: green;
+  }
+  #nextBtn {
+    margin-right: auto;
+  }
+  #prevBtn {
+    margin-left: auto;
+  }
+</style>
+
+<div id="slideshow">
+  <div id="prevBtn" class="ssBtn"></div>
+  <div id="slides">
+    <div>1<img src="https://lh3.googleusercontent.com/IZaPguPz6HFU7aaw92ElbNh42nvflx0xpeRfHNmD7rPNlZ5QKau3toYR25r9XszqCN7-zkORaGNvzQ=w382-h287-no"></div>
+    <div>2<img src="https://lh3.googleusercontent.com/ZtIjSCg9N_fqiYPVnNx9fFDBL1C9uXFCUsmiTXC2nSd-F8yKTJKv8j0UMaEILcGLxiPiLN4y2txsyQ=w382-h287-no"></div>
+    <div>3<img src="https://lh3.googleusercontent.com/raZizFZUYEXiCryOD6oa1aIWsPDwZGs5DB8HOnJjyy9sjLKfNGw26LMTNv5ALjMXMEjz8Gi39QdBvw=w382-h287-no"></div>
+    <div>4<img src="https://lh3.googleusercontent.com/D0Rkk76IksTbKy6ttPyZXOOUQIbQGNWOCZO9U3alcABptJ3gvnhTEmswjlNZZmwrMlPhbHsu7eDd1Q=w240-h318-no"></div>
+    <div>5<img src="https://lh3.googleusercontent.com/KwrC_-EgtSEPjlPIjZ1d4Ei3VazxsxYHSqgj26YX1xxH9ZpQGltM3XWLX6wyht9YDQE_4fBv5mG_yA=w239-h318-no"></div>
+    <div>6<img src="https://lh3.googleusercontent.com/0UibNDPfGDgwP0k7C6CCWp-w1GuIyr_TF8Nt9g9M_Nkt5CUUA0GqVoljQL6nBmw1DWSVeQcVhxUKNw=w239-h318-no"></div>
+    <div>7<img src="https://lh3.googleusercontent.com/TieAZA8V_d0Q6-fikqWTH5lcYr8C-3m9UcS3Mvojb-WTfBE_YdzQOQd6acqsy-Y-ZQbuT5SGTv8r9w=w424-h318-no"></div>
+    <div>8<img src="https://lh3.googleusercontent.com/mUtRx3SR9EF1HYNFuZW0rRhvpmvrTimYjvxTM5d6Xh1auzH8Ewbildu-wyzvwlHLS5uqdv52pcYsBg=w540-h404-no"></div>
+    <div>9<img src="https://lh3.googleusercontent.com/Ht98-C7mqnf8S2m0vYnSTDPYTvOa046RJ70ysQL-QXWVZzxn4zwrjBmFZ01yg8PvnfN7Iqcuj6vUuQ=w303-h404-no"></div>
+    <div>10<img src="https://lh3.googleusercontent.com/ccpW6LpG_lef5Pl_BPoGaoQBTzBykAuSCflznPiUhtOL_Zd1EW2_NmrAWeNRVX9L_MTUs0aqih11Ig=w303-h404-no"></div>
+    <div>11<img src="https://lh3.googleusercontent.com/64I6WLq0EngXSsxG51xDF1sTs5Z9boS_RHoVTrjtBBSS8gkNVVe0q6j5uxRLofMahjpBUEKMxXLaLg=w425-h319-no"></div>
+    <div>12<img src="https://lh3.googleusercontent.com/jtyAN07KmUZuhDIdA_Gtl5w7yDaoUSK_Lw03oM1-zlfagBIUArEs6skLieF7o2vxJbZt4aywuTsXPg=w239-h319-no"></div>
+    <div>13<img src="https://lh3.googleusercontent.com/lNfFI6Bs76CJ8Os_dfyJ1wK_bHGY5PpSQVMyA5LE5_m-63MyvRpRUYoJgt1kpKemuV7KVscjENRkQQ=w239-h319-no"></div>
+    <div>14<img src="https://lh3.googleusercontent.com/2TIo-ww9V_oZ0ByZBTMnCdPr6AGambZMw4GRg0Ld1O8ywiPRIsmZNmuR-NDOouWaVHI7LI_Hdr3p3w=w239-h319-no"></div>
+    <div>15<img src="https://lh3.googleusercontent.com/hfb81FyNkPc4MpWAGqvFfrMMZjVPmhPsKvtHQwK_r_JU9hMVUU5C25vtMOIk1uhScri3GtP8p9H2Aw=w252-h335-no"></div>
+    <div>16<img src="https://lh3.googleusercontent.com/OVdNq2MubmixDU7QObMQL2YfGRU2Lm7bbuAGMddzlFx3jP0BKfGqT4wdFdWjbjzm-FPdzEq8BgPmsA=w447-h335-no"></div>
+    <div>17<img src="https://lh3.googleusercontent.com/LaJPkwKL0TlbRmYqJnsLqUlAR9K8Hsb68rOuvGkfzrnEXb6K67amrWVCiK3k5604fRt1yQvOMCYBFw=w447-h335-no"></div>
+  </div>
+  <div id="nextBtn" class="ssBtn"></div>  
+</div>
+
+<script type="text/javascript">
+
+// Based on: https://css-tricks.com/snippets/jquery/simple-auto-playing-slideshow/
+
+  $("#slides > div:gt(0)").hide();
+  var nextSlide = function () {
+    $('#slides > div:first')
+            .fadeOut(1000)
+            .next()
+            .fadeIn(1000)
+            .end()
+            .appendTo('#slides');
+  };
+
+  var prevSlide = function () {
+    $('#slides > div:first')
+            .fadeOut(1000)
+            .nextAll()
+            .last()
+            .prependTo('#slides')
+            .fadeIn(1000);
+  };
+
+  setInterval(nextSlide, 3000);
+
+</script>

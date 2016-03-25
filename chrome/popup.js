@@ -58,7 +58,7 @@ $(function () {
       type: 'basic',
       title: chrome.i18n.getMessage('extName'),
       message: chrome.i18n.getMessage('msgDataCopied'),
-      iconUrl: 'icons/icon.png'});    
+      iconUrl: 'icons/icon192.png'});    
   };
 
   $('#copyListBtn').click(function () {

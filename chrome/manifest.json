@@ -5,7 +5,6 @@
   "description": "__MSG_extDescription__",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "icons/icon.png",
     "default_popup": "popup.html",
     "default_title": "List images"
   },
@@ -14,5 +13,12 @@
     "http://*/",
     "https://*/",
     "notifications"
-  ]
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "19": "icons/icon19.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png",
+    "192": "icons/icon192.png"
+  }
 }

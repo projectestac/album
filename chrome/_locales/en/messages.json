@@ -23,7 +23,7 @@
     "description": "Label for the number of images currently selected"
   },
   "copyListBtn": {
-    "message": "COPY LIST",
+    "message": "List",
     "description": "Caption for the 'copy list' button"
   },
   "copyListBtnTooltip": {
@@ -31,12 +31,20 @@
     "description": "Description of the 'copy list' action"
   },
   "copyHtmlBtn": {
-    "message": "COPY HTML",
+    "message": "HTML",
     "description": "Caption for the 'copy html' button"
   },
   "copyHtmlBtnTooltip": {
     "message": "Copy to the clipboard an HTML snippet with 'img' tags for all selected images",
     "description": "Description of the 'copy list' action"
+  },
+  "copyScriptBtn": {
+    "message": "Carousel",
+    "description": "Caption for the 'copy script' button"
+  },
+  "copyScriptBtnTooltip": {
+    "message": "Copy to the clipboard an HTML snippet with a 'script' tag that creates an slideshow with the selected images",
+    "description": "Description of the 'copy script' action"
   },
   "msgDataCopied": {
     "message": "The requested data has been copied to the clipboard. Use CTRL+V to paste it into your editor.",

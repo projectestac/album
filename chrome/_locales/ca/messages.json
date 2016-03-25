@@ -23,7 +23,7 @@
     "description": "Label for the number of images currently selected"
   },
   "copyListBtn": {
-    "message": "COPIA LA LLISTA",
+    "message": "Llista",
     "description": "Caption for the 'copy list' button"
   },
   "copyListBtnTooltip": {
@@ -31,12 +31,20 @@
     "description": "Description of the 'copy list' action"
   },
   "copyHtmlBtn": {
-    "message": "COPIA EL CODI HTML",
+    "message": "HTML",
     "description": "Caption for the 'copy html' button"
   },
   "copyHtmlBtnTooltip": {
-    "message": "Copia al porta-retalls un fragmentd e codi HTML amb etiquetes 'img' per a les imatges seleccionades",
+    "message": "Copia al porta-retalls un fragment de codi HTML amb etiquetes 'img' per a les imatges seleccionades",
     "description": "Description of the 'copy list' action"
+  },
+  "copyScriptBtn": {
+    "message": "Carrusel",
+    "description": "Caption for the 'copy script' button"
+  },
+  "copyScriptBtnTooltip": {
+    "message": "Copia al porta-retalls un fragmentd e codi HTML amb una etoqueta 'script' que genera un carrusel amb les imatges seleccionades",
+    "description": "Description of the 'copy script' action"
   },
   "msgDataCopied": {
     "message": "Les dades sol·licitades han estat copiades al porta-retalls. Utilitzeu CTRL+V per enganxar-les al vostre editor.",

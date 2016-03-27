@@ -87,11 +87,11 @@ $(function () {
     
     // Gallery made with http://galleria.io/
     
-    var playerId = Math.floor(Math.random() * 65535).toString(16);
+    var playerId = Math.floor(Math.random() * 100000).toString(16).toUpperCase();
     var width = 600, height = 400;
     var txt = '[raw]\n' +
-            '<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@2.2.2,galleria@1.4.2(galleria.js)"></script>\n' +
-            '<div id="' + playerId + '" style="width:' + width + 'px; height:' + height + 'px;">\n';
+            '<script type="text/javascript" src="//cdn.jsdelivr.net/g/jquery@1.12.1,galleria@1.4.2(galleria.js)"></script>\n' +
+            '<div id="' + playerId + '" style="width: '+width+'px; height: '+height+'px;">\n';
     $('li').each(function (index) {
       if (selected[index]) {
         txt = txt + '<img src="' + $(this).data('url') + '">\n';
@@ -101,7 +101,9 @@ $(function () {
             '</div>\n' +
             '<script>\n' +
             'Galleria.loadTheme(\'//cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js\');\n' +
-            'Galleria.run(\'#' + playerId + '\');\n' +
+            'Galleria.run(\'#' + playerId + '\', {\n'+
+            //'  width: ' + width + ', height:' + height + '\n'+
+            '});\n' +
             '</script>\n' +
             '[/raw]';
     copyAndNotify(txt);

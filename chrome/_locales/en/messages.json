@@ -39,12 +39,12 @@
     "description": "Description of the 'copy list' action"
   },
   "copyScriptBtn": {
-    "message": "Carousel",
-    "description": "Caption for the 'copy script' button"
+    "message": "galleria.io",
+    "description": "Caption for the 'copy galleria.io' button"
   },
   "copyScriptBtnTooltip": {
-    "message": "Copy to the clipboard an HTML snippet with a 'script' tag that creates an slideshow with the selected images",
-    "description": "Description of the 'copy script' action"
+    "message": "Copy to the clipboard an HTML snippet that creates an slideshow powered by galleria.io",
+    "description": "Description of the 'copy galleria.io' action"
   },
   "msgDataCopied": {
     "message": "The requested data has been copied to the clipboard. Use CTRL+V to paste it into your editor.",

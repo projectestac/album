@@ -40,11 +40,11 @@
   },
   "copyScriptBtn": {
     "message": "Carrusel",
-    "description": "Caption for the 'copy script' button"
+    "description": "Caption for the 'copy galleria.io' button"
   },
   "copyScriptBtnTooltip": {
-    "message": "Copia al porta-retalls un fragmentd e codi HTML amb una etoqueta 'script' que genera un carrusel amb les imatges seleccionades",
-    "description": "Description of the 'copy script' action"
+    "message": "Copia al porta-retalls un fragment de codi HTML que mostra un carrusel d'imatges de galleria.io",
+    "description": "Description of the 'copy galleria.io' action"
   },
   "msgDataCopied": {
     "message": "Les dades sol·licitades han estat copiades al porta-retalls. Utilitzeu CTRL+V per enganxar-les al vostre editor.",

@@ -59,7 +59,7 @@ $(function () {
    */
   $('#stopBtn').html('stop').click(function () {
     chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-  });
+  }).button();
 
   var $imgDialog = $('<div title="'+chrome.i18n.getMessage('previewImage')+'"/>');
   var $imgDialogPreview = $('<img class="imgpreview">');
@@ -80,7 +80,7 @@ $(function () {
               var $checkBox = $('<input class="ui-state-default" type="checkbox" checked/>').change(function () {
                 selected[n] = this.checked ? true : false;
                 $('#numSel').html(updateNumSelected());
-              });                            
+              });           
               $lispan.append($checkBox);
               
               var $img = $('<img class="imgcaption" src="' + request.imgurl + '"/>').load(function(){
@@ -144,15 +144,15 @@ $(function () {
     return result;
   };
 
-  $('#copyListBtn').click(function () {
+  $('#copyListBtn').button().click(function () {
     copyAndNotify(listImages(false, false, false));
   });
 
-  $('#copyHtmlBtn').click(function () {
+  $('#copyHtmlBtn').button().click(function () {
     copyAndNotify(listImages(true, true, false));
   });
 
-  $('#copyScriptBtn').click(function () {
+  $('#copyScriptBtn').button().click(function () {
     // Gallery made with http://galleria.io/
     var playerId = Math.floor(Math.random() * 100000).toString(16).toUpperCase();
     var width = 600, height = 400;
@@ -165,7 +165,8 @@ $(function () {
             '<script>\n' +
             'Galleria.loadTheme(\'https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js\');\n' +
             'Galleria.run(\'#' + playerId + '\', {\n' +
-            //'  width: ' + width + ', height:' + height + '\n'+
+            ' autoplay: true,' +
+            ' lightbox: true' +
             '});\n' +
             '</script>\n' +
             '[/raw]');

@@ -57,14 +57,17 @@ body {
 }
 
 .counters {
-  margin: 2pt;
+  margin: 3pt;
 }
 
 .description {
-  margin: 2pt;
+  margin: 3pt;
 }
 
-button {
-  padding: 2pt 8pt;
-  margin: 2pt;
+.centered {
+  text-align: center;
+}
+
+.buttons {
+  display: inline-block; 
 }

@@ -59,7 +59,7 @@ $(function () {
    */
   $('#stopBtn').html('stop').click(function () {
     chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-  }).button();
+  }).button({icons: {primary: 'ui-icon-gear'}});
 
   var $imgDialog = $('<div title="'+chrome.i18n.getMessage('previewImage')+'"/>');
   var $imgDialogPreview = $('<img class="imgpreview">');

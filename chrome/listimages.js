@@ -89,9 +89,10 @@ ListImages.prototype = {
     var thisObj = this;
     this.scanProcess = window.setInterval(function () {
       thisObj.scanImages();
-    }, this.SCAN_INTERVAL);
+    }, this.SCAN_INTERVAL);    
   },
   endScanning: function () {
+    console.log('endScanning called');
     if (this.scanProcess) {
       window.clearInterval(this.scanProcess);
       this.scanProcess = null;
@@ -141,7 +142,7 @@ var findLinkDown = function (obj) {
 
 var absoluteLink = function (link) {
   return link.protocol ? link.protocol + "//" + link.host + link.pathname + link.search + link.hash : null;
-}
+};
 
 
 if (typeof window.__listImages === 'undefined')

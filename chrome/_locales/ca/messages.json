@@ -39,7 +39,7 @@
     "description": "Description of the 'copy list' action"
   },
   "copyScriptBtn": {
-    "message": "Carrusel",
+    "message": "galleria.io",
     "description": "Caption for the 'copy galleria.io' button"
   },
   "copyScriptBtnTooltip": {
@@ -49,5 +49,9 @@
   "msgDataCopied": {
     "message": "Les dades sol·licitades han estat copiades al porta-retalls. Utilitzeu CTRL+V per enganxar-les al vostre editor.",
     "description": "Notification to be shown when the data has been copied to the clipboard"
-  }  
+  },
+  "previewImage": {
+    "message": "Previsualitzacio",
+    "description": "Titol del dialeg mostrat en fer clic damunt les miniatures"
+  }      
 }

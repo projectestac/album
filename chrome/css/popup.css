@@ -41,6 +41,13 @@ body {
   margin: 0px 5px;
 }
 
+.imgpreview {
+  max-width: 260px;
+  max-height: 260px;
+  display: block;
+  margin: auto auto;
+}
+
 .urltext {
   display: inline-block;
   width: 250px;

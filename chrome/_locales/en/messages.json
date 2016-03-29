@@ -49,5 +49,9 @@
   "msgDataCopied": {
     "message": "The requested data has been copied to the clipboard. Use CTRL+V to paste it into your editor.",
     "description": "Notification to be shown when the data has been copied to the clipboard"
+  },    
+  "previewImage": {
+    "message": "Preview image",
+    "description": "Caption of the dialog shown when thumbnails are clicked"
   }    
 }

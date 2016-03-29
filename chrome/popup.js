@@ -1,13 +1,40 @@
 
 /* global chrome, clipboard */
 
-// Load when the DOM is ready to be used
+/**
+ * Loads when DOM is ready to be used
+ */ 
 $(function () {
-
+  
+  /**
+   * Number of images currently detected
+   * @type number
+   */
   var numImgs = 0;
-  var numSelected = 0;
+  
+  /**
+   * Number of images currently selected
+   * @type number
+   */
+  var numSelected = 0;  
+  
+  /**
+   * Minimum width and height to auto-check images
+   * @type number
+   */
+  var MIN_WIDTH = 60, MIN_HEIGHT=60;
+  
+  /**
+   * Array of boolean values indicating the 'selected' state of each image
+   * @type number[]
+   */
   var selected = [];
-
+  
+  /**
+   * 
+   * Updates the counter of images currently selected
+   * @returns {number}
+   */
   var updateNumSelected = function () {
     var result = 0;
     for (var i = 0; i < numImgs; i++)
@@ -16,7 +43,10 @@ $(function () {
     numSelected = result;
     return result;
   };
-
+  
+  /**
+   * Applies locale strings to UI elements
+   */
   $('.description').html(chrome.i18n.getMessage('extDescText'));
   $('#numImgLb').html(chrome.i18n.getMessage('numImgLb'));
   $('#selImgLb').html(chrome.i18n.getMessage('selImgLb'));
@@ -24,9 +54,17 @@ $(function () {
   $('#copyHtmlBtn').html(chrome.i18n.getMessage('copyHtmlBtn')).prop('title', chrome.i18n.getMessage('copyHtmlBtnTooltip'));
   $('#copyScriptBtn').html(chrome.i18n.getMessage('copyScriptBtn')).prop('title', chrome.i18n.getMessage('copyScriptBtnTooltip'));
 
+  /**
+   * This button stops the scanning of images on main document
+   */
   $('#stopBtn').html('stop').click(function () {
     chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
   });
+
+  var $imgDialog = $('<div title="'+chrome.i18n.getMessage('previewImage')+'"/>');
+  var $imgDialogPreview = $('<img class="imgpreview">');
+  $('.imgList').append($imgDialog.append($imgDialogPreview));
+  $imgDialog.dialog({autoOpen: false});
 
   var $list = $('ul#list')
           .sortable({placeholder: "ui-state-highlight"})
@@ -38,17 +76,37 @@ $(function () {
               var n = numImgs;
               selected[n] = true;
               var $lispan = $('<span/>');
-              $lispan.append($('<input class="ui-state-default" type="checkbox" checked/>').change(function () {
+              
+              var $checkBox = $('<input class="ui-state-default" type="checkbox" checked/>').change(function () {
                 selected[n] = this.checked ? true : false;
                 $('#numSel').html(updateNumSelected());
-              }));
-              $lispan.append($('<img class="imgcaption" src="' + request.imgurl + '"/>'));
-              $lispan.append($('<span class="urltext">' + request.imgurl + '</span>'));
+              });                            
+              $lispan.append($checkBox);
+              
+              var $img = $('<img class="imgcaption" src="' + request.imgurl + '"/>').load(function(){
+                // Uncheck small images
+                if($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT){
+                  $checkBox.prop('checked', false);
+                  selected[n] = false;
+                  $('#numSel').html(updateNumSelected());
+                }                
+              }).on('click', function(){
+                if(!$imgDialog.dialog("isOpen")){
+                  $imgDialogPreview.attr({src: this.src});
+                  $imgDialog.dialog("open");
+                }
+              });
+              $lispan.append($img);
+              
+              var $urlText = $('<span class="urltext">' + request.imgurl + '</span>');
+              $lispan.append($urlText);
+              
               var $li = $('<li class="ui-state-default ui-sortable-handle"/>')
                       .data('url', request.imgurl)
                       .append($lispan);
               if (request.imglink)
                 $li.data('link', request.imglink);
+              
               $list.append($li);
               $('#numImgs').html(++numImgs);
               $('#numSel').html(++numSelected);
@@ -95,9 +153,7 @@ $(function () {
   });
 
   $('#copyScriptBtn').click(function () {
-
     // Gallery made with http://galleria.io/
-
     var playerId = Math.floor(Math.random() * 100000).toString(16).toUpperCase();
     var width = 600, height = 400;
     copyAndNotify(
@@ -113,8 +169,8 @@ $(function () {
             '});\n' +
             '</script>\n' +
             '[/raw]');
-  });
-
+  });  
+  
   chrome.tabs.executeScript(null, {file: 'listimages.js'});
 
 });

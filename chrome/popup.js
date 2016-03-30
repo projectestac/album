@@ -55,11 +55,23 @@ $(function () {
   $('#copyScriptBtn').html(chrome.i18n.getMessage('copyScriptBtn')).prop('title', chrome.i18n.getMessage('copyScriptBtnTooltip'));
 
   /**
-   * This button stops the scanning of images on main document
+   * This button stops and restarts the scanning of images on main document
    */
+  var stopBtnStatus = true;
   $('#stopBtn').html('stop').click(function () {
-    chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-  }).button({icons: {primary: 'ui-icon-gear'}});
+    if (stopBtnStatus) {
+      chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
+      $(this).button("option", {icons: {primary: 'ui-icon-play'}, label: 'run'});
+      $('#activity').attr({src: 'icons/stopped-wheel.gif'});
+      stopBtnStatus = false;
+    }
+    else {
+      chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
+      $(this).button("option", {icons: {primary: 'ui-icon-pause'}, label: 'stop'});
+      $('#activity').attr({src: 'icons/rotating-wheel.gif'});
+      stopBtnStatus = true;
+    }
+  }).button({icons: {primary: 'ui-icon-pause'}, label: 'stop'});
 
   var $imgDialog = $('<div title="'+chrome.i18n.getMessage('previewImage')+'"/>');
   var $imgDialogPreview = $('<img class="imgpreview">');

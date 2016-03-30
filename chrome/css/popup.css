@@ -71,3 +71,16 @@ body {
 .buttons {
   display: inline-block; 
 }
+
+.buttons * {
+  vertical-align: middle;
+}
+
+#stopBtn {
+  min-width: 80px;
+}
+
+#activity {
+  margin-right: 10px;
+}
+

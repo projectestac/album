@@ -61,17 +61,15 @@ $(function () {
   $('#stopBtn').html('stop').click(function () {
     if (stopBtnStatus) {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-      $(this).button("option", {icons: {primary: 'ui-icon-play'}, label: 'run'});
-      $('#activity').attr({src: 'icons/stopped-wheel.gif'});
+      $(this).button("option", {icons: {primary: 'search-off'}, label: 'run'});
       stopBtnStatus = false;
     }
     else {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
-      $(this).button("option", {icons: {primary: 'ui-icon-pause'}, label: 'stop'});
-      $('#activity').attr({src: 'icons/rotating-wheel.gif'});
+      $(this).button("option", {icons: {primary: 'search-on'}, label: 'stop'});
       stopBtnStatus = true;
     }
-  }).button({icons: {primary: 'ui-icon-pause'}, label: 'stop'});
+  }).button({icons: {primary: 'search-on'}, text: false, label: 'stop'});
 
   var $imgDialog = $('<div title="'+chrome.i18n.getMessage('previewImage')+'"/>');
   var $imgDialogPreview = $('<img class="imgpreview">');
@@ -156,16 +154,17 @@ $(function () {
     return result;
   };
 
-  $('#copyListBtn').button().click(function () {
+  $('#copyListBtn').button({icons: {primary: 'list'}}).click(function () {
     copyAndNotify(listImages(false, false, false));
   });
 
-  $('#copyHtmlBtn').button().click(function () {
+  $('#copyHtmlBtn').button({icons: {primary: 'quilt'}}).click(function () {
     copyAndNotify(listImages(true, true, false));
   });
 
-  $('#copyScriptBtn').button().click(function () {
-    // Gallery made with http://galleria.io/
+  $('#copyScriptBtn').button({icons: {primary: 'carousel'}}).click(function () {
+
+    // Gallery provided by http://galleria.io/
     var playerId = Math.floor(Math.random() * 100000).toString(16).toUpperCase();
     var width = 600, height = 400;
     copyAndNotify(

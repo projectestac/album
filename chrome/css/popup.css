@@ -77,10 +77,45 @@ body {
 }
 
 #stopBtn {
-  min-width: 80px;
+  min-width: 52px;
+  min-height: 52px;
+  margin: 10px;
 }
 
 #activity {
   margin-right: 10px;
 }
 
+.ui-button .ui-icon.list {
+  background-image: url(../icons/list16.png);
+  width: 16px;
+  height: 16px; 
+}
+
+.ui-button .ui-icon.carousel {
+  background-image: url(../icons/carousel16.png);
+  width: 16px;
+  height: 16px; 
+}
+
+.ui-button .ui-icon.quilt {
+  background-image: url(../icons/quilt16.png);
+  width: 16px;
+  height: 16px; 
+}
+
+.ui-button .ui-icon.search-on {
+  background-image: url(../icons/search.gif);
+  width: 48px;
+  height: 48px;
+  left: 9px;
+  top: 9px;
+}
+
+.ui-button .ui-icon.search-off {
+  background-image: url(../icons/search00.gif);
+  width: 48px;
+  height: 48px; 
+  left: 9px;
+  top: 9px;
+}

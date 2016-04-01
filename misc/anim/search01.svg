@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="search01.svg"
+   inkscape:export-filename="/home/fbusquet/dev/list-images/misc/anim/search01.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="838"
+     inkscape:window-height="805"
+     id="namedview8"
+     showgrid="false"
+     inkscape:zoom="9.9083016"
+     inkscape:cx="24"
+     inkscape:cy="24"
+     inkscape:window-x="104"
+     inkscape:window-y="55"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer2" />
+  <path
+     fill="none"
+     d="M0 0h48v48H0z"
+     id="path4" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Base"
+     style="display:inline">
+    <path
+       d="m 40,8.0000001 -32,0 c -2.21,0 -4,1.79 -4,3.9999999 l 0,24 c 0,2.21 1.79,4 4,4 l 32,0 c 2.21,0 4,-1.79 4,-4 L 44,12 C 44,9.7900001 42.21,8.0000001 40,8.0000001 z"
+       id="path6-6"
+       style="fill:#6699cc;fill-opacity:1;display:inline"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssssss" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Lupa"
+     style="display:inline">
+    <path
+       d="m 23,14 c -2.76,0 -5,2.24 -5,5 0,2.76 2.24,5 5,5 2.76,0 5,-2.24 5,-5 0,-2.76 -2.24,-5 -5,-5 z M 33.59,32.41 27.78,26.6 C 26.39,27.48 24.76,28 23,28 c -4.97,0 -9,-4.03 -9,-9 0,-4.97 4.03,-9 9,-9 4.97,0 9,4.03 9,9 0,1.76 -0.52,3.39 -1.4,4.77 l 5.82,5.8 z"
+       id="path6"
+       style="fill:#ffffff;fill-opacity:1;display:inline"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssssccssssccc" />
+  </g>
+</svg>

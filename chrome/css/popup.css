@@ -7,29 +7,18 @@ body {
   font-size: 80%;
 }
 
+.steps {
+  margin: 10px;
+}
+
 #list {
-  list-style-type: none; 
-  margin: 0;
-  padding: 3px;
   border: 1px solid lightgray;
-  width: 370px;
   height: 300px;
   overflow: hidden;
   overflow-y: scroll;
-  background-color: #ededed;
 }
 
-#list li {
-  margin: 0 3px 3px 3px;
-  padding: 0.3em;
-}
-
-#list li * {
-  vertical-align: middle;
-  font-size: 90%;
-}
-
-.imgcaption {
+.xximgcaption {
   max-width: 20px;
   max-height: 20px;
   margin: 0px 5px;
@@ -44,17 +33,13 @@ body {
 
 .urltext {
   display: inline-block;
-  width: 250px;
+  max-width: 250px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .counters {
-  margin: 3pt;
-}
-
-.description {
   margin: 3pt;
 }
 
@@ -68,12 +53,6 @@ body {
 
 .buttons * {
   vertical-align: middle;
-}
-
-#stopBtn {
-  min-width: 52px;
-  min-height: 52px;
-  margin: 10px;
 }
 
 #activity {

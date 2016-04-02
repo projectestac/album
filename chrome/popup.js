@@ -61,15 +61,15 @@ $(function () {
    * This button stops and restarts the scanning of images on main document
    */
   var stopBtnStatus = true;
-  $('#stopBtn').html('stop').click(function () {
+  $('#stopBtn').click(function () {
     if (stopBtnStatus) {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-      //$(this).button("option", {icons: {primary: 'search-off'}, label: 'run'});
+      $('#stopIcon').html('play_arrow');
       stopBtnStatus = false;
     }
     else {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
-      //$(this).button("option", {icons: {primary: 'search-on'}, label: 'stop'});
+      $('#stopIcon').html('stop');
       stopBtnStatus = true;
     }
   });
@@ -89,7 +89,7 @@ $(function () {
             if (request.imgurl) {
               var n = numImgs;
               selected[n] = true;
-              var $lispan = $('<span/>');
+              var $lispan = $('<span class="mdl-list__item-primary-content"/>');
               
               // var $checkBox = $('<input class="ui-state-default" type="checkbox" checked/>')
               var $checkBox = $('<input type="checkbox" checked/>').change(function () {
@@ -98,7 +98,7 @@ $(function () {
               });
               $lispan.append($checkBox);
               
-              var $img = $('<img class="imgcaption" src="' + request.imgurl + '"/>').load(function(){
+              var $img = $('<img class="imgcaption mdl-list__item-avatar" src="' + request.imgurl + '"/>').load(function(){
                 // Uncheck small images
                 if($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT){
                   $checkBox.prop('checked', false);
@@ -117,7 +117,7 @@ $(function () {
               $lispan.append($urlText);
               
               // var $li = $('<li class="ui-state-default ui-sortable-handle"/>')
-              var $li = $('<li/>')
+              var $li = $('<li class="mdl-list__item"/>')
                       .data('url', request.imgurl)
                       .append($lispan);
               if (request.imglink)

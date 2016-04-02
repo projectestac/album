@@ -3,12 +3,14 @@
   <head>
     <title>List images</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="lib/theme/jquery-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/material.min.css">
     <link rel="stylesheet" type="text/css" href="css/popup.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="lib/jquery.min.js"></script>    
-    <script src="lib/jquery-ui.min.js"></script>    
-    <script src="lib/clipboard.min.js"></script>    
+    <script src="lib/material.min.js"></script>
+    <script src="lib/clipboard.min.js"></script>
     <script src="popup.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <div class="description"></div>
@@ -24,9 +26,15 @@
         <br><span id="selImgLb">Selected:</span> <span id="numSel">0</span>
       </div>
       <div class="buttons">
-        <button id="copyListBtn">List</button>    
-        <button id="copyHtmlBtn">HTML</button>    
-        <button id="copyScriptBtn">galleria.io</button>
+        <button id="copyListBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          <i class="material-icons">reorder</i> <span id="copyListCaption">List</span>
+        </button>    
+        <button id="copyHtmlBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          <i class="material-icons">view_quilt</i> <span id="copyHtmlCaption">HTML</span>
+        </button>    
+        <button id="copyScriptBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          <i class="material-icons">view_carousel</i> <span id="copyScriptCaption">galleria.io</span>
+        </button>
       </div>
     </div>
   </body>

@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "jquery": "^2.2.2",
-    "jquery-ui": "^1.11.4",
-    "clipboard.js": "^0.2.0"
+    "clipboard.js": "^0.2.0",
+    "material-design-lite": "^1.1.3"
   }
 }

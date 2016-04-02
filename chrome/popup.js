@@ -50,9 +50,12 @@ $(function () {
   $('.description').html(chrome.i18n.getMessage('extDescText'));
   $('#numImgLb').html(chrome.i18n.getMessage('numImgLb'));
   $('#selImgLb').html(chrome.i18n.getMessage('selImgLb'));
-  $('#copyListBtn').html(chrome.i18n.getMessage('copyListBtn')).prop('title', chrome.i18n.getMessage('copyListBtnTooltip'));
-  $('#copyHtmlBtn').html(chrome.i18n.getMessage('copyHtmlBtn')).prop('title', chrome.i18n.getMessage('copyHtmlBtnTooltip'));
-  $('#copyScriptBtn').html(chrome.i18n.getMessage('copyScriptBtn')).prop('title', chrome.i18n.getMessage('copyScriptBtnTooltip'));
+  $('#copyListCaption').html(chrome.i18n.getMessage('copyListBtn'));
+  $('#copyListBtn').prop('title', chrome.i18n.getMessage('copyListBtnTooltip'));
+  $('#copyHtmlCaption').html(chrome.i18n.getMessage('copyHtmlBtn'));
+  $('#copyHtmlBtn').prop('title', chrome.i18n.getMessage('copyHtmlBtnTooltip'));
+  $('#copyScriptCaption').html(chrome.i18n.getMessage('copyScriptBtn'));
+  $('#copyScriptBtn').prop('title', chrome.i18n.getMessage('copyScriptBtnTooltip'));
 
   /**
    * This button stops and restarts the scanning of images on main document
@@ -61,24 +64,25 @@ $(function () {
   $('#stopBtn').html('stop').click(function () {
     if (stopBtnStatus) {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-      $(this).button("option", {icons: {primary: 'search-off'}, label: 'run'});
+      //$(this).button("option", {icons: {primary: 'search-off'}, label: 'run'});
       stopBtnStatus = false;
     }
     else {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
-      $(this).button("option", {icons: {primary: 'search-on'}, label: 'stop'});
+      //$(this).button("option", {icons: {primary: 'search-on'}, label: 'stop'});
       stopBtnStatus = true;
     }
-  }).button({icons: {primary: 'search-on'}, text: false, label: 'stop'});
+  });
+          //.button({icons: {primary: 'search-on'}, text: false, label: 'stop'});
 
   var $imgDialog = $('<div title="'+chrome.i18n.getMessage('previewImage')+'"/>');
   var $imgDialogPreview = $('<img class="imgpreview">');
   $('.imgList').append($imgDialog.append($imgDialogPreview));
-  $imgDialog.dialog({autoOpen: false});
+  //$imgDialog.dialog({autoOpen: false});
 
-  var $list = $('ul#list')
-          .sortable({placeholder: "ui-state-highlight"})
-          .disableSelection();
+  var $list = $('ul#list');
+          //.sortable({placeholder: "ui-state-highlight"})
+          //.disableSelection();
 
   chrome.runtime.onMessage.addListener(
           function (request, sender, sendResponse) {
@@ -87,10 +91,11 @@ $(function () {
               selected[n] = true;
               var $lispan = $('<span/>');
               
-              var $checkBox = $('<input class="ui-state-default" type="checkbox" checked/>').change(function () {
+              // var $checkBox = $('<input class="ui-state-default" type="checkbox" checked/>')
+              var $checkBox = $('<input type="checkbox" checked/>').change(function () {
                 selected[n] = this.checked ? true : false;
                 $('#numSel').html(updateNumSelected());
-              });           
+              });
               $lispan.append($checkBox);
               
               var $img = $('<img class="imgcaption" src="' + request.imgurl + '"/>').load(function(){
@@ -101,17 +106,18 @@ $(function () {
                   $('#numSel').html(updateNumSelected());
                 }                
               }).on('click', function(){
-                if(!$imgDialog.dialog("isOpen")){
-                  $imgDialogPreview.attr({src: this.src});
-                  $imgDialog.dialog("open");
-                }
+                //if(!$imgDialog.dialog("isOpen")){
+                //  $imgDialogPreview.attr({src: this.src});
+                //  $imgDialog.dialog("open");
+                //}
               });
               $lispan.append($img);
               
               var $urlText = $('<span class="urltext">' + request.imgurl + '</span>');
               $lispan.append($urlText);
               
-              var $li = $('<li class="ui-state-default ui-sortable-handle"/>')
+              // var $li = $('<li class="ui-state-default ui-sortable-handle"/>')
+              var $li = $('<li/>')
                       .data('url', request.imgurl)
                       .append($lispan);
               if (request.imglink)
@@ -153,16 +159,19 @@ $(function () {
     });
     return result;
   };
-
-  $('#copyListBtn').button({icons: {primary: 'list'}}).click(function () {
+  
+  // $('#copyListBtn').button({icons: {primary: 'list'}}).
+  $('#copyListBtn').click(function () {
     copyAndNotify(listImages(false, false, false));
   });
-
-  $('#copyHtmlBtn').button({icons: {primary: 'quilt'}}).click(function () {
+  
+  // $('#copyHtmlBtn').button({icons: {primary: 'quilt'}}).
+  $('#copyHtmlBtn').click(function () {
     copyAndNotify(listImages(true, true, false));
   });
-
-  $('#copyScriptBtn').button({icons: {primary: 'carousel'}}).click(function () {
+  
+  // $('#copyScriptBtn').button({icons: {primary: 'carousel'}}).
+  $('#copyScriptBtn').click(function () {
 
     // Gallery provided by http://galleria.io/
     var playerId = Math.floor(Math.random() * 100000).toString(16).toUpperCase();

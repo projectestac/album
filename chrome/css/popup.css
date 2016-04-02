@@ -4,7 +4,6 @@
 */
 
 body {
-  font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
   font-size: 80%;
 }
 
@@ -14,7 +13,7 @@ body {
   padding: 3px;
   border: 1px solid lightgray;
   width: 370px;
-  height: 400px;
+  height: 300px;
   overflow: hidden;
   overflow-y: scroll;
   background-color: #ededed;
@@ -28,11 +27,6 @@ body {
 #list li * {
   vertical-align: middle;
   font-size: 90%;
-}
-
-.ui-state-highlight {
-  height: 1.5em;
-  line-height: 1.2em;
 }
 
 .imgcaption {
@@ -84,38 +78,4 @@ body {
 
 #activity {
   margin-right: 10px;
-}
-
-.ui-button .ui-icon.list {
-  background-image: url(../icons/list16.png);
-  width: 16px;
-  height: 16px; 
-}
-
-.ui-button .ui-icon.carousel {
-  background-image: url(../icons/carousel16.png);
-  width: 16px;
-  height: 16px; 
-}
-
-.ui-button .ui-icon.quilt {
-  background-image: url(../icons/quilt16.png);
-  width: 16px;
-  height: 16px; 
-}
-
-.ui-button .ui-icon.search-on {
-  background-image: url(../icons/search.gif);
-  width: 48px;
-  height: 48px;
-  left: 9px;
-  top: 9px;
-}
-
-.ui-button .ui-icon.search-off {
-  background-image: url(../icons/search00.gif);
-  width: 48px;
-  height: 48px; 
-  left: 9px;
-  top: 9px;
 }

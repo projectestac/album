@@ -5,6 +5,8 @@
 
 body {
   font-size: 80%;
+  min-height: 400px;
+  background-color: #eee;
 }
 
 .steps {

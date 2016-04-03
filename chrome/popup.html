@@ -3,9 +3,10 @@
   <head>
     <title>List images</title>
     <meta charset="UTF-8">
+    <!-- link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css" -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">    
     <link rel="stylesheet" type="text/css" href="lib/material.min.css">
     <link rel="stylesheet" type="text/css" href="css/popup.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="lib/jquery.min.js"></script>    
     <script src="lib/material.min.js"></script>
     <script src="lib/clipboard.min.js"></script>
@@ -21,6 +22,7 @@
     </div>
     <div class="centered">
       <div class="info">
+        <div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div>
         <button id="stopBtn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
           <i id="stopIcon" class="material-icons">stop</i>
         </button>    

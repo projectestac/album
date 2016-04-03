@@ -64,11 +64,13 @@ $(function () {
   $('#stopBtn').click(function () {
     if (stopBtnStatus) {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
+      $('#spinner').removeClass('is-active');
       $('#stopIcon').html('play_arrow');
       stopBtnStatus = false;
     }
     else {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
+      $('#spinner').addClass('is-active');
       $('#stopIcon').html('stop');
       stopBtnStatus = true;
     }

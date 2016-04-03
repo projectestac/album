@@ -12,31 +12,47 @@ body {
 }
 
 #list {
-  border: 1px solid lightgray;
+  _border: 1px solid lightgray;
   height: 300px;
   overflow: hidden;
   overflow-y: scroll;
+  -webkit-padding-start: 10px;
 }
 
-.xximgcaption {
-  max-width: 20px;
-  max-height: 20px;
-  margin: 0px 5px;
+#list li {
+  padding: 4px;
 }
 
-.imgpreview {
+#list li .mdl-checkbox {
+  width: auto;
+}
+
+#list li .mdl-list__item-icon {
+  margin-right: 8px;
+}
+
+#previewDlg {
+  width: 350px;
+}
+
+#previewImg {
+  display: block;
   max-width: 260px;
   max-height: 260px;
-  display: block;
-  margin: auto auto;
+  margin: auto;
 }
 
 .urltext {
-  display: inline-block;
-  max-width: 250px;
+  font-size: 80%;
+  width: 270px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.urllink {
+  font-size: 80%;
+  margin-left: 10px;
 }
 
 .counters {
@@ -48,6 +64,7 @@ body {
 }
 
 .buttons {
+  min-width: 400px;
   display: inline-block; 
 }
 

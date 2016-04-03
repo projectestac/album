@@ -22,7 +22,7 @@
     <div class="centered">
       <div class="info">
         <button id="stopBtn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-          <i id="stopIcon" class="material-icons">play_arrow</i>
+          <i id="stopIcon" class="material-icons">stop</i>
         </button>    
         <span id="numImgLb">Images detected:</span> <span id="numImgs">0</span>
         <br><span id="selImgLb">Selected:</span> <span id="numSel">0</span>
@@ -39,6 +39,16 @@
         </button>
       </div>
     </div>
+    <dialog id="previewDlg" class="mdl-dialog">
+      <div class="mdl-dialog__content">
+        <a id="previewLink" href="" target="_blank"><img id="previewImg" src=""></a>
+      </div>
+      <div class="mdl-dialog__actions">
+        <button id="previewClose" class="mdl-button mdl-js-button mdl-button--icon">
+          <i class="material-icons">close</i>
+        </button>
+      </div>
+    </dialog>
   </body>
 </html>
 

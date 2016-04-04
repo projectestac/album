@@ -64,14 +64,14 @@ $(function () {
   $('#stopBtn').click(function () {
     if (stopBtnStatus) {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-      //$('#spinner').removeClass('is-active');
-      $('#searchImg').attr({src: 'icons/search00.gif'});
+      $('#spinner').removeClass('is-active');
+      //$('#searchImg').attr({src: 'icons/search00.gif'});
       $('#stopIcon').html('play_arrow');
       stopBtnStatus = false;
     } else {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
-      //$('#spinner').addClass('is-active');
-      $('#searchImg').attr({src: 'icons/search.gif'});
+      $('#spinner').addClass('is-active');
+      //$('#searchImg').attr({src: 'icons/search.gif'});
       $('#stopIcon').html('pause');
       stopBtnStatus = true;
     }

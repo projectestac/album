@@ -4,19 +4,27 @@
 */
 
 body {
-  font-size: 80%;
   min-height: 400px;
   background-color: #fafafa;
-  position: relative;
 }
 
-.steps {
+.description {
   margin: 10px;
+  line-height: normal;
+}
+
+.spacer {
+  display: inline-block;
+  width: 200px;
+}
+
+#imgListTable {
+  margin: 5px;
 }
 
 #imgListTable tbody,
 #imgListTable thead {
-  display: block;
+  __display: block;
 }
 
 #imgListTable tbody {
@@ -67,14 +75,19 @@ body {
   margin-left: 10px;
 }
 
-#info > * {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 10px auto;
+.info {
+  line-height: normal;
+  font-size: 80%;
 }
 
 #scanInfo p {
   text-align: left;
   margin: 0;
   line-height: normal;
+}
+
+#spinner {
+  max-width: 20px;
+  max-height: 20px;
+  vertical-align: middle;
 }

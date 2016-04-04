@@ -11,7 +11,7 @@
     "description": "Extension description"
   },
   "extDescText": {
-    "message": "Feu lliscar verticalment el document principal fins que s'hi hagin mostrat totes les imatges. Quan la llista estigui completa, seleccioneu i reordeneu els elements arrossegant les files amunt o avall.",
+    "message": "Feu lliscar verticalment el document principal fins que s'hi hagin mostrat totes les imatges.",
     "description": "Short message with basic instructions"
   },
   "numImgLb": {

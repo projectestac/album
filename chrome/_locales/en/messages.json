@@ -11,7 +11,7 @@
     "description": "Extension description"
   },
   "extDescText": {
-    "message": "Scroll down the main document until all images are displayed. When the list is complete, select and re-arrange its elements up and down.",
+    "message": "Scroll down the main document until all images are displayed.",
     "description": "Short message with basic instructions"
   },
   "numImgLb": {

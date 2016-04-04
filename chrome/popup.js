@@ -67,12 +67,14 @@ $(function () {
       $('#spinner').removeClass('is-active');
       //$('#searchImg').attr({src: 'icons/search00.gif'});
       $('#stopIcon').html('play_arrow');
+      $('#scanningLb').html('Scan stopped.');
       stopBtnStatus = false;
     } else {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
       $('#spinner').addClass('is-active');
       //$('#searchImg').attr({src: 'icons/search.gif'});
       $('#stopIcon').html('pause');
+      $('#scanningLb').html('Scanning...');
       stopBtnStatus = true;
     }
   });
@@ -119,7 +121,9 @@ $(function () {
               }).load(function () {
                 // Uncheck small images
                 if ($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT) {
-                  $checkBox.prop('checked', false);
+                  console.log('unchecking '+$checkBox);
+                  //$checkBox.prop('checked', false);
+                  $checkBox[0].MaterialCheckbox.uncheck();
                   selected[n] = false;
                   $numSel.html(updateNumSelected());
                 }

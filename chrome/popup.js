@@ -1,35 +1,35 @@
 
-/* global chrome, clipboard */
+/* global chrome, clipboard, componentHandler */
 
 /**
  * Loads when DOM is ready to be used
- */ 
+ */
 $(function () {
-  
+
   /**
    * Number of images currently detected
    * @type number
    */
   var numImgs = 0;
-  
+
   /**
    * Number of images currently selected
    * @type number
    */
-  var numSelected = 0;  
-  
+  var numSelected = 0;
+
   /**
    * Minimum width and height to auto-check images
    * @type number
    */
-  var MIN_WIDTH = 60, MIN_HEIGHT=60;
-  
+  var MIN_WIDTH = 60, MIN_HEIGHT = 60;
+
   /**
    * Array of boolean values indicating the 'selected' state of each image
    * @type number[]
    */
   var selected = [];
-  
+
   /**
    * 
    * Updates the counter of images currently selected
@@ -43,7 +43,7 @@ $(function () {
     numSelected = result;
     return result;
   };
-  
+
   /**
    * Applies locale strings to UI elements
    */
@@ -67,66 +67,88 @@ $(function () {
       $('#spinner').removeClass('is-active');
       $('#stopIcon').html('play_arrow');
       stopBtnStatus = false;
-    }
-    else {
+    } else {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
       $('#spinner').addClass('is-active');
       $('#stopIcon').html('stop');
       stopBtnStatus = true;
     }
   });
-  
-  var $list = $('ul#list');
 
+  var $table = $('#imgListTable');
+  var $tbody = $('#imgListTableBody');
+  var $numSel = $('#numSel');
+  var $numImgs = $('#numImgs');
+  
+   
+  var $headerCheckBox=$table.find('thead .mdl-data-table__select input');
+  $headerCheckBox.on('change', function(event){
+    var boxes = $tbody.find('.mdl-data-table__select').get();
+    var check = event.target.checked;
+    for(var i=0; i<boxes.length; i++){
+      selected[i] = check;
+      if(check)
+        boxes[i].MaterialCheckbox.check();
+      else
+        boxes[i].MaterialCheckbox.uncheck();
+    }
+    $numSel.html(updateNumSelected());
+  });
+  
   chrome.runtime.onMessage.addListener(
           function (request, sender, sendResponse) {
             if (request.imgurl) {
               var n = numImgs;
               selected[n] = true;
-              var $lispan = $('<span class="mdl-list__item-primary-content"/>');
-              
-              var $checkBox = $('<input type="checkbox" class="mdl-checkbox__input" checked/>').change(function () {
-                selected[n] = this.checked ? true : false;
-                $('#numSel').html(updateNumSelected());
-              });
-              $lispan.append($('<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"/>').append($checkBox));
-              
+
+              var $tr = $('<tr/>');
+
+              var $checkBox = $('<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[' + (numImgs + 1) + ']"/>')
+                      .append($('<input type="checkbox" id="row[' + (numImgs + 1) + ']" class="mdl-checkbox__input" checked/>')
+                      .change(function(){
+                        selected[n] = this.checked ? true : false;
+                        $numSel.html(updateNumSelected());
+                      }));
+              $tr.append($('<td/>').append($checkBox));
+
               var $img = $('<img class="mdl-list__item-icon"/>').attr({
                 src: request.imgurl,
                 title: request.imgurl
-              }).load(function(){
+              }).load(function () {
                 // Uncheck small images
-                if($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT){
+                if ($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT) {
                   $checkBox.prop('checked', false);
                   selected[n] = false;
-                  $('#numSel').html(updateNumSelected());
-                }                
-              }).on('click', function(){
+                  $numSel.html(updateNumSelected());
+                }
+              }).on('click', function () {
                 $('#previewLink').attr({'href': request.imgurl});
                 $('#previewImg').attr({'src': request.imgurl});
                 $('#previewDlg')[0].showModal();
               });
-              $lispan.append($img);
-              
+              $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($img));
+              $tr.data('url', request.imgurl);
+
               var $urlText = $('<span class="urltext">' + request.imgurl + '</span>');
-              $lispan.append($urlText);
-              
-              if (request.imglink)
-                $lispan.append($('<a/>').attr({
+              $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($urlText));
+
+              var $link = $('<span/>');
+              if (request.imglink) {
+                $link = $('<a class="urllink"/>').attr({
                   href: request.imglink,
                   target: '_blank',
                   title: request.imglink
-                }).append($('<i class="urllink material-icons"/>').html('link')));
-
-              var $li = $('<li class="mdl-list__item"/>')
-                      .data('url', request.imgurl)
-                      .append($lispan);
-              if (request.imglink)
-                $li.data('link', request.imglink);
+                }).append($('<i class="material-icons"/>').html('link'));
+                $tr.data('link', request.imglink);
+              } else
+                $link = $('');
+              $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($link));
               
-              $list.append($li);
-              $('#numImgs').html(++numImgs);
-              $('#numSel').html(++numSelected);
+              $tbody.append($tr);
+              componentHandler.upgradeElements($table.get());
+
+              $numImgs.html(++numImgs);
+              $numSel.html(++numSelected);
             }
           });
 
@@ -141,7 +163,7 @@ $(function () {
 
   var listImages = function (withImg, withLinks, dataLink) {
     var result = '';
-    $('li').each(function (index) {
+    $tbody.find('tr').each(function (index) {
       if (selected[index]) {
         var txt = $(this).data('url');
         if (withImg)
@@ -149,7 +171,7 @@ $(function () {
         if (withLinks) {
           var link = $(this).data('link');
           if (link) {
-            if(dataLink)
+            if (dataLink)
               txt = txt.slice(0, -1) + ' data-link="' + link + '">';
             else
               txt = '<a href="' + link + '">' + txt + '</a>';
@@ -160,18 +182,15 @@ $(function () {
     });
     return result;
   };
-  
-  // $('#copyListBtn').button({icons: {primary: 'list'}}).
+
   $('#copyListBtn').click(function () {
     copyAndNotify(listImages(false, false, false));
   });
-  
-  // $('#copyHtmlBtn').button({icons: {primary: 'quilt'}}).
+
   $('#copyHtmlBtn').click(function () {
     copyAndNotify(listImages(true, true, false));
   });
-  
-  // $('#copyScriptBtn').button({icons: {primary: 'carousel'}}).
+
   $('#copyScriptBtn').click(function () {
 
     // Gallery provided by http://galleria.io/
@@ -191,12 +210,12 @@ $(function () {
             '});\n' +
             '</script>\n' +
             '[/raw]');
-  });  
-  
-  $('#previewClose').on('click', function(){
+  });
+
+  $('#previewClose').on('click', function () {
     $('#previewDlg')[0].close();
   });
-  
+
   chrome.tabs.executeScript(null, {file: 'listimages.js'});
 
 });

@@ -6,31 +6,23 @@
 body {
   font-size: 80%;
   min-height: 400px;
-  background-color: #eee;
+  background-color: #fafafa;
+  position: relative;
 }
 
 .steps {
   margin: 10px;
 }
 
-#list {
-  _border: 1px solid lightgray;
+#imgListTable tbody,
+#imgListTable thead {
+  display: block;
+}
+
+#imgListTable tbody {
   height: 300px;
-  overflow: hidden;
-  overflow-y: scroll;
-  -webkit-padding-start: 10px;
-}
-
-#list li {
-  padding: 4px;
-}
-
-#list li .mdl-checkbox {
-  width: auto;
-}
-
-#list li .mdl-list__item-icon {
-  margin-right: 8px;
+  overflow-y: auto;  
+  overflow-x: hidden;
 }
 
 #previewDlg {
@@ -45,20 +37,16 @@ body {
 }
 
 .urltext {
+  display: block;
   font-size: 80%;
-  width: 270px;
+  width: 250px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .urllink {
-  font-size: 80%;
-  margin-left: 10px;
-}
-
-.counters {
-  margin: 3pt;
+  text-decoration: none;
 }
 
 .centered {

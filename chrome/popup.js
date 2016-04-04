@@ -64,13 +64,15 @@ $(function () {
   $('#stopBtn').click(function () {
     if (stopBtnStatus) {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-      $('#spinner').removeClass('is-active');
+      //$('#spinner').removeClass('is-active');
+      $('#searchImg').attr({src: 'icons/search00.gif'});
       $('#stopIcon').html('play_arrow');
       stopBtnStatus = false;
     } else {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
-      $('#spinner').addClass('is-active');
-      $('#stopIcon').html('stop');
+      //$('#spinner').addClass('is-active');
+      $('#searchImg').attr({src: 'icons/search.gif'});
+      $('#stopIcon').html('pause');
       stopBtnStatus = true;
     }
   });
@@ -134,11 +136,9 @@ $(function () {
 
               var $link = $('<span/>');
               if (request.imglink) {
-                $link = $('<a class="urllink"/>').attr({
-                  href: request.imglink,
-                  target: '_blank',
-                  title: request.imglink
-                }).append($('<i class="material-icons"/>').html('link'));
+                $link=$('<a id="link[' + (numImgs + 1) + ']" class="urllink"/>')
+                        .attr({href: request.imglink, target: '_blank', title: request.imglink})
+                        .append($('<i class="material-icons"/>').html('link'));
                 $tr.data('link', request.imglink);
               } else
                 $link = $('');

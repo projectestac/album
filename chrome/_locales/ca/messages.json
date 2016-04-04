@@ -19,7 +19,7 @@
     "description": "Label for the number of images detected"
   },
   "selImgLb": {
-    "message": "seleccionades:",
+    "message": "Imatges seleccionades:",
     "description": "Label for the number of images currently selected"
   },
   "copyListBtn": {

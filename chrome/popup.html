@@ -30,13 +30,20 @@
       <tbody id="imgListTableBody"/>
     </table>
     <div class="centered">
-      <div class="info">
-        <div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div>
-        <button id="stopBtn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
-          <i id="stopIcon" class="material-icons">stop</i>
-        </button>    
-        <span id="numImgLb">Images detected:</span> <span id="numImgs">0</span>
-        <br><span id="selImgLb">Selected:</span> <span id="numSel">0</span>
+      <div id="info">
+        <img id="searchImg" src="icons/search.gif" title="searchig..."/>
+        <!-- div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div -->
+        <button id="stopBtn" class="mdl-button mdl-js-button mdl-button--icon">
+          <i id="stopIcon" class="material-icons">pause</i>
+        </button>
+        <div id="scanInfo">
+          <p id="status">Scanning...</p>
+          <p><span id="numImgLb">Images detected:</span> <span id="numImgs">0</span></p>
+          <p><span id="selImgLb">Images selected:</span> <span id="numSel">0</span></p>
+        </div>
+        <button id="settingsBtn" class="mdl-button mdl-js-button mdl-button--icon">
+          <i id="stopIcon" class="material-icons">settings</i>
+        </button>        
       </div>
       <div class="buttons">
         <button id="copyListBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">

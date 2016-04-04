@@ -60,8 +60,21 @@ body {
 
 .buttons * {
   vertical-align: middle;
+  margin: 5px;
 }
 
-#activity {
-  margin-right: 10px;
+#searchImg {
+  margin-left: 10px;
+}
+
+#info > * {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 10px auto;
+}
+
+#scanInfo p {
+  text-align: left;
+  margin: 0;
+  line-height: normal;
 }

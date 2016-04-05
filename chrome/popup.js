@@ -33,6 +33,12 @@ $(function () {
   var galWidth = 600, galHeight = 400, galLinks = true;
   var htmlMaxWidth = 600, htmlMaxHeight = 600, htmlLinks = true;
 
+  var $table = $('#imgTable');
+  var $tbody = $('#imgTableBody');
+  var $numSel = $('#numSel');
+  var $numImgs = $('#numImgs');
+  var $settingsDlg = $('settingsDlg');
+
   /**
    * 
    * Updates the counter of images currently selected
@@ -80,11 +86,42 @@ $(function () {
   });
 
   $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip')).click(function () {
+
+    $('#galWidth').val(galWidth);
+    $('#galHeight').val(galHeight);
+    $('#galLinks').val(galLinks);
+
+    $('#htmlMaxWidth').val(htmlMaxWidth);
+    $('#htmlMaxHeight').val(htmlMaxHeight);
+    $('#htmlLinks').val(htmlLinks);
+
+    $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty');
     $('#settingsDlg')[0].showModal();
   });
 
+  var checkSettingsDlg = function () {
+    return $('#settingsDlg').find('.is-invalid').length === 0;
+  };
+
+  $('#settingsDlg').find('input').on('input', function () {
+    window.setTimeout(function () {
+      $('#settingsOk').attr('disabled', !checkSettingsDlg());
+    }, 0);
+  });
+
+
   $('#settingsOk').html(chrome.i18n.getMessage('OK')).click(function () {
-    $('#settingsDlg')[0].close();
+    if (checkSettingsDlg()) {
+      galWidth = $('#galWidth').val();
+      galHeight = $('#galHeight').val();
+      galLinks = $('#galLinks').val();
+
+      htmlMaxWidth = $('#htmlMaxWidth').val();
+      htmlMaxHeight = $('#htmlMaxHeight').val();
+      htmlLinks = $('#htmlLinks').val();
+
+      $('#settingsDlg')[0].close();
+    }
   });
 
   $('#settingsCancel').html(chrome.i18n.getMessage('Cancel')).click(function () {
@@ -94,11 +131,6 @@ $(function () {
   $('#previewClose').prop('title', chrome.i18n.getMessage('Close')).click(function () {
     $('#previewDlg')[0].close();
   });
-
-  var $table = $('#imgTable');
-  var $tbody = $('#imgTableBody');
-  var $numSel = $('#numSel');
-  var $numImgs = $('#numImgs');
 
   var $headerCheckBox = $table.find('thead .mdl-data-table__select input');
   $headerCheckBox.on('change', function (event) {
@@ -209,11 +241,12 @@ $(function () {
   $('#copyHtmlBtn').click(function () {
     var pre = '', post = '';
     if (htmlMaxWidth || htmlMaxHeight) {
-      pre = '<style>.__imgMosaic img {' +
+      var id = (65536 + Math.floor(Math.random() * 120000)).toString(16).toUpperCase();
+      pre = '<style>.mosaic' + id + ' img {' +
               (htmlMaxWidth ? 'max-width:' + htmlMaxWidth + 'px;' : '') +
               (htmlMaxHeight ? 'max-height:' + htmlMaxHeight + 'px;' : '') +
-              '}</style>\n<div class="__imgMosaic">\n';
-      post = '</div>';
+              '}</style>\n<div class="mosaic' + id + '">\n';
+      post = '</div>\n';
     }
     copyAndNotify(pre + listImages(true, htmlLinks, false) + post);
   });
@@ -221,9 +254,8 @@ $(function () {
   $('#copyScriptBtn').click(function () {
 
     // Gallery provided by http://galleria.io/
-    var playerId = Math.floor(Math.random() * 100000).toString(16).toUpperCase();
+    var playerId = (65536 + Math.floor(Math.random() * 120000)).toString(16).toUpperCase();
     copyAndNotify(
-            '[raw]\n' +
             '<script type="text/javascript" src="https://cdn.jsdelivr.net/g/jquery@1.12.1,galleria@1.4.2(galleria.js)"></script>\n' +
             '<div id="' + playerId + '" style="width: ' + galWidth + 'px; height: ' + galHeight + 'px;">\n' +
             listImages(true, galLinks, galLinks) +
@@ -234,8 +266,7 @@ $(function () {
             ' autoplay: true,' +
             ' lightbox: true' +
             '});\n' +
-            '</script>\n' +
-            '[/raw]');
+            '</script>\n');
   });
 
   chrome.tabs.executeScript(null, {file: 'listimages.js'});

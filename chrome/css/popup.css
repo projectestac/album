@@ -100,11 +100,11 @@ body {
 
 #settingsDlg {
   min-width: 350px;
+  background-color: #fafafa;  
 }
 
 .dimInput {
   width: 300px;
-  background-color: #fafafa;
   margin-top: 15px;
   margin-bottom: 25px;
 }
@@ -126,4 +126,9 @@ body {
 .dimInput > label {
   margin-left: 15px;
   margin-bottom: 15px;
+}
+
+.mdl-textfield__error {
+  line-height: normal;
+  
 }

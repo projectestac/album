@@ -37,7 +37,6 @@ $(function () {
   var $tbody = $('#imgTableBody');
   var $numSel = $('#numSel');
   var $numImgs = $('#numImgs');
-  var $settingsDlg = $('settingsDlg');
 
   /**
    * 
@@ -64,6 +63,23 @@ $(function () {
   $('#copyHtmlBtn').prop('title', chrome.i18n.getMessage('copyHtmlBtnTooltip'));
   $('#copyScriptCaption').html(chrome.i18n.getMessage('copyScriptBtn'));
   $('#copyScriptBtn').prop('title', chrome.i18n.getMessage('copyScriptBtnTooltip'));
+
+  chrome.storage.sync.get(function (items) {
+
+    if (items.hasOwnProperty('galWidth'))
+      galWidth = Number(items.galWidth);
+    if (items.hasOwnProperty('galHeight'))
+      galHeight = Number(items.galHeight);
+    if (items.hasOwnProperty('galLinks'))
+      galLinks = (items.galLinks === 'true');
+
+    if (items.hasOwnProperty('htmlMaxWidth'))
+      htmlMaxWidth = Number(items.htmlMaxWidth);
+    if (items.hasOwnProperty('htmlMaxHeight'))
+      htmlMaxHeight = Number(items.htmlMaxHeight);
+    if (items.hasOwnProperty('htmlLinks'))
+      htmlLinks = (items.htmlLinks === 'true');
+  });
 
   /**
    * This button stops and restarts the scanning of images on main document
@@ -109,7 +125,6 @@ $(function () {
     }, 0);
   });
 
-
   $('#settingsOk').html(chrome.i18n.getMessage('OK')).click(function () {
     if (checkSettingsDlg()) {
       galWidth = $('#galWidth').val();
@@ -121,6 +136,15 @@ $(function () {
       htmlLinks = $('#htmlLinks').val();
 
       $('#settingsDlg')[0].close();
+
+      chrome.storage.sync.set({
+        galWidth: galWidth,
+        galHeight: galHeight,
+        galLinks: galLinks,
+        htmlMaxWidth: htmlMaxWidth,
+        htmlMaxHeight: htmlMaxHeight,
+        htmlLinks: htmlLinks
+      });
     }
   });
 

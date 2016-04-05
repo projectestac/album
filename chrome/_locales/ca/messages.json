@@ -61,5 +61,17 @@
   "previewImage": {
     "message": "Previsualitzacio",
     "description": "Titol del dialeg mostrat en fer clic damunt les miniatures"
-  }      
+  },
+  "OK": {
+    "message": "D'acord",
+    "description": "OK button"
+  },
+  "Cancel": {
+    "message": "Cancel·la",
+    "description": "Cancel button"
+  },
+  "Close": {
+    "message": "Tanca",
+    "description": "Close button"
+  }
 }

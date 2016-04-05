@@ -21,7 +21,7 @@
               <input type="checkbox" id="table-header" class="mdl-checkbox__input" />
             </label>
           </th>
-          <th class="mdl-data-table__cell"><i class="material-icons" style="vertical-align: middle;">photo</i></th>
+          <th class="mdl-data-table__cell"><i class="material-icons" style="vertical-align: middle;">collections</i></th>
           <th id="imgUrlLb" class="mdl-data-table__cell--non-numeric">Image URL</th>
           <th class="mdl-data-table__cell--non-numeric"></th>
         </tr>        
@@ -59,9 +59,55 @@
         <a id="previewLink" href="" target="_blank"><img id="previewImg" src=""></a>
       </div>
       <div class="mdl-dialog__actions">
-        <button id="previewClose" class="mdl-button mdl-js-button mdl-button--icon">
+        <button id="previewClose" class="mdl-button mdl-js-button mdl-button--icon close mdl-button--colored">
           <i class="material-icons">close</i>
         </button>
+      </div>
+    </dialog>
+    <dialog id="settingsDlg" class="mdl-dialog">
+      <div class="mdl-dialog__content">
+        <div class="dimInput mdl-shadow--4dp">
+          <p>Galleria.io</p>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="carouselW">
+            <label class="mdl-textfield__label" for="carouselW">Width</label>
+            <span class="mdl-textfield__error">Please enter a number!</span>
+          </div>        
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="carouselH">
+            <label class="mdl-textfield__label" for="carouselH">Height</label>
+            <span class="mdl-textfield__error">Please enter a number!</span>
+          </div>        
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="galLinks">
+            <input type="checkbox" id="galLinks" class="mdl-switch__input" checked>
+            <span id="chkLinksLb" class="mdl-switch__label">Include hyperlinks</span>
+          </label>
+        </div>
+        <div class="dimInput mdl-shadow--4dp">
+          <p>HTML mosaic</p>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="htmlW">
+            <label class="mdl-textfield__label" for="htmlW">Max. width</label>
+            <span class="mdl-textfield__error">Please enter a number!</span>
+          </div>        
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="htmlH">
+            <label class="mdl-textfield__label" for="htmlH">Max. height</label>
+            <span class="mdl-textfield__error">Please enter a number!</span>
+          </div>
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="htmlLinks">
+            <input type="checkbox" id="htmlLinks" class="mdl-switch__input" checked>
+            <span id="chkLinksLb" class="mdl-switch__label">Include hyperlinks</span>
+          </label>
+        </div>
+      </div>
+      <div class="mdl-dialog__actions">
+        <button id="settingsOk" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+          OK
+        </button>
+        <button id="settingsCancel" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+          Cancel
+        </button>        
       </div>
     </dialog>
   </body>

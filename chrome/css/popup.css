@@ -24,6 +24,10 @@ body {
   overflow-x: hidden;
 }
 
+#imgTable thead {
+  background-color: #fafafa;
+}
+
 .urltext {
   display: block;
   font-size: 80%;
@@ -92,4 +96,34 @@ body {
   max-width: 260px;
   max-height: 260px;
   margin: auto;
+}
+
+#settingsDlg {
+  min-width: 350px;
+}
+
+.dimInput {
+  width: 300px;
+  background-color: #fafafa;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.dimInput > div {
+  width: 100px;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.dimInput > p {
+  font-weight: bold;
+  font-size: 110%;
+  padding-left: 15px;
+  padding-top: 5px;
+  margin-bottom: 0;
+}
+
+.dimInput > label {
+  margin-left: 15px;
+  margin-bottom: 15px;
 }

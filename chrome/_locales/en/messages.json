@@ -61,5 +61,17 @@
   "previewImage": {
     "message": "Preview image",
     "description": "Caption of the dialog shown when thumbnails are clicked"
-  }    
+  },
+  "OK": {
+    "message": "OK",
+    "description": "OK button"
+  },
+  "Cancel": {
+    "message": "Cancel",
+    "description": "Cancel button"
+  },
+  "Close": {
+    "message": "Close",
+    "description": "Close button"
+  }  
 }

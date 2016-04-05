@@ -14,13 +14,21 @@
     "message": "Scroll down the main document until all images are displayed.",
     "description": "Short message with basic instructions"
   },
-  "numImgLb": {
-    "message": "Images detected:",
-    "description": "Label for the number of images detected"
+  "imgUrlLb": {
+    "message": "Image URL",
+    "description": "Label for the image URL"
   },
-  "selImgLb": {
-    "message": "selected:",
-    "description": "Label for the number of images currently selected"
+  "stopBtnTooltip": {
+    "message": "Stop scanning for images",
+    "description": "Label for the stop button"
+  },
+  "playBtnTooltip": {
+    "message": "Resume scanning for images",
+    "description": "Label for the play button"
+  },
+  "settingsBtnTooltip": {
+    "message": "Settings",
+    "description": "Label for settings button"
   },
   "copyListBtn": {
     "message": "List",

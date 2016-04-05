@@ -12,9 +12,8 @@
     <script src="popup.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
-  <body>
-    <div class="description"></div>
-    <table id="imgListTable" class="mdl-data-table mdl-shadow--2dp">
+  <body>    
+    <table id="imgTable" class="mdl-data-table mdl-shadow--2dp">
       <thead>
         <tr>
           <th>
@@ -23,35 +22,25 @@
             </label>
           </th>
           <th class="mdl-data-table__cell"><i class="material-icons" style="vertical-align: middle;">photo</i></th>
-          <th class="mdl-data-table__cell--non-numeric">Image URL</th>
+          <th id="imgUrlLb" class="mdl-data-table__cell--non-numeric">Image URL</th>
           <th class="mdl-data-table__cell--non-numeric"></th>
         </tr>        
       </thead>
-      <tfoot>
-        <tr>
-          <td class="mdl-data-table__cell">
-            <button id="stopBtn" class="mdl-button mdl-js-button mdl-button--icon">
-              <i id="stopIcon" class="material-icons">pause</i>
-            </button>
-          </td>          
-          <td class="mdl-data-table__cell--non-numeric">
-            <div id="spinner" class="mdl-spinner mdl-js-spinner is-active"></div>
-            <!-- img id="searchImg" src="icons/search.gif" title="searchig..."/ -->
-          </td>          
-          <td class="mdl-data-table__cell--non-numeric info">
-            <span id="scanningLb">Scanning...</span><br>
-            <span id="numImgLb">Images detected:</span> <span id="numImgs">0</span><br>
-            <span id="selImgLb">Images selected:</span> <span id="numSel">0</span>
-          </td>          
-          <td class="mdl-data-table__cell--non-numeric">
-            <button id="settingsBtn" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
-              <i class="material-icons">settings</i>
-            </button>                                
-          </td>
-        </tr>
-      </tfoot>
-      <tbody id="imgListTableBody"/>
+      <tbody id="imgTableBody"/>
     </table>
+    <div class="controls mdl-shadow--4dp">
+      <div class="counter">
+        <div class="nums"><span id="numSel">0</span> / <span id="numImgs">0</span></div>
+        <div id="progressBar" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+      </div>
+      <button id="stopBtn" title="Stop scanning" class="mdl-button mdl-js-button mdl-button--icon">
+        <i id="stopIcon" class="material-icons">pause</i>
+      </button>
+      <div class="description"></div>
+      <button id="settingsBtn" title="settings" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+        <i class="material-icons">settings</i>
+      </button>                                      
+    </div>
     <div class="centered">
       <div class="buttons">
         <button id="copyListBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">

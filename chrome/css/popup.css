@@ -4,44 +4,24 @@
 */
 
 body {
-  min-height: 400px;
+  min-height: 500px;
   background-color: #fafafa;
 }
 
-.description {
-  margin: 10px;
-  line-height: normal;
-}
-
-.spacer {
-  display: inline-block;
-  width: 200px;
-}
-
-#imgListTable {
+#imgTable {
   margin: 5px;
+  min-width: 479px;
 }
 
-#imgListTable tbody,
-#imgListTable thead {
-  __display: block;
+#imgTable tbody,
+#imgTable thead {
+  display: block;
 }
 
-#imgListTable tbody {
-  height: 300px;
+#imgTable tbody {
+  height: 400px;
   overflow-y: auto;  
   overflow-x: hidden;
-}
-
-#previewDlg {
-  width: 350px;
-}
-
-#previewImg {
-  display: block;
-  max-width: 260px;
-  max-height: 260px;
-  margin: auto;
 }
 
 .urltext {
@@ -57,8 +37,40 @@ body {
   text-decoration: none;
 }
 
+.controls {
+  margin: 5px;
+  padding: 5px 15px;
+}
+
+.controls > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.counter {
+  width: 50px;
+}
+
+.nums {
+  font-weight: bolder;
+  text-align: center;
+  width: 100%;
+}
+
+#progressBar {
+  width: 100%;
+}
+
+.description {
+  margin: 10px;
+  line-height: normal;
+  width: 300px;
+  font-size: 90%;
+}
+
 .centered {
   text-align: center;
+  margin-top: 15px;
 }
 
 .buttons {
@@ -71,23 +83,13 @@ body {
   margin: 5px;
 }
 
-#searchImg {
-  margin-left: 10px;
+#previewDlg {
+  width: 350px;
 }
 
-.info {
-  line-height: normal;
-  font-size: 80%;
-}
-
-#scanInfo p {
-  text-align: left;
-  margin: 0;
-  line-height: normal;
-}
-
-#spinner {
-  max-width: 20px;
-  max-height: 20px;
-  vertical-align: middle;
+#previewImg {
+  display: block;
+  max-width: 260px;
+  max-height: 260px;
+  margin: auto;
 }

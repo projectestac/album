@@ -14,13 +14,21 @@
     "message": "Feu lliscar verticalment el document principal fins que s'hi hagin mostrat totes les imatges.",
     "description": "Short message with basic instructions"
   },
-  "numImgLb": {
-    "message": "Imatges detectades:",
-    "description": "Label for the number of images detected"
+  "imgUrlLb": {
+    "message": "URL de les imatges",
+    "description": "Label for the image URL"
   },
-  "selImgLb": {
-    "message": "Imatges seleccionades:",
-    "description": "Label for the number of images currently selected"
+  "stopBtnTooltip": {
+    "message": "Atura la detecció d'imatges",
+    "description": "Label for the stop button"
+  },
+  "playBtnTooltip": {
+    "message": "Reprèn la detecció d'imatges",
+    "description": "Label for the play button"
+  },
+  "settingsBtnTooltip": {
+    "message": "Configuració",
+    "description": "Label for settings button"
   },
   "copyListBtn": {
     "message": "Llista",

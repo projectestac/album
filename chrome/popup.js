@@ -47,9 +47,10 @@ $(function () {
   /**
    * Applies locale strings to UI elements
    */
+  $('#imgUrlLb').html(chrome.i18n.getMessage('imgUrlLb'));
   $('.description').html(chrome.i18n.getMessage('extDescText'));
-  $('#numImgLb').html(chrome.i18n.getMessage('numImgLb'));
-  $('#selImgLb').html(chrome.i18n.getMessage('selImgLb'));
+  $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip'));
+  $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip'));
   $('#copyListCaption').html(chrome.i18n.getMessage('copyListBtn'));
   $('#copyListBtn').prop('title', chrome.i18n.getMessage('copyListBtnTooltip'));
   $('#copyHtmlCaption').html(chrome.i18n.getMessage('copyHtmlBtn'));
@@ -64,97 +65,94 @@ $(function () {
   $('#stopBtn').click(function () {
     if (stopBtnStatus) {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-      $('#spinner').removeClass('is-active');
-      //$('#searchImg').attr({src: 'icons/search00.gif'});
+      $('#progressBar').removeClass('mdl-progress__indeterminate');
       $('#stopIcon').html('play_arrow');
-      $('#scanningLb').html('Scan stopped.');
+      $('#stopBtn').prop('title', chrome.i18n.getMessage('playBtnTooltip'));
       stopBtnStatus = false;
     } else {
       chrome.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
-      $('#spinner').addClass('is-active');
-      //$('#searchImg').attr({src: 'icons/search.gif'});
+      $('#progressBar').addClass('mdl-progress__indeterminate');
       $('#stopIcon').html('pause');
-      $('#scanningLb').html('Scanning...');
+      $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip'));
       stopBtnStatus = true;
     }
   });
 
-  var $table = $('#imgListTable');
-  var $tbody = $('#imgListTableBody');
+  var $table = $('#imgTable');
+  var $tbody = $('#imgTableBody');
   var $numSel = $('#numSel');
   var $numImgs = $('#numImgs');
-  
-   
-  var $headerCheckBox=$table.find('thead .mdl-data-table__select input');
-  $headerCheckBox.on('change', function(event){
+
+  var $headerCheckBox = $table.find('thead .mdl-data-table__select input');
+  $headerCheckBox.on('change', function (event) {
     var boxes = $tbody.find('.mdl-data-table__select').get();
     var check = event.target.checked;
-    for(var i=0; i<boxes.length; i++){
+    for (var i = 0; i < boxes.length; i++) {
       selected[i] = check;
-      if(check)
+      if (check)
         boxes[i].MaterialCheckbox.check();
       else
         boxes[i].MaterialCheckbox.uncheck();
     }
     $numSel.html(updateNumSelected());
   });
-  
-  chrome.runtime.onMessage.addListener(
-          function (request, sender, sendResponse) {
-            if (request.imgurl) {
-              var n = numImgs;
-              selected[n] = true;
 
-              var $tr = $('<tr/>');
+  var msgListener = function (request, sender, sendResponse) {
 
-              var $checkBox = $('<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[' + (numImgs + 1) + ']"/>')
-                      .append($('<input type="checkbox" id="row[' + (numImgs + 1) + ']" class="mdl-checkbox__input" checked/>')
-                      .change(function(){
+    if (request.imgurl) {
+      var n = numImgs;
+      selected[n] = true;
+
+      var $tr = $('<tr/>');
+
+      var $checkBox = $('<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[' + (numImgs + 1) + ']"/>')
+              .append($('<input type="checkbox" id="row[' + (numImgs + 1) + ']" class="mdl-checkbox__input" checked/>')
+                      .change(function () {
                         selected[n] = this.checked ? true : false;
                         $numSel.html(updateNumSelected());
                       }));
-              $tr.append($('<td/>').append($checkBox));
+      $tr.append($('<td/>').append($checkBox));
 
-              var $img = $('<img class="mdl-list__item-icon"/>').attr({
-                src: request.imgurl,
-                title: request.imgurl
-              }).load(function () {
-                // Uncheck small images
-                if ($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT) {
-                  console.log('unchecking '+$checkBox);
-                  //$checkBox.prop('checked', false);
-                  $checkBox[0].MaterialCheckbox.uncheck();
-                  selected[n] = false;
-                  $numSel.html(updateNumSelected());
-                }
-              }).on('click', function () {
-                $('#previewLink').attr({'href': request.imgurl});
-                $('#previewImg').attr({'src': request.imgurl});
-                $('#previewDlg')[0].showModal();
-              });
-              $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($img));
-              $tr.data('url', request.imgurl);
+      var $img = $('<img class="mdl-list__item-icon"/>').attr({
+        src: request.imgurl,
+        title: request.imgurl
+      }).load(function () {
+        // Uncheck small images
+        if ($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT) {
+          $checkBox[0].MaterialCheckbox.uncheck();
+          selected[n] = false;
+          $numSel.html(updateNumSelected());
+        }
+      }).on('click', function () {
+        $('#previewLink').attr({'href': request.imgurl});
+        $('#previewImg').attr({'src': request.imgurl});
+        $('#previewDlg')[0].showModal();
+      });
+      $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($img));
+      $tr.data('url', request.imgurl);
 
-              var $urlText = $('<span class="urltext">' + request.imgurl + '</span>');
-              $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($urlText));
+      var $urlText = $('<span class="urltext">' + request.imgurl + '</span>');
+      $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($urlText));
 
-              var $link = $('<span/>');
-              if (request.imglink) {
-                $link=$('<a id="link[' + (numImgs + 1) + ']" class="urllink"/>')
-                        .attr({href: request.imglink, target: '_blank', title: request.imglink})
-                        .append($('<i class="material-icons"/>').html('link'));
-                $tr.data('link', request.imglink);
-              } else
-                $link = $('');
-              $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($link));
-              
-              $tbody.append($tr);
-              componentHandler.upgradeElements($table.get());
+      var $link = $('<span/>');
+      if (request.imglink) {
+        $link = $('<a id="link[' + (numImgs + 1) + ']" class="urllink"/>')
+                .attr({href: request.imglink, target: '_blank', title: request.imglink})
+                .append($('<i class="material-icons"/>').html('link'));
+        $tr.data('link', request.imglink);
+      } else
+        $link = $('');
+      $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($link));
 
-              $numImgs.html(++numImgs);
-              $numSel.html(++numSelected);
-            }
-          });
+      $tbody.append($tr);
+      componentHandler.upgradeElements($table.get());
+
+      $numImgs.html(++numImgs);
+      $numSel.html(++numSelected);
+    }
+  };
+
+  chrome.runtime.onMessage.addListener(msgListener);
 
   var copyAndNotify = function (txt) {
     clipboard.copy(txt);

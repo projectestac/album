@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>List images</title>
+    <title>Album</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">    
     <link rel="stylesheet" type="text/css" href="lib/material.min.css">
@@ -43,14 +43,14 @@
     </div>
     <div class="centered">
       <div class="buttons">
-        <button id="copyListBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-          <i class="material-icons">reorder</i> <span id="copyListCaption">List</span>
+        <button id="listBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+          <i class="material-icons">reorder</i> <span id="listCaption">List</span>
         </button>    
-        <button id="copyHtmlBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-          <i class="material-icons">view_quilt</i> <span id="copyHtmlCaption">HTML</span>
+        <button id="mosaicBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+          <i class="material-icons">view_quilt</i> <span id="mosaicCaption">Mosaic</span>
         </button>    
-        <button id="copyScriptBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-          <i class="material-icons">view_carousel</i> <span id="copyScriptCaption">galleria.io</span>
+        <button id="galleriaBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+          <i class="material-icons">view_carousel</i> <span id="galleriaCaption">galleria.io</span>
         </button>
       </div>
     </div>
@@ -67,37 +67,37 @@
     <dialog id="settingsDlg" class="mdl-dialog">
       <div class="mdl-dialog__content">
         <div class="dimInput mdl-shadow--4dp">
-          <p>Galleria.io</p>
+          <p id="galleriaLb">galleria.io</p>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="galWidth" type="text" class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?">
-            <label class="mdl-textfield__label" for="galWidth">Width</label>
-            <span class="mdl-textfield__error">Please enter a number!</span>
+            <label id="galWidthLb" class="mdl-textfield__label" for="galWidth">Width</label>
+            <span class="mdl-textfield__error numeric">Please enter a number!</span>
           </div>        
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="galHeight" type="text" class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?">
-            <label class="mdl-textfield__label" for="galHeight">Height</label>
-            <span class="mdl-textfield__error">Please enter a number!</span>
+            <label id="galHeightLb" class="mdl-textfield__label" for="galHeight">Height</label>
+            <span class="mdl-textfield__error numeric">Please enter a number!</span>
           </div>        
           <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="galLinks">
             <input id="galLinks" type="checkbox" class="mdl-switch__input" checked>
-            <span id="chkLinksLb" class="mdl-switch__label">Include hyperlinks</span>
+            <span class="mdl-switch__label hyperlinks">Include hyperlinks</span>
           </label>
         </div>
         <div class="dimInput mdl-shadow--4dp">
-          <p>HTML mosaic</p>
+          <p id="mosaicLb">HTML mosaic</p>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="htmlMaxWidth">
-            <label class="mdl-textfield__label" for="htmlMaxWidth">Max. width</label>
-            <span class="mdl-textfield__error">Please enter a number!</span>
+            <input id="mosaicMaxWidth" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?">
+            <label id="mosaicMaxWidthLb" class="mdl-textfield__label" for="mosaicMaxWidth">Max. width</label>
+            <span class="mdl-textfield__error numeric">Please enter a number!</span>
           </div>        
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="htmlMaxHeight">
-            <label class="mdl-textfield__label" for="htmlMaxHeight">Max. height</label>
-            <span class="mdl-textfield__error">Please enter a number!</span>
+            <input id="mosaicMaxHeight" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?">
+            <label id="mosaicMaxHeightLb" class="mdl-textfield__label" for="mosaicMaxHeight">Max. height</label>
+            <span class="mdl-textfield__error numeric">Please enter a number!</span>
           </div>
-          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="htmlLinks">
-            <input type="checkbox" id="htmlLinks" class="mdl-switch__input" checked>
-            <span id="chkLinksLb" class="mdl-switch__label">Include hyperlinks</span>
+          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="mosaicLinks">
+            <input type="checkbox" id="mosaicLinks" class="mdl-switch__input" checked>
+            <span class="mdl-switch__label hyperlinks">Include hyperlinks</span>
           </label>
         </div>
       </div>

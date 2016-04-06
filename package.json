@@ -1,8 +1,24 @@
 {
-  "name": "ListImages",
+  "name": "album",
+  "title": "Album",
+  "description": "Detects the images on the current page and allows to export them as URL list, picture mosaic or carousel",
   "version": "1.0.0",
-  "keywords": ["util", "functional", "server", "client", "browser"],
-  "author": "fbusquet",
-  "contributors": [],
-  "dependencies": {}
+  "homepage": "https://github.com/projectestac/album",
+  "keywords": [
+    "util",
+    "browser",
+    "extension",
+    "images"
+  ],
+  "bugs": {
+    "url": "https://github.com/projectestac/album/issues"
+  },
+  "licenses": [
+    {
+      "type": "GPL-3.0",
+      "url": "https://spdx.org/licenses/GPL-3.0.html"
+    }
+  ],
+  "license": "GPL-3.0",
+  "author": "Francesc Busquets <francesc@gmail.com>"
 }

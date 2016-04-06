@@ -7,19 +7,13 @@
 $(function () {
 
   /**
-   * Number of images currently detected
+   * Number of images currently detected and selected
    * @type number
    */
-  var numImgs = 0;
+  var numImgs = 0, numSelected = 0;
 
   /**
-   * Number of images currently selected
-   * @type number
-   */
-  var numSelected = 0;
-
-  /**
-   * Minimum width and height to auto-check images
+   * By default, images below this size (in pixels) will not be checked
    * @type number
    */
   var MIN_WIDTH = 60, MIN_HEIGHT = 60;
@@ -29,18 +23,24 @@ $(function () {
    * @type number[]
    */
   var selected = [];
-
+  
+  /**
+   * Default settings for Mosaic and Gallery.io
+   * @type Number|boolean
+   */
   var galWidth = 600, galHeight = 400, galLinks = true;
-  var htmlMaxWidth = 600, htmlMaxHeight = 600, htmlLinks = true;
+  var mosaicMaxWidth = 600, mosaicMaxHeight = 600, mosaicLinks = true;
 
-  var $table = $('#imgTable');
-  var $tbody = $('#imgTableBody');
-  var $numSel = $('#numSel');
-  var $numImgs = $('#numImgs');
+  /**
+   * Variables initialized with JQuery objects frequently used
+   * @type $JQuery
+   */
+  var $table = $('#imgTable'), $tbody = $('#imgTableBody');
+  var $numSel = $('#numSel'), $numImgs = $('#numImgs');
 
   /**
    * 
-   * Updates the counter of images currently selected
+   * Updates the counter of selected images
    * @returns {number}
    */
   var updateNumSelected = function () {
@@ -57,28 +57,27 @@ $(function () {
    */
   $('#imgUrlLb').html(chrome.i18n.getMessage('imgUrlLb'));
   $('.description').html(chrome.i18n.getMessage('extDescText'));
-  $('#copyListCaption').html(chrome.i18n.getMessage('copyListBtn'));
-  $('#copyListBtn').prop('title', chrome.i18n.getMessage('copyListBtnTooltip'));
-  $('#copyHtmlCaption').html(chrome.i18n.getMessage('copyHtmlBtn'));
-  $('#copyHtmlBtn').prop('title', chrome.i18n.getMessage('copyHtmlBtnTooltip'));
-  $('#copyScriptCaption').html(chrome.i18n.getMessage('copyScriptBtn'));
-  $('#copyScriptBtn').prop('title', chrome.i18n.getMessage('copyScriptBtnTooltip'));
+  $('#listCaption').html(chrome.i18n.getMessage('listBtn'));
+  $('#listBtn').prop('title', chrome.i18n.getMessage('listBtnTooltip'));
+  $('#mosaicCaption').html(chrome.i18n.getMessage('mosaicBtn'));
+  $('#mosaicBtn').prop('title', chrome.i18n.getMessage('mosaicBtnTooltip'));
+  $('#galleriaCaption').html(chrome.i18n.getMessage('galleriaBtn'));
+  $('#galleriaBtn').prop('title', chrome.i18n.getMessage('galleriaBtnTooltip'));
+  $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip'));
 
   chrome.storage.sync.get(function (items) {
-
     if (items.hasOwnProperty('galWidth'))
       galWidth = Number(items.galWidth);
     if (items.hasOwnProperty('galHeight'))
       galHeight = Number(items.galHeight);
     if (items.hasOwnProperty('galLinks'))
       galLinks = (items.galLinks === 'true');
-
-    if (items.hasOwnProperty('htmlMaxWidth'))
-      htmlMaxWidth = Number(items.htmlMaxWidth);
-    if (items.hasOwnProperty('htmlMaxHeight'))
-      htmlMaxHeight = Number(items.htmlMaxHeight);
-    if (items.hasOwnProperty('htmlLinks'))
-      htmlLinks = (items.htmlLinks === 'true');
+    if (items.hasOwnProperty('mosaicMaxWidth'))
+      mosaicMaxWidth = Number(items.mosaicMaxWidth);
+    if (items.hasOwnProperty('mosaicMaxHeight'))
+      mosaicMaxHeight = Number(items.mosaicMaxHeight);
+    if (items.hasOwnProperty('mosaicLinks'))
+      mosaicLinks = (items.mosaicLinks === 'true');
   });
 
   /**
@@ -101,56 +100,7 @@ $(function () {
     }
   });
 
-  $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip')).click(function () {
 
-    $('#galWidth').val(galWidth);
-    $('#galHeight').val(galHeight);
-    $('#galLinks').val(galLinks);
-
-    $('#htmlMaxWidth').val(htmlMaxWidth);
-    $('#htmlMaxHeight').val(htmlMaxHeight);
-    $('#htmlLinks').val(htmlLinks);
-
-    $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty');
-    $('#settingsDlg')[0].showModal();
-  });
-
-  var checkSettingsDlg = function () {
-    return $('#settingsDlg').find('.is-invalid').length === 0;
-  };
-
-  $('#settingsDlg').find('input').on('input', function () {
-    window.setTimeout(function () {
-      $('#settingsOk').attr('disabled', !checkSettingsDlg());
-    }, 0);
-  });
-
-  $('#settingsOk').html(chrome.i18n.getMessage('OK')).click(function () {
-    if (checkSettingsDlg()) {
-      galWidth = $('#galWidth').val();
-      galHeight = $('#galHeight').val();
-      galLinks = $('#galLinks').val();
-
-      htmlMaxWidth = $('#htmlMaxWidth').val();
-      htmlMaxHeight = $('#htmlMaxHeight').val();
-      htmlLinks = $('#htmlLinks').val();
-
-      $('#settingsDlg')[0].close();
-
-      chrome.storage.sync.set({
-        galWidth: galWidth,
-        galHeight: galHeight,
-        galLinks: galLinks,
-        htmlMaxWidth: htmlMaxWidth,
-        htmlMaxHeight: htmlMaxHeight,
-        htmlLinks: htmlLinks
-      });
-    }
-  });
-
-  $('#settingsCancel').html(chrome.i18n.getMessage('Cancel')).click(function () {
-    $('#settingsDlg')[0].close();
-  });
 
   $('#previewClose').prop('title', chrome.i18n.getMessage('Close')).click(function () {
     $('#previewDlg')[0].close();
@@ -225,7 +175,9 @@ $(function () {
     }
   };
 
-  chrome.runtime.onMessage.addListener(msgListener);
+  var getUniqueId = function(){
+    return (65536 + Math.floor(Math.random() * 120000)).toString(16).toUpperCase();
+  };
 
   var copyAndNotify = function (txt) {
     clipboard.copy(txt);
@@ -258,41 +210,109 @@ $(function () {
     return result;
   };
 
-  $('#copyListBtn').click(function () {
+  $('#listBtn').click(function () {
     copyAndNotify(listImages(false, false, false));
   });
 
-  $('#copyHtmlBtn').click(function () {
+  $('#mosaicBtn').click(function () {
     var pre = '', post = '';
-    if (htmlMaxWidth || htmlMaxHeight) {
-      var id = (65536 + Math.floor(Math.random() * 120000)).toString(16).toUpperCase();
+    if (mosaicMaxWidth || mosaicMaxHeight) {
+      var id = getUniqueId();
       pre = '<style>.mosaic' + id + ' img {' +
-              (htmlMaxWidth ? 'max-width:' + htmlMaxWidth + 'px;' : '') +
-              (htmlMaxHeight ? 'max-height:' + htmlMaxHeight + 'px;' : '') +
+              (mosaicMaxWidth ? 'max-width:' + mosaicMaxWidth + 'px;' : '') +
+              (mosaicMaxHeight ? 'max-height:' + mosaicMaxHeight + 'px;' : '') +
               '}</style>\n<div class="mosaic' + id + '">\n';
       post = '</div>\n';
     }
-    copyAndNotify(pre + listImages(true, htmlLinks, false) + post);
+    copyAndNotify(pre + listImages(true, mosaicLinks, false) + post);
   });
 
-  $('#copyScriptBtn').click(function () {
+  $('#galleriaBtn').click(function () {
 
-    // Gallery provided by http://galleria.io/
-    var playerId = (65536 + Math.floor(Math.random() * 120000)).toString(16).toUpperCase();
+    var id = getUniqueId();
     copyAndNotify(
             '<script type="text/javascript" src="https://cdn.jsdelivr.net/g/jquery@1.12.1,galleria@1.4.2(galleria.js)"></script>\n' +
-            '<div id="' + playerId + '" style="width: ' + galWidth + 'px; height: ' + galHeight + 'px;">\n' +
+            '<div id="' + id + '" style="width: ' + galWidth + 'px; height: ' + galHeight + 'px;">\n' +
             listImages(true, galLinks, galLinks) +
             '</div>\n' +
             '<script>\n' +
             'Galleria.loadTheme(\'https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js\');\n' +
-            'Galleria.run(\'#' + playerId + '\', {\n' +
+            'Galleria.run(\'#' + id + '\', {\n' +
             ' autoplay: true,' +
             ' lightbox: true' +
             '});\n' +
             '</script>\n');
   });
+  
+  var settingsArmed = false;
+  var armSettings = function () {
+    // Set literals
+    $('#galleriaLb').html(chrome.i18n.getMessage('galleriaBtn'));
+    $('#galWidthLb').html(chrome.i18n.getMessage('galWidthLb'));
+    $('#galHeightLb').html(chrome.i18n.getMessage('galHeightLb'));
+    $('.numeric').html(chrome.i18n.getMessage('numberFormatWarning'));
+    $('.hyperlinks').html(chrome.i18n.getMessage('addHyperlinks'));
+    $('#mosaicLb').html(chrome.i18n.getMessage('mosaicBtn'));
+    $('#mosaicMaxWidthLb').html(chrome.i18n.getMessage('mosaicMaxWidthLb'));
+    $('#mosaicMaxHeightLb').html(chrome.i18n.getMessage('mosaicMaxHeightLb'));
 
+    var checkSettingsDlg = function () {
+      return $('#settingsDlg').find('.is-invalid').length === 0;
+    };
+
+    $('#settingsDlg').find('input').on('input', function () {
+      window.setTimeout(function () {
+        $('#settingsOk').attr('disabled', !checkSettingsDlg());
+      }, 0);
+    });
+
+    $('#settingsOk').html(chrome.i18n.getMessage('OK')).click(function () {
+      if (checkSettingsDlg()) {
+        galWidth = $('#galWidth').val();
+        galHeight = $('#galHeight').val();
+        galLinks = $('#galLinks')[0].checked;
+
+        mosaicMaxWidth = $('#mosaicMaxWidth').val();
+        mosaicMaxHeight = $('#mosaicMaxHeight').val();
+        mosaicLinks = $('#mosaicLinks')[0].checked;
+
+        $('#settingsDlg')[0].close();
+        
+        var currentOptions = {
+          galWidth: galWidth,
+          galHeight: galHeight,
+          galLinks: galLinks,
+          mosaicMaxWidth: mosaicMaxWidth,
+          mosaicMaxHeight: mosaicMaxHeight,
+          mosaicLinks: mosaicLinks
+        };
+        chrome.storage.sync.set(currentOptions);
+      }
+    });
+
+    $('#settingsCancel').html(chrome.i18n.getMessage('Cancel')).click(function () {
+      $('#settingsDlg')[0].close();
+    });
+
+    settingsArmed = true;
+  };
+
+  $('#settingsBtn').click(function () {
+    if (!settingsArmed)
+      armSettings();
+
+    $('#galWidth').val(galWidth);
+    $('#galHeight').val(galHeight);
+    $('#galLinks').prop('checked', galLinks);
+
+    $('#mosaicMaxWidth').val(mosaicMaxWidth);
+    $('#mosaicMaxHeight').val(mosaicMaxHeight);
+    $('#mosaicLinks').prop('checked', mosaicLinks);
+
+    $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty');
+    $('#settingsDlg')[0].showModal();
+  });
+  
+  chrome.runtime.onMessage.addListener(msgListener);
   chrome.tabs.executeScript(null, {file: 'listimages.js'});
-
 });

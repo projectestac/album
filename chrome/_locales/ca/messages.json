@@ -3,11 +3,11 @@
     "message": "català"    
   },  
   "extName": {
-    "message": "Llista imatges",
+    "message": "Àlbum",
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Mostra la llista de totes les imatges que es mostren a la pestanya actual",
+    "message": "Detecta les imatges que es mostren a la pàgina actual i permet exportar-les com a llista d'adreces, mosaic o carrusel de diapositives.",
     "description": "Extension description"
   },
   "extDescText": {
@@ -30,33 +30,33 @@
     "message": "Configuració",
     "description": "Label for settings button"
   },
-  "copyListBtn": {
+  "listBtn": {
     "message": "Llista",
-    "description": "Caption for the 'copy list' button"
+    "description": "Caption for the 'list' button"
   },
-  "copyListBtnTooltip": {
+  "listBtnTooltip": {
     "message": "Copia al porta-retalls la llista dels URL absoluts de les imatges seleccionades",
-    "description": "Description of the 'copy list' action"
+    "description": "Description of the 'list' action"
   },
-  "copyHtmlBtn": {
-    "message": "HTML",
-    "description": "Caption for the 'copy html' button"
+  "mosaicBtn": {
+    "message": "Mosaic",
+    "description": "Caption for the 'mosaic' button"
   },
-  "copyHtmlBtnTooltip": {
+  "mosaicBtnTooltip": {
     "message": "Copia al porta-retalls un fragment de codi HTML amb etiquetes 'img' per a les imatges seleccionades",
-    "description": "Description of the 'copy list' action"
+    "description": "Description of the 'Mosaic' action"
   },
-  "copyScriptBtn": {
+  "galleriaBtn": {
     "message": "galleria.io",
-    "description": "Caption for the 'copy galleria.io' button"
+    "description": "Caption for the 'galleria.io' button"
   },
-  "copyScriptBtnTooltip": {
+  "galleriaBtnTooltip": {
     "message": "Copia al porta-retalls un fragment de codi HTML que mostra un carrusel d'imatges de galleria.io",
-    "description": "Description of the 'copy galleria.io' action"
+    "description": "Description of the 'galleria.io' action"
   },
   "msgDataCopied": {
     "message": "Les dades sol·licitades han estat copiades al porta-retalls. Utilitzeu CTRL+V per enganxar-les al vostre editor.",
-    "description": "Notification to be shown when the data has been copied to the clipboard"
+    "description": "Notification to display when data has been copied to the clipboard"
   },
   "previewImage": {
     "message": "Previsualitzacio",
@@ -73,5 +73,29 @@
   "Close": {
     "message": "Tanca",
     "description": "Close button"
+  },
+  "galWidthLb": {
+    "message": "Amplada",
+    "description": "Gallery width"
+  },
+  "galHeightLb": {
+    "message": "Alçada",
+    "description": "Gallery height"
+  },
+  "numberFormatWarning": {
+    "message": "Heu d'escriure un nombre!",
+    "description": "Warning shown in numeric fields when user enters a non-numeric char"
+  },
+  "addHyperlinks": {
+    "message": "Inclou els hiperenllaços",
+    "description": "To include or not the hyperlink associated to each image"
+  },
+  "mosaicMaxWidthLb": {
+    "message": "Amplada màx.",
+    "description": "Max. width for images in mosaic"
+  },
+  "mosaicMaxHeightLb": {
+    "message": "Alçada màx.",
+    "description": "Max. height for images in mosaic"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "ListImages",
-  "private": true,
+  "name": "album",
+  "private": "true",
   "dependencies": {
     "jquery": "^2.2.2",
     "clipboard.js": "^0.2.0",

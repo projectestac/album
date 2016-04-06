@@ -4,7 +4,6 @@
  * 
  */
 
-
 /* global chrome */
 
 var ListImages = function () {

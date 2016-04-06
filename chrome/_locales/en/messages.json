@@ -3,15 +3,15 @@
     "message": "English"
   },  
   "extName": {
-    "message": "List images",
+    "message": "Album",
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "List all images displayed on the current page",
+    "message": "Detects the images on the current page and allows to export them as URL list, picture mosaic or carousel.",
     "description": "Extension description"
   },
   "extDescText": {
-    "message": "Scroll down the main document until all images are displayed.",
+    "message": "Scroll down the main document until all images have been displayed.",
     "description": "Short message with basic instructions"
   },
   "imgUrlLb": {
@@ -30,33 +30,33 @@
     "message": "Settings",
     "description": "Label for settings button"
   },
-  "copyListBtn": {
+  "listBtn": {
     "message": "List",
-    "description": "Caption for the 'copy list' button"
+    "description": "Caption for the 'list' button"
   },
-  "copyListBtnTooltip": {
-    "message": "Copy to the clipboard the list of absolute URLs of selected images",
-    "description": "Description of the 'copy list' action"
+  "listBtnTooltip": {
+    "message": "Copy to the clipboard the list of absolute URLs of the selected images",
+    "description": "Description of the 'list' action"
   },
-  "copyHtmlBtn": {
-    "message": "HTML",
-    "description": "Caption for the 'copy html' button"
+  "mosaicBtn": {
+    "message": "Mosaic",
+    "description": "Caption for the 'mosaic' button"
   },
-  "copyHtmlBtnTooltip": {
-    "message": "Copy to the clipboard an HTML snippet with 'img' tags for all selected images",
-    "description": "Description of the 'copy list' action"
+  "mosaicBtnTooltip": {
+    "message": "Copy to the clipboard an HTML snippet with 'img' tags for all the selected images",
+    "description": "Description of the 'mosaic' action"
   },
-  "copyScriptBtn": {
+  "galleriaBtn": {
     "message": "galleria.io",
-    "description": "Caption for the 'copy galleria.io' button"
+    "description": "Caption for the 'galleria.io' button"
   },
-  "copyScriptBtnTooltip": {
+  "galleriaBtnTooltip": {
     "message": "Copy to the clipboard an HTML snippet that creates an slideshow powered by galleria.io",
     "description": "Description of the 'copy galleria.io' action"
   },
   "msgDataCopied": {
     "message": "The requested data has been copied to the clipboard. Use CTRL+V to paste it into your editor.",
-    "description": "Notification to be shown when the data has been copied to the clipboard"
+    "description": "Notification to display when data has been copied to the clipboard"
   },    
   "previewImage": {
     "message": "Preview image",
@@ -73,5 +73,29 @@
   "Close": {
     "message": "Close",
     "description": "Close button"
+  },
+  "galWidthLb": {
+    "message": "Width",
+    "description": "Gallery width"
+  },
+  "galHeightLb": {
+    "message": "Height",
+    "description": "Gallery height"
+  },
+  "numberFormatWarning": {
+    "message": "Please enter a number!",
+    "description": "Warning shown in numeric fields when user enters a non-numeric char"
+  },
+  "addHyperlinks": {
+    "message": "Include hyperlinks",
+    "description": "To include or not the hyperlink associated to each image"
+  },
+  "mosaicMaxWidthLb": {
+    "message": "Max. width",
+    "description": "Max. width for images in mosaic"
+  },
+  "mosaicMaxHeightLb": {
+    "message": "Max. height",
+    "description": "Max. height for images in mosaic"
   }  
 }

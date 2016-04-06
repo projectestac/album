@@ -267,23 +267,22 @@ $(function () {
       if (checkSettingsDlg()) {
         galWidth = $('#galWidth').val();
         galHeight = $('#galHeight').val();
-        galLinks = $('#galLinks')[0].checked;
+        galLinks = $('#galLinks').parent().hasClass('is-checked');
 
         mosaicMaxWidth = $('#mosaicMaxWidth').val();
         mosaicMaxHeight = $('#mosaicMaxHeight').val();
-        mosaicLinks = $('#mosaicLinks')[0].checked;
+        mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked');
 
         $('#settingsDlg')[0].close();
         
-        var currentOptions = {
+        chrome.storage.sync.set({
           galWidth: galWidth,
           galHeight: galHeight,
           galLinks: galLinks,
           mosaicMaxWidth: mosaicMaxWidth,
           mosaicMaxHeight: mosaicMaxHeight,
           mosaicLinks: mosaicLinks
-        };
-        chrome.storage.sync.set(currentOptions);
+        });
       }
     });
 
@@ -300,13 +299,20 @@ $(function () {
     
     $('#galWidth').val(galWidth);
     $('#galHeight').val(galHeight);
-    $('#galLinks')[0].checked = galLinks;
+    if(galLinks)
+      $('#galLinks').parent().addClass('is-checked');
+    else
+      $('#galLinks').parent().removeClass('is-checked');
 
     $('#mosaicMaxWidth').val(mosaicMaxWidth);
     $('#mosaicMaxHeight').val(mosaicMaxHeight);
-    $('#mosaicLinks')[0].checked = mosaicLinks;
+    if(mosaicLinks)
+      $('#mosaicLinks').parent().addClass('is-checked');
+    else
+      $('#mosaicLinks').parent().removeClass('is-checked');
 
     $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty');
+        
     $('#settingsDlg')[0].showModal();
   });
   

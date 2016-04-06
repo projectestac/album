@@ -71,13 +71,13 @@ $(function () {
     if (items.hasOwnProperty('galHeight'))
       galHeight = Number(items.galHeight);
     if (items.hasOwnProperty('galLinks'))
-      galLinks = (items.galLinks === 'true');
+      galLinks = (items.galLinks.toString() === 'true');
     if (items.hasOwnProperty('mosaicMaxWidth'))
       mosaicMaxWidth = Number(items.mosaicMaxWidth);
     if (items.hasOwnProperty('mosaicMaxHeight'))
       mosaicMaxHeight = Number(items.mosaicMaxHeight);
     if (items.hasOwnProperty('mosaicLinks'))
-      mosaicLinks = (items.mosaicLinks === 'true');
+      mosaicLinks = (items.mosaicLinks.toString() === 'true');
   });
 
   /**
@@ -99,8 +99,6 @@ $(function () {
       stopBtnStatus = true;
     }
   });
-
-
 
   $('#previewClose').prop('title', chrome.i18n.getMessage('Close')).click(function () {
     $('#previewDlg')[0].close();
@@ -228,7 +226,6 @@ $(function () {
   });
 
   $('#galleriaBtn').click(function () {
-
     var id = getUniqueId();
     copyAndNotify(
             '<script type="text/javascript" src="https://cdn.jsdelivr.net/g/jquery@1.12.1,galleria@1.4.2(galleria.js)"></script>\n' +
@@ -300,14 +297,14 @@ $(function () {
   $('#settingsBtn').click(function () {
     if (!settingsArmed)
       armSettings();
-
+    
     $('#galWidth').val(galWidth);
     $('#galHeight').val(galHeight);
-    $('#galLinks').prop('checked', galLinks);
+    $('#galLinks')[0].checked = galLinks;
 
     $('#mosaicMaxWidth').val(mosaicMaxWidth);
     $('#mosaicMaxHeight').val(mosaicMaxHeight);
-    $('#mosaicLinks').prop('checked', mosaicLinks);
+    $('#mosaicLinks')[0].checked = mosaicLinks;
 
     $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty');
     $('#settingsDlg')[0].showModal();

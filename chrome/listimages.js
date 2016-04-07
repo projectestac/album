@@ -1,37 +1,81 @@
 /**
- * listimages.js
+ * File    : chrome/listimages.js  
+ * Created : 20/03/2016  
+ * By      : Francesc Busquets  
  * 
- * 
+ * Album (version for Chrome/Chromium)  
+ * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab  
+ * https://github.com/projectestac/album  
+ * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)  
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation, version. This
+ * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
  */
 
-/* global chrome */
+/* global window, document, chrome */
 
+/**
+ * ListImages is the main object used in this script.
+ * It provides methods for locating the images existing in the DOM tree
+ * and reporting the absolute URL of found images to the extension popup.
+ */
 var ListImages = function () {
+  // Initialize arrays for images and links
   this.allImages = [];
   this.allLinks = [];
 };
 
 ListImages.prototype = {
   constructor: ListImages,
+  /**
+   * Array containing all the detected images
+   * @type String[]
+   */
   allImages: null,
+  /**
+   * Array containing the link associated to each image (when any)
+   * @type String[]
+   */
   allLinks: null,
+  /**
+   * Numeric identifier of the background process responsible for the detection
+   * of images and links
+   * @type Number
+   */
   scanProcess: null,
+  /**
+   * Flag indicating that the scan process is currently running
+   * @type Boolean
+   */
   scanning: false,
+  /**
+   * When 'true', the script is reporting results to the extension popup.
+   * @type Boolean
+   */
   reporting: false,
-  SCAN_INTERVAL: 1000,
+  /**
+   * The document is scanned again every two seconds
+   * @type Number
+   */
+  SCAN_INTERVAL: 2000,
+  /**
+   * This function scans the main document searching for images
+   */
   scanImages: function () {
 
     // Avoid re-entrant processing
     if (this.scanning || this.reporting)
       return;
-
     this.scanning = true;
-    console.log('scanning...');
 
+    // Temporary arrays used to store newly discovered data
     var imgList = [];
     var objList = [];
 
-    // Check `img` objects
+    // Check 'img' objects
     var obj = document.querySelectorAll('img');
     for (var n = 0; n < obj.length; n++) {
       if (obj[n].src) {
@@ -40,7 +84,7 @@ ListImages.prototype = {
       }
     }
 
-    // Check all objects with `background-image` attribute
+    // Check objects with the 'background-image' attribute
     obj = document.querySelectorAll('*[style*=background-image]');
     for (var n = 0; n < obj.length; n++) {
       var exp = window.getComputedStyle(obj[n]).getPropertyValue('background-image').trim();
@@ -51,6 +95,7 @@ ListImages.prototype = {
                 (exp.substring(0, 1) === '\'' && exp.substring(exp.length - 1, exp.length) === '\'')) {
           exp = exp.substring(1, exp.length - 1).trim();
         }
+        // Save URL and element
         imgList.push(exp);
         objList.push(obj[n]);
       }
@@ -63,41 +108,57 @@ ListImages.prototype = {
         var url = new URL(exp);
         if (url && this.allImages.indexOf(exp) === -1 && url.protocol &&
                 (url.protocol === 'http:' || url.protocol === 'https:')) {
+
+          // Save the discovered image into the 'allImages' array
           this.allImages.push(exp);
+
+          // object used to communicate with the extension popup
           var obj = {imgurl: exp};
+
+          // Try to find links associated to this image, walking up and down
+          // the DOM tree
           var link = findLinkUp(objList[n]);
           if (link === null)
             link = findLinkDown(objList[n]);
+          // If found, save link
           if (link) {
             this.allLinks[this.allImages.length - 1] = link;
             obj.imglink = link;
           }
 
-          // Notify plugin
+          // Notify the existence of a new image to the extension popup
           chrome.runtime.sendMessage(obj);
         }
       } catch (ex) {
-        console.log('Error processing element ' + n + ':\n' + exp + ' - ' + ex);
+        // Something bad has happened
+        console.log('Album extension: Error processing element ' + n + ':\n' + exp + ' - ' + ex);
       }
     }
     this.scanning = false;
   },
+  /**
+   * Starts the scanning process as a daemon
+   */
   startScanning: function () {
     if (this.scanProcess)
       this.endScanning();
     var thisObj = this;
     this.scanProcess = window.setInterval(function () {
       thisObj.scanImages();
-    }, this.SCAN_INTERVAL);    
+    }, this.SCAN_INTERVAL);
   },
+  /**
+   * Stops the scanning daemon
+   */
   endScanning: function () {
-    console.log('endScanning called');
     if (this.scanProcess) {
       window.clearInterval(this.scanProcess);
       this.scanProcess = null;
-      console.log('scanning stopped!');
     }
   },
+  /**
+   * Reports all the detected images, sending messages to the extension popup
+   */
   listScannedImages: function () {
     this.reporting = true;
     for (var i = 0; i < this.allImages.length; i++) {
@@ -110,8 +171,19 @@ ListImages.prototype = {
   }
 };
 
+// UTILITY FUNCTIONS:
+
+/**
+ * Array of objects already examined when searching for links
+ * @type Object[]
+ */
 var alreadyLooked = [];
 
+/**
+ * Walks up on the DOM tree searching for objects of type 'a' with 'href'
+ * @param {HTMLElement} obj - The HTML element to check for. If it's not of the
+ * desired type, the search will continue with its parent.
+ */
 var findLinkUp = function (obj) {
   if (obj.nodeName.toLowerCase() === 'a') {
     if (obj.getAttribute('href'))
@@ -123,6 +195,11 @@ var findLinkUp = function (obj) {
   return parent ? this.findLinkUp(parent) : null;
 };
 
+/**
+ * Walks down on the DOM tree searching for objects of type 'a' with 'href'
+ * @param {HTMLElement} obj - The HTML element to check for. If it's not of the
+ * desired type, the search will continue with its children.
+ */
 var findLinkDown = function (obj) {
   if (obj.nodeName.toLowerCase() === 'a') {
     if (obj.getAttribute('href'))
@@ -139,14 +216,25 @@ var findLinkDown = function (obj) {
   return  null;
 };
 
+/**
+ * Builds a link with the absolute URL of the provided link
+ * @param {URL} link
+ * @returns {String}
+ */
 var absoluteLink = function (link) {
   return link.protocol ? link.protocol + "//" + link.host + link.pathname + link.search + link.hash : null;
 };
 
+// MAIN:
 
+// On the first execution, create an object of type 'ListImages' and assign it to
+// the global variable '__listImages'.
+// Otherwise, if '__listImages' already exists, report detected images to
+// the extension popup
 if (typeof window.__listImages === 'undefined')
   window.__listImages = new ListImages();
 else
   window.__listImages.listScannedImages();
 
+// Instruct '__listImages' to start the scanning daemon
 window.__listImages.startScanning();

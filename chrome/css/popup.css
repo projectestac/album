@@ -1,11 +1,39 @@
-/* 
-    Created on : 19/03/2016, 19:40:58
-    Author     : fbusquet
-*/
+/**
+ * File    : chrome/css/popup.css  
+ * Created : 20/03/2016  
+ * By      : Francesc Busquets  
+ * 
+ * Album (version for Chrome/Chromium)  
+ * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab  
+ * https://github.com/projectestac/album  
+ * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)  
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation, version. This
+ * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+ */
 
 body {
   min-height: 500px;
   background-color: #fafafa;
+}
+
+.loading {
+  display: table;
+  width: 490px;
+  height: 577px;
+  text-align: center;
+}
+
+.loading > * {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.mainContent {
+  display: none;
 }
 
 #imgTable {
@@ -25,16 +53,20 @@ body {
 }
 
 #imgTable thead {
-  background-color: #fafafa;
+  background-color: #f0f0f0;
 }
 
 .urltext {
   display: block;
   font-size: 80%;
-  width: 250px;
+  max-width: 250px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+#imgTable .urltext {
+  width: 250px;
 }
 
 .urllink {
@@ -88,7 +120,20 @@ body {
 }
 
 #previewDlg {
-  width: 350px;
+  width: 400px;
+}
+
+#previewDlg .mdl-dialog__content {
+  background-color: #fafafa;
+  padding-bottom: 0;
+}
+
+#previewDlg table {
+  margin: 12px auto;
+}
+
+#previewDlg .material-icons {
+  vertical-align: text-top;
 }
 
 #previewImg {
@@ -96,6 +141,7 @@ body {
   max-width: 260px;
   max-height: 260px;
   margin: auto;
+  border: 0;
 }
 
 #settingsDlg {
@@ -129,6 +175,5 @@ body {
 }
 
 .mdl-textfield__error {
-  line-height: normal;
-  
+  line-height: normal;  
 }

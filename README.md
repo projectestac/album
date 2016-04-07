@@ -14,7 +14,7 @@ The list of detected images can be retrieved in different formats:
 In all cases, the data is copied to the clipboard. You can paste it using `Ctrl+V` into your text editor and use it in HTML documents, blog posts, virtual learning environments, etc.
 Before pasting the code in these platforms, be sure to set the rich-text editor in _plain text_ mode.
 
-_Album_ is a free software project created by the [ICT in Education Unit of the Catalan Ministry of Education](https://github.com/projectestac). You can contribute to improve this plugin reporting [issues](https://github.com/projectestac/album/issues) or sending [pull requests](https://github.com/projectestac/album/pulls). Thanks in advance!
+_Album_ is a free software project. You can contribute to improve this plugin reporting [issues](https://github.com/projectestac/album/issues) or sending [pull requests](https://github.com/projectestac/album/pulls). Thanks in advance!
 
 We want to specially thank the excellent work done by the **[Galleria.io](http://galleria.io)** project that provides the engine beneath the image carousel. In addition to the basic free theme used by _Àlbum_, they provide very nice and improved themes at cheap prices.
 

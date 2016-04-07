@@ -7,7 +7,7 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Detecta las imágenes que se muestran en la página actual y permite exportarlas en formato de lista de URLs, mosaico o carrusel de diapositivas.",
+    "message": "Encuentra los URL de las imágenes de la página actual y los exporta en formato de lista, mosaico o carrusel de imágenes. Los datos resultantes se copian en el portapapeles y se pueden pegar fácilmente en cualquier editor de texto con [Ctrl+V]. Los mosaicos y carruseles se pueden utilizar en documentos, blogs y cualquier plataforma que gestione contenido HTML.",
     "description": "Extension description"
   },
   "extDescText": {

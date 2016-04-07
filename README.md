@@ -1,9 +1,7 @@
 # Album
 https://github.com/projectestac/album
 
-Browser extension that finds the URLs of all images on the current page and exports them as list, mosaic or carousel.
-
-The image URLs can be retrieved in three formats:
+Browser extension that finds the URLs of all images on the current page and exports them in three formats:
 
 * A simple **list** of absolute URLs pointing to the images.
 
@@ -11,7 +9,7 @@ The image URLs can be retrieved in three formats:
 
 * An HTML snippet that creates an **slideshow** powered by [galleria.io](http://galleria.io). Images in the slideshow can also reproduce its original link.
 
-In all cases, the data is copied to the clipboard and can be inserted into any text editor using `Ctrl+V`. Mosaic and carousel snippets can be inserted in documents, blog posts, virtual learning environments and any other place based on HTML. Before pasting the code in these platforms, be sure to set the rich-text editor in _plain text_ mode.
+In all cases, the data is copied to the clipboard and can be inserted into any text editor by pressing `Ctrl+V`. Mosaic and carousel snippets can be inserted into documents, blog posts, virtual learning environments and any other application based on HTML content. Before pasting the code in these platforms, be sure to set the rich-text editor in _plain text_ mode.
 
 This is a free software project. You can contribute to improve this browser extension reporting [issues](https://github.com/projectestac/album/issues) or sending [pull requests](https://github.com/projectestac/album/pulls). Thanks in advance!
 

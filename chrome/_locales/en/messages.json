@@ -7,7 +7,7 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Detects the images on the current page and allows to export them as URL list, picture mosaic or carousel.",
+    "message": "Finds the URLs of all images on the current page and exports them as a list, mosaic or carousel. The resulting data is copied to the clipboard and can be inserted into any text editor with [Ctrl+V]. Mosaics and carousels can be inserted into documents, blog posts and other platforms based on HTML content.",
     "description": "Extension description"
   },
   "extDescText": {

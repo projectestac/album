@@ -7,7 +7,7 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Detecta les imatges que es mostren a la pàgina actual i permet exportar-les com a llista d'adreces, mosaic o carrusel de diapositives.",
+    "message": "Troba els URL de les imatges de la pàgina actual i els exporta en format de llista, mosaic o carrusel d'imatges. Les dades resultants es copien al porta-retalls i es poden enganxar fàcilment a qualsevol editor de text amb [Ctrl+V]. Els mosaics i carrusels es poden utilitzar en documents, blogs i qualsevol plataforma que gestioni contingut HTML.",
     "description": "Extension description"
   },
   "extDescText": {

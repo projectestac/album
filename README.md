@@ -1,24 +1,25 @@
 # Album
 https://github.com/projectestac/album
 
-Browser plugin, currently implemented only for Chrome/Chromium, that detects and lists the absolute URL of all images diplayed on the current tab.
+Browser extension that finds the URLs of all images on the current page and exports them as list, mosaic or carousel.
 
-The list of detected images can be retrieved in different formats:
+The image URLs can be retrieved in three formats:
 
 * A simple **list** of absolute URLs pointing to the images.
 
-* An HTML snippet with `img` tags displaying a **mosaic** with the selected images. The `img` tags can be sourronded by `a href` tags pointing to the link associated to each image, if any.
+* An HTML snippet with `img` tags forming a **mosaic**. For images that act as a links in the original document, the `img` tag can be placed inside an `a href` tag pointing to its original link.
 
-* An HTML snippet that creates an **slideshow** powered by [galleria.io](http://galleria.io). The slideshow can also contain links associated to images.
+* An HTML snippet that creates an **slideshow** powered by [galleria.io](http://galleria.io). Images in the slideshow can also reproduce its original link.
 
-In all cases, the data is copied to the clipboard. You can paste it using `Ctrl+V` into your text editor and use it in HTML documents, blog posts, virtual learning environments, etc.
-Before pasting the code in these platforms, be sure to set the rich-text editor in _plain text_ mode.
+In all cases, the data is copied to the clipboard and can be inserted into any text editor using `Ctrl+V`. Mosaic and carousel snippets can be inserted in documents, blog posts, virtual learning environments and any other place based on HTML. Before pasting the code in these platforms, be sure to set the rich-text editor in _plain text_ mode.
 
-_Album_ is a free software project. You can contribute to improve this plugin reporting [issues](https://github.com/projectestac/album/issues) or sending [pull requests](https://github.com/projectestac/album/pulls). Thanks in advance!
+This is a free software project. You can contribute to improve this browser extension reporting [issues](https://github.com/projectestac/album/issues) or sending [pull requests](https://github.com/projectestac/album/pulls). Thanks in advance!
 
-We want to specially thank the excellent work done by the **[Galleria.io](http://galleria.io)** project that provides the engine beneath the image carousel. In addition to the basic free theme used by _Àlbum_, they provide very nice and improved themes at cheap prices.
+_Album_ is currently implemented for **Chromium** & **Chrome** browsers. We plan to implement it also for **Mozilla Firefox** in the future (developers help wanted!)
 
-Note that _Àlbum_ does not copy images nor any type or files: it just deals with URLs pointing to remote resources. Issues with these images (slow loading, not found...) are often related to problems with the origin of the images, and not to _Àlbum_.
+Special thanks to the excellent work done by the **[Galleria.io](http://galleria.io)**, that provides the engine beneath the image carousel. In addition to the basic free theme used by _Album_, they provide also other nice and featured themes at cheap prices.
+
+Note that _Album_ does not copy images nor any type or files: it just deals with URLs pointing to remote resources. Issues with the images (slow loading, file not found...) are often related to problems with the origin of the images, not to _Album_ itself.
 
 This project was developed in HTML5, CSS and JavaScript. It makes use of three open-source libraries:
 
@@ -26,5 +27,8 @@ This project was developed in HTML5, CSS and JavaScript. It makes use of three o
 * [clipboard.js](https://github.com/lgarron/clipboard.js) by Lucas Garron
 * [Material Design Lite](https://www.getmdl.io) by Google
 
-All these components are obtained with [Bower](http://bower.io/). To download the latest releases just install Bower and launch `bower update` from the project's root folder. Components will then be placed into `/bower_components`, and referenced by symbolic links from `/chrome/lib`.
+All these components can be obtained with [Bower](http://bower.io/). To download its latest releases install Bower on your system and launch `bower update` from the project's root folder. Components will then be placed into `/bower_components`, and referenced by symbolic links from `/chrome/lib`.
+
+For more information on how to build Chrome & Chromium extensions, refer to [Chrome Developers](https://developer.chrome.com/extensions) site.
+
 

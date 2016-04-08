@@ -4,10 +4,14 @@
   },  
   "extName": {
     "message": "Àlbum",
-    "description": "Extension name"
+    "description": "Extension name (max. 45 characters)"
+  },
+  "extShortName": {
+    "message": "Àlbum",
+    "description": "Extension short name (max. 12 characters)"
   },
   "extDescription": {
-    "message": "Construeix la llista d'imatges existents a la pàgina actual i l'exporta a format de text, mosaic o carrusel.",
+    "message": "Construeix una llista amb les imatges existents a la pàgina actual i l'exporta a format de text, mosaic o carrusel.",
     "description": "Extension description. Max length: 132 characters."
   },
   "extDescText": {

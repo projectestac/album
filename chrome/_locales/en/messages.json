@@ -4,10 +4,14 @@
   },  
   "extName": {
     "message": "Album",
-    "description": "Extension name"
+    "description": "Extension name (max. 45 characters)"
+  },
+  "extShortName": {
+    "message": "Album",
+    "description": "Extension short name (max. 12 characters)"
   },
   "extDescription": {
-    "message": "Builds a list with the images present on the current page and exports it as a text, mosaic or carousel.",
+    "message": "Builds a list with the images present on the current page and exports it as text, mosaic or carousel.",
     "description": "Extension description. Max length: 132 characters."
   },
   "extDescText": {

@@ -1,9 +1,10 @@
 {
   "manifest_version": 2,
+  "version": "1.0.1",
   "default_locale": "en",
   "name": "__MSG_extName__",
+  "short_name": "__MSG_extShortName__",
   "description": "__MSG_extDescription__",
-  "version": "1.0",
   "browser_action": {
     "default_popup": "popup.html",
     "default_title": "Album",

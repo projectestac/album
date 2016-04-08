@@ -1,0 +1,15 @@
+This extension detects the images on the current page and shows them in a list that can be exported in three different formats:
+
+- A simple list of absolute URLs pointing at the images.
+
+- An HTML snippet with "img" tags forming a mosaic. Images can also export their original links.
+
+- An HTML snippet that creates a slideshow powered by http://galleria.io
+
+In all cases, the data is copied into the clipboard and can be inserted into any text editor by pressing [Ctrl+V]. Mosaic and carousel snippets can be inserted into documents, blog posts, virtual learning environments and any other application based on HTML content. Before pasting the code into a rich-text editor, be sure to set it in "plain text" mode (usually represented by a button with the symbol "<>" or "html").
+
+This is a free software project. You can contribute to improving this browser extension by reporting issues or sending pull requests to https://github.com/projectestac/album. Thanks in advance!
+
+Special thanks to the excellent work done by galleria.io (http://galleria.io), the open source engine beneath the image carousel. In addition to the basic free theme used by Album, they provide also with other nice and featured themes at cheap prices.
+
+Note that Album does not copy images nor any type of files: it just deals with URLs pointing at remote resources. Issues with the images (slow loading, file not found...) are often related to problems with the origin of the images, not to Album itself.

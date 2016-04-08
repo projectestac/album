@@ -5,13 +5,13 @@ Browser extension that finds the URLs of all images on the current page and expo
 
 * A simple **list** of absolute URLs pointing at the images.
 
-* An HTML snippet with `img` tags forming a **mosaic**. For images that act as links in the original document, the `img` tag can be placed inside an `a href` tag pointing at its original link.
+* An HTML snippet with `img` tags forming a **mosaic**. Images can also export their original links.
 
 * An HTML snippet that creates a **slideshow** powered by [galleria.io](http://galleria.io). Images in the slideshow can also reproduce its original link.
 
-In all cases, the data is copied into the clipboard and can be inserted into any text editor by pressing `Ctrl+V`. Mosaic and carousel snippets can be inserted into documents, blog posts, virtual learning environments or any other application based on HTML content. Before pasting the code in these platforms, be sure to set the rich-text editor in _plain text_ mode.
+In all cases, the data is copied into the clipboard and can be inserted into any text editor by pressing `Ctrl+V`. Mosaic and carousel snippets can be inserted into documents, blog posts, virtual learning environments or any other application based on HTML content. Before pasting the code into a rich-text editor, be sure to set it in _plain text_ mode (usually represented by a button with the symbol `<>` or `html`).
 
-This is a free software project. You can contribute to improving this browser extension by reporting [issues](https://github.com/projectestac/album/issues) or sending [pull requests](https://github.com/projectestac/album/pulls). Thanks in advance!
+This is a free software project. You can contribute to improving this browser extension by reporting [issues](https://github.com/projectestac/album/issues), translating it to other languages or sending [pull requests](https://github.com/projectestac/album/pulls). Thanks in advance!
 
 _Album_ is currently implemented for **Chromium** & **Chrome** browsers. We plan to implement it also for **Mozilla Firefox** in the future (developers help wanted!)
 

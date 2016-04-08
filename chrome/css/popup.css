@@ -145,11 +145,11 @@ body {
 }
 
 #settingsDlg {
-  min-width: 380px;
+  min-width: 390px;
 }
 
 .dimInput {
-  width: 330px;
+  width: 340px;
   margin-top: 15px;
   margin-bottom: 25px;
   background-color: #fafafa;  

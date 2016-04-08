@@ -91,7 +91,7 @@
     "description": "Warning shown in numeric fields when user enters a non-numeric char"
   },
   "addHyperlinks": {
-    "message": "Incluir hiperenlaces",
+    "message": "Añadir hiperenlaces",
     "description": "To include or not the hyperlink associated to each image"
   },
   "mosaicMaxWidthLb": {
@@ -105,5 +105,9 @@
   "rawTag": {
     "message": "Añadir etiqueta [raw] (WordPress)",
     "description": "Label for the 'Add [raw] tag' switch, useful in WordPress"
-  }
+  },
+  "popupLinks": {
+    "message": "Abrir enlaces en otra pestaña",
+    "description": "Label for the 'open links in new tab' switch"
+  }  
 }

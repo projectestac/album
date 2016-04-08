@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Check if jq is installed
+if [ ! -f /usr/bin/jq ]; then
+  echo "JSON processor 'jq' not found!"
+  echo "Please install package 'jq' and try again."
+  exit 1
+fi
+
 # Get current version from chrome/manifest.json using jq
 v=`cat chrome/manifest.json | jq --raw-output '.version'`
 
@@ -14,5 +21,9 @@ zip -r $fname *
 mkdir -p ../dist
 mv $fname ../dist
 cd ..
-echo File $fname successfully created into /dist
+
+echo
+echo -------------------------------------------------------------------------
+echo File dist/$fname successfully created
+echo -------------------------------------------------------------------------
 

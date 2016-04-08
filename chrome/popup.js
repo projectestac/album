@@ -46,7 +46,7 @@ $(function () {
    */
   var galWidth = 600, galHeight = 400, galLinks = true;
   var mosaicMaxWidth = 800, mosaicMaxHeight = 400, mosaicLinks = true;
-  var rawTag = false;
+  var rawTag = false, popupLinks = true;
 
   /**
    * Variables frequently used, initialized with JQuery objects
@@ -99,6 +99,8 @@ $(function () {
       mosaicLinks = (items.mosaicLinks.toString() === 'true');
     if (items.hasOwnProperty('rawTag'))
       rawTag = (items.rawTag.toString() === 'true');
+    if (items.hasOwnProperty('popupLinks'))
+      popupLinks = (items.popupLinks.toString() === 'true');
   });
 
   /**
@@ -236,8 +238,8 @@ $(function () {
    * @param {String} txt - The text to copy to the clipboard
    */
   var copyAndNotify = function (txt, raw) {
-    if(raw)
-      txt='[raw]\n'+txt+'[/raw]\n';
+    if (raw)
+      txt = '[raw]\n' + txt + '[/raw]\n';
     clipboard.copy(txt);
     chrome.notifications.create({
       type: 'basic',
@@ -253,9 +255,10 @@ $(function () {
    * @param {boolean} dataLink - Use a 'data-link' attribute (instead of 'a href') for the link
    * @returns {String} - The text with the requested list
    */
-  var listImages = function (withImg, withLinks, dataLink, imgStyle) {
+  var listImages = function (withImg, withLinks, dataLink, targetBlank, imgStyle) {
     var result = '';
     var styleTag = imgStyle ? ' style="' + imgStyle + '"' : '';
+    var targetTag = targetBlank ? ' target="_blank"' : '';
 
     $tbody.find('tr').each(function (index) {
       if (selected[index]) {
@@ -269,7 +272,7 @@ $(function () {
             if (dataLink)
               txt = txt.slice(0, -1) + ' data-link="' + link + '">';
             else
-              txt = '<a href="' + link + '">' + txt + '</a>';
+              txt = '<a href="' + link + '"' + targetTag + '>' + txt + '</a>';
           }
         }
         result = result + txt + '\n';
@@ -293,7 +296,7 @@ $(function () {
     var imgStyle = (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) ?
             (mosaicMaxWidth > 0 ? 'max-width:' + mosaicMaxWidth + 'px;' : '') +
             (mosaicMaxHeight > 0 ? 'max-height:' + mosaicMaxHeight + 'px;' : '') : null;
-    copyAndNotify(listImages(true, mosaicLinks, false, imgStyle), rawTag);
+    copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle), rawTag);
   });
 
   /**
@@ -301,8 +304,7 @@ $(function () {
    */
   $('#galleriaBtn').click(function () {
     var id = getUniqueId();
-    copyAndNotify(
-            '<script type="text/javascript" src="https://cdn.jsdelivr.net/g/jquery@1.12.1,galleria@1.4.2(galleria.js)"></script>\n' +
+    var code = '<script type="text/javascript" src="https://cdn.jsdelivr.net/g/jquery@1.12.1,galleria@1.4.2(galleria.js)"></script>\n' +
             '<div id="' + id + '" style="width: ' + galWidth + 'px; height: ' + galHeight + 'px;">\n' +
             listImages(true, galLinks, galLinks) +
             '</div>\n' +
@@ -310,9 +312,11 @@ $(function () {
             'Galleria.loadTheme(\'https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js\');\n' +
             'Galleria.run(\'#' + id + '\', {\n' +
             ' autoplay: true,' +
-            ' lightbox: true' +
+            ' lightbox: true,' +
+            ' popupLinks: ' + popupLinks +
             '});\n' +
-            '</script>\n', rawTag);
+            '</script>\n';    
+    copyAndNotify(code, rawTag);
   });
 
   /**
@@ -332,6 +336,7 @@ $(function () {
     $('#mosaicMaxWidthLb').html(chrome.i18n.getMessage('mosaicMaxWidthLb'));
     $('#mosaicMaxHeightLb').html(chrome.i18n.getMessage('mosaicMaxHeightLb'));
     $('#rawTagLb').html(chrome.i18n.getMessage('rawTag'));
+    $('#popupLinksLb').html(chrome.i18n.getMessage('popupLinks'));
 
     // Check if all numeric fields have a valid format
     var checkSettingsDlg = function () {
@@ -359,6 +364,7 @@ $(function () {
         mosaicMaxHeight = $('#mosaicMaxHeight').val();
         mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked');
         rawTag = $('#rawTag').parent().hasClass('is-checked');
+        popupLinks = $('#popupLinks').parent().hasClass('is-checked');
 
         // Close dialog
         $('#settingsDlg')[0].close();
@@ -371,7 +377,8 @@ $(function () {
           mosaicMaxWidth: mosaicMaxWidth,
           mosaicMaxHeight: mosaicMaxHeight,
           mosaicLinks: mosaicLinks,
-          rawTag: rawTag
+          rawTag: rawTag,
+          popupLinks: popupLinks
         });
       }
     });
@@ -410,6 +417,11 @@ $(function () {
       $('#rawTag').parent().addClass('is-checked');
     else
       $('#rawTag').parent().removeClass('is-checked');
+
+    if (popupLinks)
+      $('#popupLinks').parent().addClass('is-checked');
+    else
+      $('#popupLinks').parent().removeClass('is-checked');
 
     $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty');
 

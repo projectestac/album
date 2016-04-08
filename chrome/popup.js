@@ -46,6 +46,7 @@ $(function () {
    */
   var galWidth = 600, galHeight = 400, galLinks = true;
   var mosaicMaxWidth = 800, mosaicMaxHeight = 400, mosaicLinks = true;
+  var rawTag = false;
 
   /**
    * Variables frequently used, initialized with JQuery objects
@@ -96,6 +97,8 @@ $(function () {
       mosaicMaxHeight = Number(items.mosaicMaxHeight);
     if (items.hasOwnProperty('mosaicLinks'))
       mosaicLinks = (items.mosaicLinks.toString() === 'true');
+    if (items.hasOwnProperty('rawTag'))
+      rawTag = (items.rawTag.toString() === 'true');
   });
 
   /**
@@ -232,7 +235,9 @@ $(function () {
    * the completion of the requested operation
    * @param {String} txt - The text to copy to the clipboard
    */
-  var copyAndNotify = function (txt) {
+  var copyAndNotify = function (txt, raw) {
+    if(raw)
+      txt='[raw]\n'+txt+'[/raw]\n';
     clipboard.copy(txt);
     chrome.notifications.create({
       type: 'basic',
@@ -248,13 +253,16 @@ $(function () {
    * @param {boolean} dataLink - Use a 'data-link' attribute (instead of 'a href') for the link
    * @returns {String} - The text with the requested list
    */
-  var listImages = function (withImg, withLinks, dataLink) {
+  var listImages = function (withImg, withLinks, dataLink, imgStyle) {
     var result = '';
+    var styleTag = imgStyle ? ' style="' + imgStyle + '"' : '';
+
     $tbody.find('tr').each(function (index) {
       if (selected[index]) {
         var txt = $(this).data('url');
-        if (withImg)
-          txt = '<img src="' + txt + '">';
+        if (withImg) {
+          txt = '<img src="' + txt + '"' + styleTag + '>';
+        }
         if (withLinks) {
           var link = $(this).data('link');
           if (link) {
@@ -282,16 +290,10 @@ $(function () {
    * Sets action for the 'mosaic' button
    */
   $('#mosaicBtn').click(function () {
-    var pre = '', post = '';
-    if (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) {
-      var id = getUniqueId();
-      pre = '<style>.mosaic' + id + ' img {' +
-              (mosaicMaxWidth > 0 ? 'max-width:' + mosaicMaxWidth + 'px;' : '') +
-              (mosaicMaxHeight > 0 ? 'max-height:' + mosaicMaxHeight + 'px;' : '') +
-              '}</style>\n<div class="mosaic' + id + '">\n';
-      post = '</div>\n';
-    }
-    copyAndNotify(pre + listImages(true, mosaicLinks, false) + post);
+    var imgStyle = (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) ?
+            (mosaicMaxWidth > 0 ? 'max-width:' + mosaicMaxWidth + 'px;' : '') +
+            (mosaicMaxHeight > 0 ? 'max-height:' + mosaicMaxHeight + 'px;' : '') : null;
+    copyAndNotify(listImages(true, mosaicLinks, false, imgStyle), rawTag);
   });
 
   /**
@@ -310,7 +312,7 @@ $(function () {
             ' autoplay: true,' +
             ' lightbox: true' +
             '});\n' +
-            '</script>\n');
+            '</script>\n', rawTag);
   });
 
   /**
@@ -329,6 +331,7 @@ $(function () {
     $('#mosaicLb').html(chrome.i18n.getMessage('mosaicBtn'));
     $('#mosaicMaxWidthLb').html(chrome.i18n.getMessage('mosaicMaxWidthLb'));
     $('#mosaicMaxHeightLb').html(chrome.i18n.getMessage('mosaicMaxHeightLb'));
+    $('#rawTagLb').html(chrome.i18n.getMessage('rawTag'));
 
     // Check if all numeric fields have a valid format
     var checkSettingsDlg = function () {
@@ -355,6 +358,7 @@ $(function () {
         mosaicMaxWidth = $('#mosaicMaxWidth').val();
         mosaicMaxHeight = $('#mosaicMaxHeight').val();
         mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked');
+        rawTag = $('#rawTag').parent().hasClass('is-checked');
 
         // Close dialog
         $('#settingsDlg')[0].close();
@@ -366,7 +370,8 @@ $(function () {
           galLinks: galLinks,
           mosaicMaxWidth: mosaicMaxWidth,
           mosaicMaxHeight: mosaicMaxHeight,
-          mosaicLinks: mosaicLinks
+          mosaicLinks: mosaicLinks,
+          rawTag: rawTag
         });
       }
     });
@@ -400,6 +405,11 @@ $(function () {
       $('#mosaicLinks').parent().addClass('is-checked');
     else
       $('#mosaicLinks').parent().removeClass('is-checked');
+
+    if (rawTag)
+      $('#rawTag').parent().addClass('is-checked');
+    else
+      $('#rawTag').parent().removeClass('is-checked');
 
     $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty');
 

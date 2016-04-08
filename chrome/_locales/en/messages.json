@@ -7,8 +7,8 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Finds the URLs of all images on the current page and exports them as a list, mosaic or carousel. The resulting data is copied to the clipboard and can be inserted into any text editor with [Ctrl+V]. Mosaics and carousels can be inserted into documents, blog posts and other platforms based on HTML content.",
-    "description": "Extension description"
+    "message": "Builds a list with the images present on the current page and exports it as a text, mosaic or carousel.",
+    "description": "Extension description. Max length: 132 characters."
   },
   "extDescText": {
     "message": "Scroll down the main document until all images have been displayed.",
@@ -97,5 +97,9 @@
   "mosaicMaxHeightLb": {
     "message": "Max. height",
     "description": "Max. height for images in mosaic"
+  },
+  "rawTag": {
+    "message": "Add [raw] tag (WordPress)",
+    "description": "Label for the 'Add [raw] tag' switch, useful in WordPress"
   }  
 }

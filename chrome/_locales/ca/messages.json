@@ -7,8 +7,8 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Troba els URL de les imatges de la pàgina actual i els exporta en format de llista, mosaic o carrusel d'imatges. Les dades resultants es copien al porta-retalls i es poden enganxar fàcilment a qualsevol editor de text amb [Ctrl+V]. Els mosaics i carrusels es poden utilitzar en documents, blogs i qualsevol plataforma que gestioni contingut HTML.",
-    "description": "Extension description"
+    "message": "Construeix la llista d'imatges existents a la pàgina actual i l'exporta a format de text, mosaic o carrusel.",
+    "description": "Extension description. Max length: 132 characters."
   },
   "extDescText": {
     "message": "Feu lliscar verticalment el document principal fins que s'hi hagin mostrat totes les imatges.",
@@ -97,5 +97,9 @@
   "mosaicMaxHeightLb": {
     "message": "Alçada màx.",
     "description": "Max. height for images in mosaic"
+  },
+  "rawTag": {
+    "message": "Afegeix etiqueta [raw] (WordPress)",
+    "description": "Label for the 'Add [raw] tag' switch, useful in WordPress"
   }
 }

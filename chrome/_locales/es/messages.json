@@ -7,8 +7,8 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Encuentra los URL de las imágenes de la página actual y los exporta en formato de lista, mosaico o carrusel de imágenes. Los datos resultantes se copian en el portapapeles y se pueden pegar fácilmente en cualquier editor de texto con [Ctrl+V]. Los mosaicos y carruseles se pueden utilizar en documentos, blogs y cualquier plataforma que gestione contenido HTML.",
-    "description": "Extension description"
+    "message": "Construye la lista de imágenes existentes en la página actual y la exporta a formato de texto, mosaico o carrusel.",
+    "description": "Extension description. Max length: 132 characters"
   },
   "extDescText": {
     "message": "Desplace el documento verticalmente hasta que se hayan mostrado todas las imágenes.",
@@ -97,5 +97,9 @@
   "mosaicMaxHeightLb": {
     "message": "Altura máx.",
     "description": "Max. height for images in mosaic"
+  },
+  "rawTag": {
+    "message": "Añadir etiqueta [raw] (WordPress)",
+    "description": "Label for the 'Add [raw] tag' switch, useful in WordPress"
   }
 }

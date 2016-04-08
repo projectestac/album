@@ -32,7 +32,7 @@ $(function () {
    * By default, images below this size (in pixels) will not be checked
    * @type number
    */
-  var MIN_WIDTH = 60, MIN_HEIGHT = 60;
+  var MIN_WIDTH = 93, MIN_HEIGHT = 60;
 
   /**
    * Array of boolean values indicating the 'selected' state of each image

@@ -84,8 +84,8 @@ ListImages.prototype = {
       }
     }
 
-    // Check objects with the 'background-image' attribute
-    obj = document.querySelectorAll('*[style*=background-image]');
+    // Check objects with 'background-image' or 'background' multi-attribute
+    obj = document.querySelectorAll('*[style*=background]');
     for (var n = 0; n < obj.length; n++) {
       var exp = window.getComputedStyle(obj[n]).getPropertyValue('background-image').trim();
       if (exp.toLowerCase().substring(0, 4) === 'url(') {

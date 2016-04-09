@@ -1,6 +1,8 @@
 ﻿#Album
 http://projectestac.github.io/album
 
+[![Available in the Chrome Web Store](https://raw.githubusercontent.com/projectestac/album/master/misc/chrome-store/ChromeWebStore_Badge_v2_206x58.png)](https://chrome.google.com/webstore/detail/album/obknigmaekkacdkckfeegcfiefdaeked)
+
 _Album_ is a browser extension that detects the images on the current page and shows them in a list that can be exported in three different formats:
 
 * A simple **list** of absolute URLs pointing at the images.

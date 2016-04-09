@@ -1,0 +1,16 @@
+﻿Aquesta extensió detecta les imatges existents a la pàgina actual i les mostra en una llista que es pot exportar a tres formats diferents:
+
+- Una relació de les adreces de les imatges (URL).
+
+- Un fragment de codi HTML amb etiquetes de tipus "img" que formaran un mosaic d'imatges. Els enllaços associats a les imatges, si n'hi ha, també es poden exportar.
+
+- Un fragment de codi HTML que genera un carrusel de Galleria.io (http://galleria.io)
+
+En tots els casos les dades es copien al porta-retalls i es poden inserir dins de qualsevol editor prement [Ctrl+V]. Els mosaics i carrusels es poden inserir a documents, entrades de blogs, entorns virtuals d'aprenentatge o qualsevol altra aplicació que utilitzi contingut HTML. Abans d'enganxar el codi en un editor de text enriquit, assegureu-vos que estigui en mode "text pla" (usualment representat per un botó amb els símbols "<>" o "html").
+
+Aquest és un projecte de programari lliure. Podeu contribuir a millorar-lo informant d'errors, aportant traduccions a altres idiomes o enviant propostes de codi a https://github.com/projectestac/album. Gràcies per avançat!
+
+Cal agrair especialment l'excel·lent treball fet per Galleria.io (http://galleria.io), el motor de codi obert sobre el qual funciona el carrusel d'imatges. A més del tema visual bàsic utilitzat per "Àlbum", que és gratuït, Galleria.io ofereix a bon preu altres temes amb funcionalitats addicionals i dissenys atractius.
+
+Tingueu en compte que "Àlbum" no fa cap còpia de les imatges ni de cap altre tipus de fitxers: només gestiona adreces URL que apunten a recursos remots. Els problemes amb la visualització dels continguts (càrrega lenta, fitxer no trobat...) acostumen a ser deguts a incidències en l'origen de les imatges.
+

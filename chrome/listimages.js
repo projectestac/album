@@ -89,12 +89,29 @@ ListImages.prototype = {
     for (var n = 0; n < obj.length; n++) {
       var exp = window.getComputedStyle(obj[n]).getPropertyValue('background-image').trim();
       if (exp.toLowerCase().substring(0, 4) === 'url(') {
-        exp = exp.substring(4, exp.length - 1).trim();
-        // Remove enclosing quotes
-        if ((exp.substring(0, 1) === '"' && exp.substring(exp.length - 1, exp.length) === '"') ||
-                (exp.substring(0, 1) === '\'' && exp.substring(exp.length - 1, exp.length) === '\'')) {
-          exp = exp.substring(1, exp.length - 1).trim();
-        }
+        // Find first 'non-whitespace' character after open parenthesis
+        var leftP=4;
+        while(exp.charAt(leftP)===' ' && leftP<exp.length)
+          leftP++;
+        var first = exp.charAt(leftP);
+        // Decide what character should close the expression
+        // default without quotes is ')'
+        var rightDelim = ')';
+        if(first==='"')
+          rightDelim='"';
+        else if(first==='\'')
+          rightDelim='\'';
+        else
+          // No special delimiter, so leftP must point to the open parenthesis
+          leftP--;
+        // Find closing character
+        var rightP = exp.indexOf(rightDelim, leftP+1);
+        if(rightP<0)
+          rightP=exp.length;
+        
+        // Get the fragment between (but not including) delimiters
+        exp = exp.substring(leftP+1, rightP).trim();
+        
         // Save URL and element
         imgList.push(exp);
         objList.push(obj[n]);

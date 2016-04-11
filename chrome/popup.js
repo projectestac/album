@@ -304,18 +304,22 @@ $(function () {
    */
   $('#galleriaBtn').click(function () {
     var id = getUniqueId();
-    var code = '<script type="text/javascript" src="https://cdn.jsdelivr.net/g/jquery@1.12.1,galleria@1.4.2(galleria.js)"></script>\n' +
-            '<div id="' + id + '" style="width: ' + galWidth + 'px; height: ' + galHeight + 'px;">\n' +
+    var code = '<div id="' + id + '" style="width:' + galWidth + 'px; height:' + galHeight + 'px; display:none;">\n' +
             listImages(true, galLinks, galLinks) +
             '</div>\n' +
+            '<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>' +
             '<script>\n' +
-            'Galleria.loadTheme(\'https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js\');\n' +
-            'Galleria.run(\'#' + id + '\', {\n' +
-            ' autoplay: true,' +
-            ' lightbox: true,' +
-            ' popupLinks: ' + popupLinks +
-            '});\n' +
-            '</script>\n';    
+            '(MyGalleries=(typeof MyGalleries === \'undefined\' ? [] : MyGalleries)).push({' +
+            'gallId:\'#' + id + '\',autoplay:true,lightbox:true,popupLinks:' + popupLinks + '});\n' +
+            'if(typeof GalleryLoaded === \'undefined\'){\n' +
+            ' GalleryLoaded = jQuery(function(){\n' +
+            '  jQuery.ajax({url:\'https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js\',dataType:\'script\',cache:true}).done(function(){\n' +
+            '   Galleria.loadTheme(\'https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js\');\n' +
+            '   for(var n in MyGalleries){Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);jQuery(MyGalleries[n].gallId).css(\'display\',\'block\');}\n' +
+            '  });\n' +
+            ' });\n' +
+            '}\n' +
+            '</script>\n';
     copyAndNotify(code, rawTag);
   });
 

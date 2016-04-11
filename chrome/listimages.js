@@ -84,11 +84,12 @@ ListImages.prototype = {
       }
     }
 
-    // Check objects with 'background-image' or 'background' multi-attribute
-    obj = document.querySelectorAll('*[style*=background]');
+    // Inspect all objects in DOM
+    obj = document.body.getElementsByTagName('*');
     for (var n = 0; n < obj.length; n++) {
+      // Check if object has style property 'background-image' starting by 'url('
       var exp = window.getComputedStyle(obj[n]).getPropertyValue('background-image').trim();
-      if (exp.toLowerCase().substring(0, 4) === 'url(') {
+      if(exp && exp.trim().toLowerCase().substring(0, 4) === 'url(') {
         // Find first 'non-whitespace' character after open parenthesis
         var leftP=4;
         while(exp.charAt(leftP)===' ' && leftP<exp.length)

@@ -4,9 +4,6 @@
 </head>
 <body>
 <h2>Galleria 1</h2>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js"></script>
-</script>
 <div id="16028" style="width: 600px; height: 400px;">
 <img src="https://lh3.googleusercontent.com/IZaPguPz6HFU7aaw92ElbNh42nvflx0xpeRfHNmD7rPNlZ5QKau3toYR25r9XszqCN7-zkORaGNvzQ=w386-h290-no" data-link="https://photos.google.com/share/AF1QipPLT8fhUfZc_Od-zCZ6fhY-C0oplb9FBvQnRNx1IZ3MPFgHFvZ_TiDCjjnFtHNYVg/photo/AF1QipO_jTcnEs4w0p9kSifRTgR9nWCKtHBH9ImkeYv0?key=Y1RDaWIteFMySmRGSllOWG9yejJiYk5LbVdiRzlB">
 <img src="https://lh3.googleusercontent.com/ZtIjSCg9N_fqiYPVnNx9fFDBL1C9uXFCUsmiTXC2nSd-F8yKTJKv8j0UMaEILcGLxiPiLN4y2txsyQ=w386-h290-no" data-link="https://photos.google.com/share/AF1QipPLT8fhUfZc_Od-zCZ6fhY-C0oplb9FBvQnRNx1IZ3MPFgHFvZ_TiDCjjnFtHNYVg/photo/AF1QipN78LaW27azUaoH1RLTFzC3BkXGg1m5ezb7Ya37?key=Y1RDaWIteFMySmRGSllOWG9yejJiYk5LbVdiRzlB">
@@ -33,15 +30,20 @@
 <img src="https://lh3.googleusercontent.com/5sMEqVIB-AM_4Wr7B8AxefmCAqNdt48nBJDxhuV0uT2Xu8SHk2cIWtp2Mwe7Ja4hjetzHCODpLxDRQ=w289-h384-no" data-link="https://photos.google.com/share/AF1QipPLT8fhUfZc_Od-zCZ6fhY-C0oplb9FBvQnRNx1IZ3MPFgHFvZ_TiDCjjnFtHNYVg/photo/AF1QipNOEa3GSolhKrAvtasShAC7lDTp0veSB479x7BR?key=Y1RDaWIteFMySmRGSllOWG9yejJiYk5LbVdiRzlB">
 <img src="https://lh3.googleusercontent.com/wou80D43VUyMKmr8Q8NGQ0f1qIxm5VjQNUpiffeLm8ZqP9mjr9WowqIj_SxhLlPpbdcppKOlvaJ8uw=w288-h384-no" data-link="https://photos.google.com/share/AF1QipPLT8fhUfZc_Od-zCZ6fhY-C0oplb9FBvQnRNx1IZ3MPFgHFvZ_TiDCjjnFtHNYVg/photo/AF1QipN72Py6ivgAn7JtUvCNfQZU78KTem5cvy40t95E?key=Y1RDaWIteFMySmRGSllOWG9yejJiYk5LbVdiRzlB">
 </div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>
 <script>
-Galleria.loadTheme('https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js');
-Galleria.run('#16028', {
- autoplay: true, lightbox: true, popupLinks: true});
+(MyGalleries = (typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId: '#16028', autoplay: true, lightbox: true, popupLinks: true});
+if(typeof GalleryLoaded === 'undefined'){
+  GalleryLoaded = jQuery(function () {
+    jQuery.getScript('https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js', function(){
+      Galleria.loadTheme('https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js');
+      for(var n in MyGalleries){Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);}
+    });
+  });
+}
 </script>
 
 <h2>Galleria 2</h2>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js"></script>
 <div id="1F23D" style="width: 600px; height: 400px;">
 <img src="https://c5.staticflickr.com/2/1607/26318991396_ec11985c0f_z.jpg" data-link="https://www.flickr.com/photos/pietrofaccioli/26318991396/in/explore-2016-04-10/">
 <img src="https://c7.staticflickr.com/2/1668/26072684990_c9292549e9.jpg" data-link="https://www.flickr.com/photos/lfeng1014/26072684990/in/explore-2016-04-10/">
@@ -94,10 +96,17 @@ Galleria.run('#16028', {
 <img src="https://c3.staticflickr.com/2/1546/26078217130_252402a2e8.jpg" data-link="https://www.flickr.com/photos/janwallin/26078217130/in/explore-2016-04-10/">
 <img src="https://c5.staticflickr.com/2/1665/25730853724_91dd2d7b91.jpg" data-link="https://www.flickr.com/photos/31287805@N04/25730853724/in/explore-2016-04-10/">
 </div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>
 <script>
-Galleria.loadTheme('https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js');
-Galleria.run('#1F23D', {
- autoplay: true, lightbox: true, popupLinks: true});
+(MyGalleries = (typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId: '#1F23D', autoplay: true, lightbox: true, popupLinks: true});
+if(typeof GalleryLoaded === 'undefined'){
+  GalleryLoaded = jQuery(function () {
+    jQuery.getScript('https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js', function(){
+      Galleria.loadTheme('https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js');
+      for(var n in MyGalleries){Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);}
+    });
+  });
+}
 </script>
 </body>
 </html>

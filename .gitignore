@@ -20,6 +20,9 @@ npm-debug.log*
 /nbproject/private/
 /deploy/
 
+# Misc PNG images (should be exported from SVG)
+/misc/**/*.png
+
 # Runtime data
 pids
 *.pid

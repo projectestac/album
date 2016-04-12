@@ -21,7 +21,8 @@ npm-debug.log*
 /deploy/
 
 # Misc PNG images (should be exported from SVG)
-/misc/**/*.png
+/misc/logo/*.png
+/misc/banner/*.png
 
 # Runtime data
 pids

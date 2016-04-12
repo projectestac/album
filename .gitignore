@@ -22,7 +22,7 @@ npm-debug.log*
 
 # Misc PNG images (should be exported from SVG)
 /misc/logo/*.png
-/misc/banner/*.png
+/misc/banners/*.png
 
 # Runtime data
 pids

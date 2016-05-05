@@ -48,6 +48,14 @@ $(function () {
   var mosaicMaxWidth = 800, mosaicMaxHeight = 400, mosaicLinks = true;
   var gpWidth = 800, gpHeight = 600;
   var rawTag = false, popupLinks = true;
+  
+  /**
+   * Known filling images
+   * @type RegExp[]
+   */
+  var unwantedImages = [
+    /.*\.gstatic\.com\/.*/
+  ];
 
   /**
    * Variables frequently used, initialized with JQuery objects
@@ -162,19 +170,26 @@ $(function () {
       var n = numImgs;
       selected[n] = true;
 
-      // Check if we are in Google Photos and a specific size is requested
+      // Check if we are in Google Photos and request a specific size if needed
       if ((gpWidth || gpHeight) && /^https:\/\/[\w.]+\.googleusercontent\.com\//.test(url)) {
         var exp = '=' + (gpWidth ? 'w' + gpWidth + '-' : '') + (gpHeight ? 'h' + gpHeight + '-' : '') + 'no';
         url = url.replace(/=(w\d+)?-?(h\d+)?(-[\w-+?&]*)?$/, exp);
       }
-
+      // Check if this image falls in the category of unwanted
+      else for(var p in unwantedImages){
+        if(unwantedImages[p].test(url)){
+          selected[n] = false;
+          break;
+        }        
+      }
+      
       // Build a new <tr> element with the image URL as a data attribute
       var $tr = $('<tr/>');
       $tr.data('url', url);
 
       // Add a checkbox to $tr
       var $checkBox = $('<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[' + (numImgs + 1) + ']"/>')
-              .append($('<input type="checkbox" id="row[' + (numImgs + 1) + ']" class="mdl-checkbox__input" checked/>')
+              .append($('<input type="checkbox" id="row[' + (numImgs + 1) + ']" class="mdl-checkbox__input"'+ (selected[n] ? ' checked' : '') + '/>')
                       .change(function () {
                         selected[n] = this.checked ? true : false;
                         $numSel.html(updateNumSelected());
@@ -231,7 +246,8 @@ $(function () {
         $('.description').css('width', '270px');
       }
       $numImgs.html(++numImgs);
-      $numSel.html(++numSelected);
+      if(selected[n])
+        $numSel.html(++numSelected);
     }
   };
 

@@ -102,6 +102,18 @@
     "message": "Max. height",
     "description": "Max. height for images in mosaic"
   },
+  "gpLb": {
+    "message": "Image size (Google Photos)",
+    "description": "Title for Google Photos section in Options"
+  },
+  "gpWidthLb": {
+    "message": "Desired width",
+    "description": "Google Photos requested width"
+  },
+  "gpHeightLb": {
+    "message": "Desired height",
+    "description": "Google Photos requested height"
+  },
   "rawTag": {
     "message": "Add [raw] tag (WordPress)",
     "description": "Label for the 'Add [raw] tag' switch, useful in WordPress"

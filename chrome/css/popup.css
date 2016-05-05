@@ -145,13 +145,17 @@ body {
 }
 
 #settingsDlg {
-  min-width: 390px;
+  min-width: 430px;
+  padding: 0;
+}
+
+#settingsDlg .mdl-dialog__content {
+  padding: 10px;
 }
 
 .dimInput {
-  width: 340px;
-  margin-top: 15px;
-  margin-bottom: 25px;
+  width: 410px;
+  margin-bottom: 12px;
   background-color: #fafafa;  
 }
 
@@ -171,7 +175,7 @@ body {
 
 .dimInput > label {
   margin-left: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .mdl-textfield__error {

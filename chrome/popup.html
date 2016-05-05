@@ -131,6 +131,19 @@
             <span class="mdl-switch__label hyperlinks">Add hyperlinks</span>
           </label>
         </div>
+        <div class="dimInput mdl-shadow--4dp">
+          <p id="gpLb">Image size (Google Photos)</p>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input id="gpWidth" type="text" class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?">
+            <label id="gpWidthLb" class="mdl-textfield__label" for="gpWidth">Width</label>
+            <span class="mdl-textfield__error numeric">Please enter a number!</span>
+          </div>        
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input id="gpHeight" type="text" class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?">
+            <label id="gpHeightLb" class="mdl-textfield__label" for="gpHeight">Height</label>
+            <span class="mdl-textfield__error numeric">Please enter a number!</span>
+          </div>        
+        </div>        
         <div class="dimInput mdl-shadow--4dp" style="padding-top: 15px;">          
           <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="rawTag">
             <input type="checkbox" id="rawTag" class="mdl-switch__input">

@@ -46,6 +46,7 @@ $(function () {
    */
   var galWidth = 600, galHeight = 400, galLinks = true;
   var mosaicMaxWidth = 800, mosaicMaxHeight = 400, mosaicLinks = true;
+  var gpWidth = 800, gpHeight = 600;
   var rawTag = false, popupLinks = true;
 
   /**
@@ -97,6 +98,10 @@ $(function () {
       mosaicMaxHeight = Number(items.mosaicMaxHeight);
     if (items.hasOwnProperty('mosaicLinks'))
       mosaicLinks = (items.mosaicLinks.toString() === 'true');
+    if (items.hasOwnProperty('gpWidth'))
+      gpWidth = Number(items.gpWidth);
+    if (items.hasOwnProperty('gpHeight'))
+      gpHeight = Number(items.gpHeight);
     if (items.hasOwnProperty('rawTag'))
       rawTag = (items.rawTag.toString() === 'true');
     if (items.hasOwnProperty('popupLinks'))
@@ -153,12 +158,19 @@ $(function () {
   var msgListener = function (request /*, sender, sendResponse*/) {
 
     if (request.imgurl) {
+      var url = request.imgurl;
       var n = numImgs;
       selected[n] = true;
 
+      // Check if we are in Google Photos and a specific size is requested
+      if ((gpWidth || gpHeight) && /^https:\/\/[\w.]+\.googleusercontent\.com\//.test(url)) {
+        var exp = '=' + (gpWidth ? 'w' + gpWidth + '-' : '') + (gpHeight ? 'h' + gpHeight + '-' : '') + 'no';
+        url = url.replace(/=(w\d+)?-?(h\d+)?(-[\w-+?&]*)?$/, exp);
+      }
+
       // Build a new <tr> element with the image URL as a data attribute
       var $tr = $('<tr/>');
-      $tr.data('url', request.imgurl);
+      $tr.data('url', url);
 
       // Add a checkbox to $tr
       var $checkBox = $('<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[' + (numImgs + 1) + ']"/>')
@@ -171,8 +183,8 @@ $(function () {
 
       // Add an interactive image thumbnail to $tr
       var $img = $('<img class="mdl-list__item-icon"/>').attr({
-        src: request.imgurl,
-        title: request.imgurl
+        src: url,
+        title: url
       }).load(function () {
         // Don't default check images sized below MIN_WIDH x MIN_HEIGHT
         if ($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT) {
@@ -181,9 +193,9 @@ $(function () {
           $numSel.html(updateNumSelected());
         }
       }).on('click', function () {
-        $('.previewImgUrl').attr({href: request.imgurl, title: request.imgurl});
-        $('.previewImgUrl .urltext').html(request.imgurl);
-        $('#previewImg').attr({'src': request.imgurl});
+        $('.previewImgUrl').attr({href: url, title: url});
+        $('.previewImgUrl .urltext').html(url);
+        $('#previewImg').attr({'src': url});
 
         var link = request.imglink ? request.imglink : '';
         $('.previewImgLink').attr({href: link, title: link});
@@ -195,7 +207,7 @@ $(function () {
       $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($img));
 
       // Add the URL text to $tr
-      var $urlText = $('<span class="urltext">' + request.imgurl + '</span>');
+      var $urlText = $('<span class="urltext">' + url + '</span>');
       $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($urlText));
 
       // Add the image link to $tr, if any
@@ -339,6 +351,9 @@ $(function () {
     $('#mosaicLb').html(chrome.i18n.getMessage('mosaicBtn'));
     $('#mosaicMaxWidthLb').html(chrome.i18n.getMessage('mosaicMaxWidthLb'));
     $('#mosaicMaxHeightLb').html(chrome.i18n.getMessage('mosaicMaxHeightLb'));
+    $('#gpLb').html(chrome.i18n.getMessage('gpLb'));
+    $('#gpWidthLb').html(chrome.i18n.getMessage('gpWidthLb'));
+    $('#gpHeightLb').html(chrome.i18n.getMessage('gpHeightLb'));
     $('#rawTagLb').html(chrome.i18n.getMessage('rawTag'));
     $('#popupLinksLb').html(chrome.i18n.getMessage('popupLinks'));
 
@@ -367,6 +382,8 @@ $(function () {
         mosaicMaxWidth = $('#mosaicMaxWidth').val();
         mosaicMaxHeight = $('#mosaicMaxHeight').val();
         mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked');
+        gpWidth = $('#gpWidth').val();
+        gpHeight = $('#gpHeight').val();
         rawTag = $('#rawTag').parent().hasClass('is-checked');
         popupLinks = $('#popupLinks').parent().hasClass('is-checked');
 
@@ -381,6 +398,8 @@ $(function () {
           mosaicMaxWidth: mosaicMaxWidth,
           mosaicMaxHeight: mosaicMaxHeight,
           mosaicLinks: mosaicLinks,
+          gpWidth: gpWidth,
+          gpHeight: gpHeight,
           rawTag: rawTag,
           popupLinks: popupLinks
         });
@@ -416,6 +435,9 @@ $(function () {
       $('#mosaicLinks').parent().addClass('is-checked');
     else
       $('#mosaicLinks').parent().removeClass('is-checked');
+
+    $('#gpWidth').val(gpWidth);
+    $('#gpHeight').val(gpHeight);
 
     if (rawTag)
       $('#rawTag').parent().addClass('is-checked');

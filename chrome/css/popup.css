@@ -128,8 +128,13 @@ body {
   padding-bottom: 0;
 }
 
+#previewDlg .infoSize {
+  text-align: center;
+  font-size: 80%;
+}
+
 #previewDlg table {
-  margin: 12px auto;
+  margin: 0px auto;
 }
 
 #previewDlg .material-icons {

@@ -121,5 +121,9 @@
   "popupLinks": {
     "message": "Abrir enlaces en otra pestaña",
     "description": "Label for the 'open links in new tab' switch"
+  },
+  "unknownSize": {
+    "message": "tamaño desconocido",
+    "description": "Message to show in preview dialog when the image size is unknown"
   }  
 }

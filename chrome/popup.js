@@ -48,13 +48,18 @@ $(function () {
   var mosaicMaxWidth = 800, mosaicMaxHeight = 400, mosaicLinks = true;
   var gpWidth = 800, gpHeight = 600;
   var rawTag = false, popupLinks = true;
-  
+
   /**
-   * Known filling images
+   * Known sources of app images, usually not wanted.
+   * Images with URLs matching this regular expressions will be unchecked
+   * by default.
    * @type RegExp[]
    */
   var unwantedImages = [
-    /.*\.gstatic\.com\/.*/
+    /^https?:\/\/[\w-.]+\.gstatic\.com\//,
+    /^https?:\/\/[\w-.]+\.yimg\.com\//,
+    /^https?:\/\/[\w-.]+\.istockimg\.com\/static\//,
+    /^https?:\/\/instagramstatic[\w-.]+\.akamaihd\.net\//
   ];
 
   /**
@@ -176,20 +181,21 @@ $(function () {
         url = url.replace(/=(w\d+)?-?(h\d+)?(-[\w-+?&]*)?$/, exp);
       }
       // Check if this image falls in the category of unwanted
-      else for(var p in unwantedImages){
-        if(unwantedImages[p].test(url)){
-          selected[n] = false;
-          break;
-        }        
-      }
-      
+      else
+        for (var p in unwantedImages) {
+          if (unwantedImages[p].test(url)) {
+            selected[n] = false;
+            break;
+          }
+        }
+
       // Build a new <tr> element with the image URL as a data attribute
       var $tr = $('<tr/>');
       $tr.data('url', url);
 
       // Add a checkbox to $tr
       var $checkBox = $('<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[' + (numImgs + 1) + ']"/>')
-              .append($('<input type="checkbox" id="row[' + (numImgs + 1) + ']" class="mdl-checkbox__input"'+ (selected[n] ? ' checked' : '') + '/>')
+              .append($('<input type="checkbox" id="row[' + (numImgs + 1) + ']" class="mdl-checkbox__input"' + (selected[n] ? ' checked' : '') + '/>')
                       .change(function () {
                         selected[n] = this.checked ? true : false;
                         $numSel.html(updateNumSelected());
@@ -201,13 +207,18 @@ $(function () {
         src: url,
         title: url
       }).load(function () {
-        // Don't default check images sized below MIN_WIDH x MIN_HEIGHT
+        // Images sized below MIN_WIDH x MIN_HEIGHT will be unchecked by default
         if ($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT) {
           $checkBox[0].MaterialCheckbox.uncheck();
           selected[n] = false;
           $numSel.html(updateNumSelected());
         }
       }).on('click', function () {
+        var img = $img.get(0);
+        $('.infoSize').html((img && typeof img.naturalWidth !== 'undefined' && typeof img.naturalHeight !== 'undefined' && img.naturalWidth > 0 && img.naturalHeight > 0)
+                ? img.naturalWidth + ' x ' + img.naturalHeight
+                : chrome.i18n.getMessage('unknownSize'));
+
         $('.previewImgUrl').attr({href: url, title: url});
         $('.previewImgUrl .urltext').html(url);
         $('#previewImg').attr({'src': url});
@@ -246,7 +257,7 @@ $(function () {
         $('.description').css('width', '270px');
       }
       $numImgs.html(++numImgs);
-      if(selected[n])
+      if (selected[n])
         $numSel.html(++numSelected);
     }
   };

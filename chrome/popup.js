@@ -21,6 +21,15 @@
  * Main script loads when DOM is ready to be used
  */
 $(function () {
+  
+  /**
+   * Show vertical scrollbar in small screens (laptops)
+   */
+  if(screen.availHeight < 1600){
+    var height = (screen.availHeight - 20) + 'px';
+    $('html').css({height: height, 'overflow-y': 'auto'});
+    $('body').css({height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto'});
+  }
 
   /**
    * Number of images currently detected and selected
@@ -47,7 +56,7 @@ $(function () {
   var galWidth = 600, galHeight = 400, galLinks = true;
   var mosaicMaxWidth = 800, mosaicMaxHeight = 400, mosaicLinks = true;
   var gpWidth = 800, gpHeight = 600;
-  var rawTag = false, popupLinks = true;
+  var popupLinks = true;
 
   /**
    * Known sources of app images, usually not wanted.
@@ -115,8 +124,6 @@ $(function () {
       gpWidth = Number(items.gpWidth);
     if (items.hasOwnProperty('gpHeight'))
       gpHeight = Number(items.gpHeight);
-    if (items.hasOwnProperty('rawTag'))
-      rawTag = (items.rawTag.toString() === 'true');
     if (items.hasOwnProperty('popupLinks'))
       popupLinks = (items.popupLinks.toString() === 'true');
   });
@@ -276,9 +283,7 @@ $(function () {
    * the completion of the requested operation
    * @param {String} txt - The text to copy to the clipboard
    */
-  var copyAndNotify = function (txt, raw) {
-    if (raw)
-      txt = '[raw]\n' + txt + '[/raw]\n';
+  var copyAndNotify = function (txt) {
     clipboard.copy(txt);
     chrome.notifications.create({
       type: 'basic',
@@ -292,6 +297,8 @@ $(function () {
    * @param {boolean} withImg - Put the image URL into an `<img>` tag
    * @param {boolean} withLinks - Include also the link associated with each image, if any
    * @param {boolean} dataLink - Use a 'data-link' attribute (instead of 'a href') for the link
+   * @param {boolean} targetBlank - Add `target = "_blank"` to links
+   * @param {String} imgStyle - Optional style to be applied to the image tag
    * @returns {String} - The text with the requested list
    */
   var listImages = function (withImg, withLinks, dataLink, targetBlank, imgStyle) {
@@ -335,7 +342,7 @@ $(function () {
     var imgStyle = (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) ?
             (mosaicMaxWidth > 0 ? 'max-width:' + mosaicMaxWidth + 'px;' : '') +
             (mosaicMaxHeight > 0 ? 'max-height:' + mosaicMaxHeight + 'px;' : '') : null;
-    copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle), rawTag);
+    copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle));
   });
 
   /**
@@ -359,7 +366,7 @@ $(function () {
             ' });\n' +
             '}\n' +
             '</script>\n';
-    copyAndNotify(code, rawTag);
+    copyAndNotify(code);
   });
 
   /**
@@ -381,7 +388,6 @@ $(function () {
     $('#gpLb').html(chrome.i18n.getMessage('gpLb'));
     $('#gpWidthLb').html(chrome.i18n.getMessage('gpWidthLb'));
     $('#gpHeightLb').html(chrome.i18n.getMessage('gpHeightLb'));
-    $('#rawTagLb').html(chrome.i18n.getMessage('rawTag'));
     $('#popupLinksLb').html(chrome.i18n.getMessage('popupLinks'));
 
     // Check if all numeric fields have a valid format
@@ -411,7 +417,6 @@ $(function () {
         mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked');
         gpWidth = $('#gpWidth').val();
         gpHeight = $('#gpHeight').val();
-        rawTag = $('#rawTag').parent().hasClass('is-checked');
         popupLinks = $('#popupLinks').parent().hasClass('is-checked');
 
         // Close dialog
@@ -427,7 +432,6 @@ $(function () {
           mosaicLinks: mosaicLinks,
           gpWidth: gpWidth,
           gpHeight: gpHeight,
-          rawTag: rawTag,
           popupLinks: popupLinks
         });
       }
@@ -466,11 +470,6 @@ $(function () {
     $('#gpWidth').val(gpWidth);
     $('#gpHeight').val(gpHeight);
 
-    if (rawTag)
-      $('#rawTag').parent().addClass('is-checked');
-    else
-      $('#rawTag').parent().removeClass('is-checked');
-
     if (popupLinks)
       $('#popupLinks').parent().addClass('is-checked');
     else
@@ -490,4 +489,5 @@ $(function () {
   chrome.tabs.executeScript(null, {file: 'listimages.js'});
   $('.loading').remove();
   $('.mainContent').fadeIn();
+  
 });

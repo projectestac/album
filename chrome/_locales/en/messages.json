@@ -114,10 +114,6 @@
     "message": "Desired height",
     "description": "Google Photos requested height"
   },
-  "rawTag": {
-    "message": "Add [raw] tag (WordPress)",
-    "description": "Label for the 'Add [raw] tag' switch, useful in WordPress"
-  },
   "popupLinks": {
     "message": "Open links in new tab",
     "description": "Label for the 'open links in new tab' switch"

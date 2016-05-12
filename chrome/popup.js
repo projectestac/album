@@ -23,12 +23,16 @@
 $(function () {
   
   /**
-   * Show vertical scrollbar in small screens (laptops)
+   * Adjust sizes in small screens
    */  
   if(screen.availHeight < 600){
-    var height = (screen.availHeight - 20) + 'px';
+    var height = '470px';
     $('html').css({height: height, 'overflow-y': 'auto'});
     $('body').css({height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto'});
+    $('.description').css({width: '280px'});
+    $('#imgTable tbody').css({height: '270px'});
+    $('#settingsDlg .mdl-dialog__content').css({height: '390px', 'overflow-y': 'auto'});
+    $('.dimInput').css({width: '385px'});
   }
   
   /**

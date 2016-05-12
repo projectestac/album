@@ -24,13 +24,13 @@ $(function () {
   
   /**
    * Show vertical scrollbar in small screens (laptops)
-   */
-  if(screen.availHeight < 1600){
+   */  
+  if(screen.availHeight < 600){
     var height = (screen.availHeight - 20) + 'px';
     $('html').css({height: height, 'overflow-y': 'auto'});
     $('body').css({height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto'});
   }
-
+  
   /**
    * Number of images currently detected and selected
    * @type number

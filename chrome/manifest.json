@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "default_locale": "en",
   "name": "__MSG_extName__",
   "short_name": "__MSG_extShortName__",

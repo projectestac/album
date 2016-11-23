@@ -1,18 +1,18 @@
 /**
- * File    : chrome/popup.js  
- * Created : 20/03/2016  
- * By      : Francesc Busquets  
- * 
- * Album (version for Chrome/Chromium)  
- * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab  
- * https://github.com/projectestac/album  
- * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)  
+ * File    : chrome/popup.js
+ * Created : 20/03/2016
+ * By      : Francesc Busquets
+ *
+ * Album (version for Chrome/Chromium)
+ * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
+ * https://github.com/projectestac/album
+ * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+ * Public License along with this program. If not, see [http://www.gnu.org/licenses/].
  */
 
 /* global chrome, clipboard, componentHandler */
@@ -21,11 +21,11 @@
  * Main script loads when DOM is ready to be used
  */
 $(function () {
-  
+
   /**
    * Adjust sizes in small screens
-   */  
-  if(screen.availHeight < 600){
+   */
+  if (screen.availHeight < 600) {
     var height = '470px';
     $('html').css({height: height, 'overflow-y': 'auto'});
     $('body').css({height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto'});
@@ -34,7 +34,7 @@ $(function () {
     $('#settingsDlg .mdl-dialog__content').css({height: '390px', 'overflow-y': 'auto'});
     $('.dimInput').css({width: '385px'});
   }
-  
+
   /**
    * Number of images currently detected and selected
    * @type number
@@ -217,7 +217,7 @@ $(function () {
       var $img = $('<img class="mdl-list__item-icon"/>').attr({
         src: url,
         title: url
-      }).load(function () {
+      }).on('load', function () {
         // Images sized below MIN_WIDH x MIN_HEIGHT will be unchecked by default
         if ($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT) {
           $checkBox[0].MaterialCheckbox.uncheck();
@@ -485,7 +485,7 @@ $(function () {
     $('#settingsDlg')[0].showModal();
   });
 
-  // 
+  //
   // Main actions executed after all components have been initialized:
   // Enable the message listener, inject 'listimages.js' on the main document
   // remove the 'loading' curtain and... let's go!
@@ -493,5 +493,5 @@ $(function () {
   chrome.tabs.executeScript(null, {file: 'listimages.js'});
   $('.loading').remove();
   $('.mainContent').fadeIn();
-  
+
 });

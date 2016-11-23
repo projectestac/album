@@ -2,8 +2,8 @@
   "name": "album",
   "private": "true",
   "dependencies": {
-    "jquery": "^2.2.2",
-    "clipboard.js": "^0.2.0",
+    "jquery": "^3.1.1",
+    "clipboard.js": "^0.3.1",
     "material-design-lite": "^1.1.3"
   }
 }

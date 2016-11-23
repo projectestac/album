@@ -1,18 +1,18 @@
 /**
- * File    : chrome/listimages.js  
- * Created : 20/03/2016  
- * By      : Francesc Busquets  
- * 
- * Album (version for Chrome/Chromium)  
- * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab  
- * https://github.com/projectestac/album  
- * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)  
+ * File    : chrome/listimages.js
+ * Created : 20/03/2016
+ * By      : Francesc Busquets
+ *
+ * Album (version for Chrome/Chromium)
+ * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
+ * https://github.com/projectestac/album
+ * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+ * Public License along with this program. If not, see [http://www.gnu.org/licenses/].
  */
 
 /* global window, document, chrome */
@@ -86,15 +86,15 @@ ListImages.prototype = {
 
     // Inspect all objects in DOM
     obj = document.body.getElementsByTagName('*');
-    for (var n = 0; n < obj.length; n++) {
+    for (var p = 0; p < obj.length; p++) {
       // Check if object has style property 'background-image' starting by 'url('
-      var exp = window.getComputedStyle(obj[n]).getPropertyValue('background-image').trim();
-      if(exp && exp.trim().toLowerCase().substring(0, 4) === 'url(') {
+      var bg = window.getComputedStyle(obj[p]).getPropertyValue('background-image').trim();
+      if(bg && bg.trim().toLowerCase().substring(0, 4) === 'url(') {
         // Find first 'non-whitespace' character after open parenthesis
         var leftP=4;
-        while(exp.charAt(leftP)===' ' && leftP<exp.length)
+        while(bg.charAt(leftP)===' ' && leftP<bg.length)
           leftP++;
-        var first = exp.charAt(leftP);
+        var first = bg.charAt(leftP);
         // Decide what character should close the expression
         // default without quotes is ')'
         var rightDelim = ')';
@@ -106,23 +106,23 @@ ListImages.prototype = {
           // No special delimiter, so leftP must point to the open parenthesis
           leftP--;
         // Find closing character
-        var rightP = exp.indexOf(rightDelim, leftP+1);
+        var rightP = bg.indexOf(rightDelim, leftP+1);
         if(rightP<0)
-          rightP=exp.length;
-        
+          rightP=bg.length;
+
         // Get the fragment between (but not including) delimiters
-        exp = exp.substring(leftP+1, rightP).trim();
-        
+        bg = bg.substring(leftP+1, rightP).trim();
+
         // Save URL and element
-        imgList.push(exp);
-        objList.push(obj[n]);
+        imgList.push(bg);
+        objList.push(obj[p]);
       }
     }
 
     // Filter invalid URLs
-    for (var n = 0; n < imgList.length; n++) {
+    for (var img = 0; img < imgList.length; img++) {
+      var exp = imgList[img];
       try {
-        var exp = imgList[n];
         var url = new URL(exp);
         if (url && this.allImages.indexOf(exp) === -1 && url.protocol &&
                 (url.protocol === 'http:' || url.protocol === 'https:')) {
@@ -131,25 +131,25 @@ ListImages.prototype = {
           this.allImages.push(exp);
 
           // object used to communicate with the extension popup
-          var obj = {imgurl: exp};
+          var msg = {imgurl: exp};
 
           // Try to find links associated to this image, walking up and down
           // the DOM tree
-          var link = findLinkUp(objList[n]);
+          var link = findLinkUp(objList[img]);
           if (link === null)
-            link = findLinkDown(objList[n]);
+            link = findLinkDown(objList[img]);
           // If found, save link
           if (link) {
             this.allLinks[this.allImages.length - 1] = link;
-            obj.imglink = link;
+            msg.imglink = link;
           }
 
           // Notify the existence of a new image to the extension popup
-          chrome.runtime.sendMessage(obj);
+          chrome.runtime.sendMessage(msg);
         }
       } catch (ex) {
         // Something bad has happened
-        console.log('Album extension: Error processing element ' + n + ':\n' + exp + ' - ' + ex);
+        console.log('Album extension: Error processing element ' + img + ':\n' + exp + ' - ' + ex);
       }
     }
     this.scanning = false;

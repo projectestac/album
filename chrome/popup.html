@@ -1,28 +1,28 @@
 <!doctype html>
 <!--
- * File    : chrome/popup.html  
- * Created : 20/03/2016  
- * By      : Francesc Busquets  
- * 
- * Album (version for Chrome/Chromium)  
- * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab  
- * https://github.com/projectestac/album  
- * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)  
+ * File    : chrome/popup.html
+ * Created : 20/03/2016
+ * By      : Francesc Busquets
+ *
+ * Album (version for Chrome/Chromium)
+ * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
+ * https://github.com/projectestac/album
+ * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+ * Public License along with this program. If not, see [http://www.gnu.org/licenses/].
  * -->
 <html>
   <head>
     <title>Album</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" type="text/css" href="lib/material.min.css">
     <link rel="stylesheet" type="text/css" href="css/popup.css"/>
-    <script src="lib/jquery.min.js"></script>    
+    <script src="lib/jquery.min.js"></script>
     <script src="lib/material.min.js"></script>
     <script src="lib/clipboard.min.js"></script>
     <script src="popup.js"></script>
@@ -31,7 +31,7 @@
   <body>
     <div class="loading">
       <p>Loading...</p>
-    </div>    
+    </div>
     <div class="mainContent">
       <table id="imgTable" class="mdl-data-table mdl-shadow--2dp">
         <thead>
@@ -44,7 +44,7 @@
             <th class="mdl-data-table__cell"><i class="material-icons" style="vertical-align: middle;">collections</i></th>
             <th id="imgUrlLb" class="mdl-data-table__cell--non-numeric">Image URL</th>
             <th class="mdl-data-table__cell--non-numeric"></th>
-          </tr>        
+          </tr>
         </thead>
         <tbody id="imgTableBody"/>
       </table>
@@ -59,16 +59,16 @@
         <div class="description"></div>
         <button id="settingsBtn" title="settings" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
           <i class="material-icons">settings</i>
-        </button>                                      
+        </button>
       </div>
       <div class="centered">
         <div class="buttons">
           <button id="listBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
             <i class="material-icons">reorder</i> <span id="listCaption">List</span>
-          </button>    
+          </button>
           <button id="mosaicBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
             <i class="material-icons">view_quilt</i> <span id="mosaicCaption">Mosaic</span>
-          </button>    
+          </button>
           <button id="galleriaBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
             <i class="material-icons">view_carousel</i> <span id="galleriaCaption">galleria.io</span>
           </button>
@@ -86,7 +86,7 @@
           </tr>
           <tr id="previewLink">
             <td><i class="material-icons">link</i></td>
-            <td><a class="previewImgLink" href="" target="_blank"><span class="urltext"></span></a></td>            
+            <td><a class="previewImgLink" href="" target="_blank"><span class="urltext"></span></a></td>
           </tr>
         </table>
       </div>
@@ -104,12 +104,12 @@
             <input id="galWidth" type="text" class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?">
             <label id="galWidthLb" class="mdl-textfield__label" for="galWidth">Width</label>
             <span class="mdl-textfield__error numeric">Please enter a number!</span>
-          </div>        
+          </div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="galHeight" type="text" class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?">
             <label id="galHeightLb" class="mdl-textfield__label" for="galHeight">Height</label>
             <span class="mdl-textfield__error numeric">Please enter a number!</span>
-          </div>        
+          </div>
           <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="galLinks">
             <input id="galLinks" type="checkbox" class="mdl-switch__input" checked>
             <span class="mdl-switch__label hyperlinks">Add hyperlinks</span>
@@ -121,7 +121,7 @@
             <input id="mosaicMaxWidth" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?">
             <label id="mosaicMaxWidthLb" class="mdl-textfield__label" for="mosaicMaxWidth">Max. width</label>
             <span class="mdl-textfield__error numeric">Please enter a number!</span>
-          </div>        
+          </div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="mosaicMaxHeight" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?">
             <label id="mosaicMaxHeightLb" class="mdl-textfield__label" for="mosaicMaxHeight">Max. height</label>
@@ -138,14 +138,14 @@
             <input id="gpWidth" type="text" class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?">
             <label id="gpWidthLb" class="mdl-textfield__label" for="gpWidth">Width</label>
             <span class="mdl-textfield__error numeric">Please enter a number!</span>
-          </div>        
+          </div>
           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input id="gpHeight" type="text" class="mdl-textfield__input" pattern="-?[0-9]*(\.[0-9]+)?">
             <label id="gpHeightLb" class="mdl-textfield__label" for="gpHeight">Height</label>
             <span class="mdl-textfield__error numeric">Please enter a number!</span>
-          </div>        
-        </div>        
-        <div class="dimInput mdl-shadow--4dp" style="padding-top: 15px;">          
+          </div>
+        </div>
+        <div class="dimInput mdl-shadow--4dp" style="padding-top: 15px;">
           <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="popupLinks">
             <input type="checkbox" id="popupLinks" class="mdl-switch__input">
             <span class="mdl-switch__label" id="popupLinksLb">Open links in new tab</span>
@@ -158,7 +158,7 @@
         </button>
         <button id="settingsCancel" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
           Cancel
-        </button>        
+        </button>
       </div>
     </dialog>
   </body>

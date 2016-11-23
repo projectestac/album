@@ -15,7 +15,7 @@
  * Public License along with this program. If not, see [http://www.gnu.org/licenses/].
  */
 
-/* global chrome, clipboard, componentHandler */
+/* global $, chrome, clipboard, componentHandler */
 
 /**
  * Main script loads when DOM is ready to be used
@@ -226,9 +226,13 @@ $(function () {
         }
       }).on('click', function () {
         var img = $img.get(0);
-        $('.infoSize').html((img && typeof img.naturalWidth !== 'undefined' && typeof img.naturalHeight !== 'undefined' && img.naturalWidth > 0 && img.naturalHeight > 0)
-                ? img.naturalWidth + ' x ' + img.naturalHeight
-                : chrome.i18n.getMessage('unknownSize'));
+        $('.infoSize').html((img &&
+                             typeof img.naturalWidth !== 'undefined' &&
+                             typeof img.naturalHeight !== 'undefined' &&
+                             img.naturalWidth > 0 &&
+                             img.naturalHeight > 0) ?
+                            img.naturalWidth + ' x ' + img.naturalHeight :
+                            chrome.i18n.getMessage('unknownSize'));
 
         $('.previewImgUrl').attr({href: url, title: url});
         $('.previewImgUrl .urltext').html(url);

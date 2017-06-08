@@ -1,0 +1,125 @@
+{ 
+  "language": {
+    "message": "català"    
+  },  
+  "extName": {
+    "message": "Àlbum",
+    "description": "Extension name (max. 45 characters)"
+  },
+  "extShortName": {
+    "message": "Àlbum",
+    "description": "Extension short name (max. 12 characters)"
+  },
+  "extDescription": {
+    "message": "Construeix una llista amb les imatges existents a la pàgina actual i l'exporta a format de text, mosaic o carrusel.",
+    "description": "Extension description. Max length: 132 characters."
+  },
+  "extDescText": {
+    "message": "Feu lliscar verticalment el document principal fins que s'hi hagin mostrat totes les imatges.",
+    "description": "Short message with basic instructions"
+  },
+  "imgUrlLb": {
+    "message": "URL de les imatges",
+    "description": "Label for the image URL"
+  },
+  "stopBtnTooltip": {
+    "message": "Atura la detecció d'imatges",
+    "description": "Label for the stop button"
+  },
+  "playBtnTooltip": {
+    "message": "Reprèn la detecció d'imatges",
+    "description": "Label for the play button"
+  },
+  "settingsBtnTooltip": {
+    "message": "Configuració",
+    "description": "Label for settings button"
+  },
+  "listBtn": {
+    "message": "Llista",
+    "description": "Caption for the 'list' button"
+  },
+  "listBtnTooltip": {
+    "message": "Copia al porta-retalls la llista dels URL absoluts de les imatges seleccionades",
+    "description": "Description of the 'list' action"
+  },
+  "mosaicBtn": {
+    "message": "Mosaic",
+    "description": "Caption for the 'mosaic' button"
+  },
+  "mosaicBtnTooltip": {
+    "message": "Copia al porta-retalls un fragment de codi HTML amb etiquetes 'img' per a les imatges seleccionades",
+    "description": "Description of the 'Mosaic' action"
+  },
+  "galleriaBtn": {
+    "message": "galleria.io",
+    "description": "Caption for the 'galleria.io' button"
+  },
+  "galleriaBtnTooltip": {
+    "message": "Copia al porta-retalls un fragment de codi HTML que mostra un carrusel d'imatges de galleria.io",
+    "description": "Description of the 'galleria.io' action"
+  },
+  "msgDataCopied": {
+    "message": "Les dades sol·licitades han estat copiades al porta-retalls. Utilitzeu CTRL+V per enganxar-les al vostre editor.",
+    "description": "Notification to display when data has been copied to the clipboard"
+  },
+  "previewImage": {
+    "message": "Previsualitzacio",
+    "description": "Titol del dialeg mostrat en fer clic damunt les miniatures"
+  },
+  "OK": {
+    "message": "D'acord",
+    "description": "OK button"
+  },
+  "Cancel": {
+    "message": "Cancel·la",
+    "description": "Cancel button"
+  },
+  "Close": {
+    "message": "Tanca",
+    "description": "Close button"
+  },
+  "galWidthLb": {
+    "message": "Amplada",
+    "description": "Gallery width"
+  },
+  "galHeightLb": {
+    "message": "Alçada",
+    "description": "Gallery height"
+  },
+  "numberFormatWarning": {
+    "message": "Heu d'escriure un nombre!",
+    "description": "Warning shown in numeric fields when user enters a non-numeric char"
+  },
+  "addHyperlinks": {
+    "message": "Afegeix hiperenllaços",
+    "description": "To include or not the hyperlink associated to each image"
+  },
+  "mosaicMaxWidthLb": {
+    "message": "Amplada màx.",
+    "description": "Max. width for images in mosaic"
+  },
+  "mosaicMaxHeightLb": {
+    "message": "Alçada màx.",
+    "description": "Max. height for images in mosaic"
+  },
+  "gpLb": {
+    "message": "Mida de les imatges (Google Photos)",
+    "description": "Title for Google Photos section in Options"
+  },
+  "gpWidthLb": {
+    "message": "Amplada desitjada",
+    "description": "Google Photos requested width"
+  },
+  "gpHeightLb": {
+    "message": "Alçada desitjada",
+    "description": "Google Photos requested height"
+  },  
+  "popupLinks": {
+    "message": "Obre enllaços en una pestanya nova",
+    "description": "Label for the 'open links in new tab' switch"
+  },
+  "unknownSize": {
+    "message": "mida desconeguda",
+    "description": "Message to show in preview dialog when the image size is unknown"
+  }  
+}

@@ -1,0 +1,125 @@
+{ 
+  "language": {
+    "message": "español"    
+  },  
+  "extName": {
+    "message": "Álbum",
+    "description": "Extension name (max. 45 characters)"
+  },
+  "extShortName": {
+    "message": "Álbum",
+    "description": "Extension short name (max. 12 characters)"
+  },
+  "extDescription": {
+    "message": "Construye una la lista con las imágenes existentes en la página actual y la exporta a formato de texto, mosaico o carrusel.",
+    "description": "Extension description. Max length: 132 characters"
+  },
+  "extDescText": {
+    "message": "Desplace el documento verticalmente hasta que se hayan mostrado todas las imágenes.",
+    "description": "Short message with basic instructions"
+  },
+  "imgUrlLb": {
+    "message": "URL de las imágenes",
+    "description": "Label for the image URL"
+  },
+  "stopBtnTooltip": {
+    "message": "Detener la detección de imágenes",
+    "description": "Label for the stop button"
+  },
+  "playBtnTooltip": {
+    "message": "Retomar la detección de imágenes",
+    "description": "Label for the play button"
+  },
+  "settingsBtnTooltip": {
+    "message": "Configuración",
+    "description": "Label for settings button"
+  },
+  "listBtn": {
+    "message": "Lista",
+    "description": "Caption for the 'list' button"
+  },
+  "listBtnTooltip": {
+    "message": "Copiar en el portapapeles la lista de URL absolutos de las imágenes seleccionadas.",
+    "description": "Description of the 'list' action"
+  },
+  "mosaicBtn": {
+    "message": "Mosaico",
+    "description": "Caption for the 'mosaic' button"
+  },
+  "mosaicBtnTooltip": {
+    "message": "Copiar en el portapapeles un fragmento de código HTML con etiquetas de tipo 'img' para las imágenes seleccionadas.",
+    "description": "Description of the 'Mosaic' action"
+  },
+  "galleriaBtn": {
+    "message": "galleria.io",
+    "description": "Caption for the 'galleria.io' button"
+  },
+  "galleriaBtnTooltip": {
+    "message": "Copia en el portapapeles un fragmento de código HTML que presenta un carrusel de imágenes de galleria.io",
+    "description": "Description of the 'galleria.io' action"
+  },
+  "msgDataCopied": {
+    "message": "Los datos solicitados se han copiado en el portapapeles. Utilice CTRL+V para pegarlos en su editor.",
+    "description": "Notification to display when data has been copied to the clipboard"
+  },
+  "previewImage": {
+    "message": "Previsualización",
+    "description": "Titol del dialeg mostrat en fer clic damunt les miniatures"
+  },
+  "OK": {
+    "message": "Aceptar",
+    "description": "OK button"
+  },
+  "Cancel": {
+    "message": "Cancelar",
+    "description": "Cancel button"
+  },
+  "Close": {
+    "message": "Cerrar",
+    "description": "Close button"
+  },
+  "galWidthLb": {
+    "message": "Anchura",
+    "description": "Gallery width"
+  },
+  "galHeightLb": {
+    "message": "Altura",
+    "description": "Gallery height"
+  },
+  "numberFormatWarning": {
+    "message": "¡debe escribir un número!",
+    "description": "Warning shown in numeric fields when user enters a non-numeric char"
+  },
+  "addHyperlinks": {
+    "message": "Añadir hiperenlaces",
+    "description": "To include or not the hyperlink associated to each image"
+  },
+  "mosaicMaxWidthLb": {
+    "message": "Anchura máx.",
+    "description": "Max. width for images in mosaic"
+  },
+  "mosaicMaxHeightLb": {
+    "message": "Altura máx.",
+    "description": "Max. height for images in mosaic"
+  },
+  "gpLb": {
+    "message": "Tamaño de las imágenes (Google Photos)",
+    "description": "Title for Google Photos section in Options"
+  },
+  "gpWidthLb": {
+    "message": "Anchura deseada",
+    "description": "Google Photos requested width"
+  },
+  "gpHeightLb": {
+    "message": "Altura deseada",
+    "description": "Google Photos requested height"
+  },  
+  "popupLinks": {
+    "message": "Abrir enlaces en una pestaña nueva",
+    "description": "Label for the 'open links in new tab' switch"
+  },
+  "unknownSize": {
+    "message": "tamaño desconocido",
+    "description": "Message to show in preview dialog when the image size is unknown"
+  }  
+}

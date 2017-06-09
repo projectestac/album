@@ -15,24 +15,28 @@
  * Public License along with this program. If not, see [http://www.gnu.org/licenses/].
  */
 
-/* global $, browser, clipboard, componentHandler */
+/* global $, browser, clipboard, componentHandler, dialogPolyfill */
 
 /**
  * Main script loads when DOM is ready to be used
  */
 $(function () {
 
+  $('dialog').each(function(n, el){
+    dialogPolyfill.registerDialog(el);
+  });
+
   /**
    * Adjust sizes in small screens
    */
   if (screen.availHeight < 600) {
     var height = '470px';
-    $('html').css({height: height, 'overflow-y': 'auto'});
-    $('body').css({height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto'});
-    $('.description').css({width: '280px'});
-    $('#imgTable tbody').css({height: '270px'});
-    $('#settingsDlg .mdl-dialog__content').css({height: '390px', 'overflow-y': 'auto'});
-    $('.dimInput').css({width: '385px'});
+    $('html').css({ height: height, 'overflow-y': 'auto' });
+    $('body').css({ height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto' });
+    $('.description').css({ width: '280px' });
+    $('#imgTable tbody').css({ height: '270px' });
+    $('#settingsDlg .mdl-dialog__content').css({ height: '390px', 'overflow-y': 'auto' });
+    $('.dimInput').css({ width: '385px' });
   }
 
   /**
@@ -111,44 +115,77 @@ $(function () {
   /**
    * Read current settings from browser.storage.sync
    */
-  browser.storage.sync.get(function (items) {
-    if (items.hasOwnProperty('galWidth'))
-      galWidth = Number(items.galWidth);
-    if (items.hasOwnProperty('galHeight'))
-      galHeight = Number(items.galHeight);
-    if (items.hasOwnProperty('galLinks'))
-      galLinks = (items.galLinks.toString() === 'true');
-    if (items.hasOwnProperty('mosaicMaxWidth'))
-      mosaicMaxWidth = Number(items.mosaicMaxWidth);
-    if (items.hasOwnProperty('mosaicMaxHeight'))
-      mosaicMaxHeight = Number(items.mosaicMaxHeight);
-    if (items.hasOwnProperty('mosaicLinks'))
-      mosaicLinks = (items.mosaicLinks.toString() === 'true');
-    if (items.hasOwnProperty('gpWidth'))
-      gpWidth = Number(items.gpWidth);
-    if (items.hasOwnProperty('gpHeight'))
-      gpHeight = Number(items.gpHeight);
-    if (items.hasOwnProperty('popupLinks'))
-      popupLinks = (items.popupLinks.toString() === 'true');
-  });
+  if (browser.storage && browser.storage.sync) {
+    browser.storage.sync.get().then(
+      // fullfilled
+      function (items) {
+        if (items.hasOwnProperty('galWidth'))
+          galWidth = Number(items.galWidth);
+        if (items.hasOwnProperty('galHeight'))
+          galHeight = Number(items.galHeight);
+        if (items.hasOwnProperty('galLinks'))
+          galLinks = (items.galLinks.toString() === 'true');
+        if (items.hasOwnProperty('mosaicMaxWidth'))
+          mosaicMaxWidth = Number(items.mosaicMaxWidth);
+        if (items.hasOwnProperty('mosaicMaxHeight'))
+          mosaicMaxHeight = Number(items.mosaicMaxHeight);
+        if (items.hasOwnProperty('mosaicLinks'))
+          mosaicLinks = (items.mosaicLinks.toString() === 'true');
+        if (items.hasOwnProperty('gpWidth'))
+          gpWidth = Number(items.gpWidth);
+        if (items.hasOwnProperty('gpHeight'))
+          gpHeight = Number(items.gpHeight);
+        if (items.hasOwnProperty('popupLinks'))
+          popupLinks = (items.popupLinks.toString() === 'true');
+      },
+      // rejected
+      function (err) {
+        console.log(`Album extension - Error retrieving user preferences: ${err}`);
+      }
+    );
+  }
 
   /**
    * This button stops and restarts image scanning on the main document
    */
   var stopBtnStatus = true;
+  var stopBtnWaiting = false;
   $('#stopBtn').prop('title', browser.i18n.getMessage('stopBtnTooltip')).click(function () {
-    if (stopBtnStatus) {
-      browser.tabs.executeScript(null, {code: 'window.__listImages.endScanning();'});
-      $('#progressBar').removeClass('mdl-progress__indeterminate');
-      $('#stopIcon').html('play_arrow');
-      $('#stopBtn').prop('title', browser.i18n.getMessage('playBtnTooltip'));
-      stopBtnStatus = false;
-    } else {
-      browser.tabs.executeScript(null, {code: 'window.__listImages.startScanning();'});
-      $('#progressBar').addClass('mdl-progress__indeterminate');
-      $('#stopIcon').html('pause');
-      $('#stopBtn').prop('title', browser.i18n.getMessage('stopBtnTooltip'));
-      stopBtnStatus = true;
+    if (!stopBtnWaiting) {
+      stopBtnWaiting = true;
+      if (stopBtnStatus) {
+        browser.tabs.executeScript({ code: 'window.__listImages.endScanning();' }).then(
+          // Success
+          function (result) {
+            $('#progressBar').removeClass('mdl-progress__indeterminate');
+            $('#stopIcon').html('play_arrow');
+            $('#stopBtn').prop('title', browser.i18n.getMessage('playBtnTooltip'));
+            stopBtnStatus = false;
+            stopBtnWaiting = false;
+          },
+          // Error
+          function (err) {
+            console.log(`Album extension - Error while trying to stop the images detector: ${err}`);
+            stopBtnWaiting = false;
+          }
+        );
+      } else {
+        browser.tabs.executeScript({ code: 'window.__listImages.startScanning();' }).then(
+          // Success
+          function () {
+            $('#progressBar').addClass('mdl-progress__indeterminate');
+            $('#stopIcon').html('pause');
+            $('#stopBtn').prop('title', browser.i18n.getMessage('stopBtnTooltip'));
+            stopBtnStatus = true;
+            stopBtnWaiting = false;
+          },
+          // Error
+          function () {
+            console.log(`Album extension - Error while trying to start the images detector: ${err}`);
+            stopBtnWaiting = false;
+          }
+        );
+      }
     }
   });
 
@@ -206,11 +243,11 @@ $(function () {
 
       // Add a checkbox to $tr
       var $checkBox = $('<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[' + (numImgs + 1) + ']"/>')
-              .append($('<input type="checkbox" id="row[' + (numImgs + 1) + ']" class="mdl-checkbox__input"' + (selected[n] ? ' checked' : '') + '/>')
-                      .change(function () {
-                        selected[n] = this.checked ? true : false;
-                        $numSel.html(updateNumSelected());
-                      }));
+        .append($('<input type="checkbox" id="row[' + (numImgs + 1) + ']" class="mdl-checkbox__input"' + (selected[n] ? ' checked' : '') + '/>')
+          .change(function () {
+            selected[n] = this.checked ? true : false;
+            $numSel.html(updateNumSelected());
+          }));
       $tr.append($('<td/>').append($checkBox));
 
       // Add an interactive image thumbnail to $tr
@@ -227,19 +264,19 @@ $(function () {
       }).on('click', function () {
         var img = $img.get(0);
         $('.infoSize').html((img &&
-                             typeof img.naturalWidth !== 'undefined' &&
-                             typeof img.naturalHeight !== 'undefined' &&
-                             img.naturalWidth > 0 &&
-                             img.naturalHeight > 0) ?
-                            img.naturalWidth + ' x ' + img.naturalHeight :
-                            browser.i18n.getMessage('unknownSize'));
+          typeof img.naturalWidth !== 'undefined' &&
+          typeof img.naturalHeight !== 'undefined' &&
+          img.naturalWidth > 0 &&
+          img.naturalHeight > 0) ?
+          img.naturalWidth + ' x ' + img.naturalHeight :
+          browser.i18n.getMessage('unknownSize'));
 
-        $('.previewImgUrl').attr({href: url, title: url});
+        $('.previewImgUrl').attr({ href: url, title: url });
         $('.previewImgUrl .urltext').html(url);
-        $('#previewImg').attr({'src': url});
+        $('#previewImg').attr({ 'src': url });
 
         var link = request.imglink ? request.imglink : '';
-        $('.previewImgLink').attr({href: link, title: link});
+        $('.previewImgLink').attr({ href: link, title: link });
         $('.previewImgLink .urltext').html(link);
         $('#previewLink').css('visibility', request.imglink ? 'visible' : 'hidden');
 
@@ -255,8 +292,8 @@ $(function () {
       var $link = $('<span/>');
       if (request.imglink) {
         $link = $('<a id="link[' + (numImgs + 1) + ']" class="urllink"/>')
-                .attr({href: request.imglink, target: '_blank', title: request.imglink})
-                .append($('<i class="material-icons"/>').html('link'));
+          .attr({ href: request.imglink, target: '_blank', title: request.imglink })
+          .append($('<i class="material-icons"/>').html('link'));
         $tr.data('link', request.imglink);
       } else
         $link = $('');
@@ -297,7 +334,8 @@ $(function () {
       type: 'basic',
       title: browser.i18n.getMessage('extName'),
       message: browser.i18n.getMessage('msgDataCopied'),
-      iconUrl: 'icons/icon192.png'});
+      iconUrl: 'icons/icon192.png'
+    });
   };
 
   /**
@@ -348,8 +386,8 @@ $(function () {
    */
   $('#mosaicBtn').click(function () {
     var imgStyle = (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) ?
-            (mosaicMaxWidth > 0 ? 'max-width:' + mosaicMaxWidth + 'px;' : '') +
-            (mosaicMaxHeight > 0 ? 'max-height:' + mosaicMaxHeight + 'px;' : '') : null;
+      (mosaicMaxWidth > 0 ? 'max-width:' + mosaicMaxWidth + 'px;' : '') +
+      (mosaicMaxHeight > 0 ? 'max-height:' + mosaicMaxHeight + 'px;' : '') : null;
     copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle));
   });
 
@@ -359,21 +397,21 @@ $(function () {
   $('#galleriaBtn').click(function () {
     var id = getUniqueId();
     var code = '<div id="' + id + '" style="width:' + galWidth + 'px; height:' + galHeight + 'px; display:none;">\n' +
-            listImages(true, galLinks, galLinks) +
-            '</div>\n' +
-            '<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>' +
-            '<script>\n' +
-            '(MyGalleries=(typeof MyGalleries === \'undefined\' ? [] : MyGalleries)).push({' +
-            'gallId:\'#' + id + '\',autoplay:true,lightbox:true,popupLinks:' + popupLinks + '});\n' +
-            'if(typeof GalleryLoaded === \'undefined\'){\n' +
-            ' GalleryLoaded = jQuery(function(){\n' +
-            '  jQuery.ajax({url:\'https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js\',dataType:\'script\',cache:true}).done(function(){\n' +
-            '   Galleria.loadTheme(\'https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js\');\n' +
-            '   for(var n in MyGalleries){Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);jQuery(MyGalleries[n].gallId).css(\'display\',\'block\');}\n' +
-            '  });\n' +
-            ' });\n' +
-            '}\n' +
-            '</script>\n';
+      listImages(true, galLinks, galLinks) +
+      '</div>\n' +
+      '<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>' +
+      '<script>\n' +
+      '(MyGalleries=(typeof MyGalleries === \'undefined\' ? [] : MyGalleries)).push({' +
+      'gallId:\'#' + id + '\',autoplay:true,lightbox:true,popupLinks:' + popupLinks + '});\n' +
+      'if(typeof GalleryLoaded === \'undefined\'){\n' +
+      ' GalleryLoaded = jQuery(function(){\n' +
+      '  jQuery.ajax({url:\'https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js\',dataType:\'script\',cache:true}).done(function(){\n' +
+      '   Galleria.loadTheme(\'https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js\');\n' +
+      '   for(var n in MyGalleries){Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);jQuery(MyGalleries[n].gallId).css(\'display\',\'block\');}\n' +
+      '  });\n' +
+      ' });\n' +
+      '}\n' +
+      '</script>\n';
     copyAndNotify(code);
   });
 
@@ -431,17 +469,25 @@ $(function () {
         $('#settingsDlg')[0].close();
 
         // Save values to persistent storage
-        browser.storage.sync.set({
-          galWidth: galWidth,
-          galHeight: galHeight,
-          galLinks: galLinks,
-          mosaicMaxWidth: mosaicMaxWidth,
-          mosaicMaxHeight: mosaicMaxHeight,
-          mosaicLinks: mosaicLinks,
-          gpWidth: gpWidth,
-          gpHeight: gpHeight,
-          popupLinks: popupLinks
-        });
+        if (browser.storage && browser.storage.sync) {
+          browser.storage.sync.set({
+            galWidth: galWidth,
+            galHeight: galHeight,
+            galLinks: galLinks,
+            mosaicMaxWidth: mosaicMaxWidth,
+            mosaicMaxHeight: mosaicMaxHeight,
+            mosaicLinks: mosaicLinks,
+            gpWidth: gpWidth,
+            gpHeight: gpHeight,
+            popupLinks: popupLinks
+          }).then(
+            // resolve
+            null,
+            // reject
+            function (err) {
+              console.log(`Album extension - Error saving user preferences: ${err}`);
+            });
+        }
       }
     });
 
@@ -494,8 +540,12 @@ $(function () {
   // Enable the message listener, inject 'listimages.js' on the main document
   // remove the 'loading' curtain and... let's go!
   browser.runtime.onMessage.addListener(msgListener);
-  browser.tabs.executeScript(null, {file: 'listimages.js'});
-  $('.loading').remove();
-  $('.mainContent').fadeIn();
-
+  browser.tabs.executeScript({ file: 'listimages.js' }).then(
+    function () {
+      $('.loading').remove();
+      $('.mainContent').fadeIn();
+    },
+    function (err) {
+      console.log(`Album extension: Error executing script: ${err}`);
+    });
 });

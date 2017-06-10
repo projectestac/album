@@ -2,7 +2,7 @@
   "name": "album",
   "title": "Album",
   "description": "Finds the URLs of all images on the current page and exports them as list, mosaic or carousel",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "homepage": "https://github.com/projectestac/album",
   "keywords": [
     "util",

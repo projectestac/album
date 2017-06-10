@@ -15,11 +15,11 @@ In all cases, the data is copied into the clipboard and can be inserted into any
 
 This is a free software project. You can contribute to improving this browser extension by reporting [issues](https://github.com/projectestac/album/issues), translating it into other languages or sending [pull requests](https://github.com/projectestac/album/pulls). Thanks in advance!
 
-_Album_ is currently implemented for Chrome/Chromium and can be installed directly from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/album/obknigmaekkacdkckfeegcfiefdaeked)**. We want to implement it also for **Mozilla Firefox** in the future (developers help wanted!)
+_Album_ is currently implemented and tested for Chrome/Chromium, Opera and Firefox. It is currently published on the **[Chrome Web Store](https://chrome.google.com/webstore/detail/album/obknigmaekkacdkckfeegcfiefdaeked)**.
 
 Special thanks to the excellent work done by **[Galleria.io](http://galleria.io)**, the open source engine beneath the image carousel. In addition to the basic free theme used by _Album_, they provide also with other nice and featured themes at cheap prices.
 
-Note that _Album_ does not copy images nor any type of files: it just deals with URLs pointing at remote resources. Issues with the images (slow loading, file not found...) are often related to problems with the origin of the images.
+Note that _Album_ does not copy images nor any type of files: it just deals with URLs pointing at remote resources. Issues with the images (slow loading, _File not found_ errors...) are often related to problems with the origin of the images.
 
 This project was developed in HTML5, CSS and JavaScript. It makes use of three open-source libraries:
 
@@ -27,7 +27,13 @@ This project was developed in HTML5, CSS and JavaScript. It makes use of three o
 * [clipboard.js](https://github.com/lgarron/clipboard.js) by Lucas Garron
 * [Material Design Lite](https://www.getmdl.io) by Google
 
+In browsers that don't currently support the [`<dialog>`](https://developer.mozilla.org/ca/docs/Web/HTML/Element/dialog) HTML element (like Firefox), this polyfill is also used:
+
+* [dialog-polyfill](https://github.com/GoogleChrome/dialog-polyfill) by The Chromium Authors
+
 All these components can be obtained with [Bower](http://bower.io/). To download its latest releases install Bower on your system and launch `bower update` from the project's root folder. Components will then be placed into `/bower_components` and referenced by symbolic links from `/chrome/lib`.
 
 For more information on how to build Chrome & Chromium extensions, refer to [Chrome Developers'](https://developer.chrome.com/extensions) site.
+
+For more information on how to build web extensions for Firefox and other browsers, refer to the [WebExtensions page on MDN](https://developer.mozilla.org/en-US/Add-ons/WebExtensions).
 

@@ -69,6 +69,10 @@ body {
   width: 250px;
 }
 
+.thumb {
+  cursor: pointer;
+}
+
 .urllink {
   text-decoration: none;
 }
@@ -88,8 +92,9 @@ body {
 }
 
 .nums {
-  font-weight: bolder;
+  font-weight: bold;
   text-align: center;
+  font-size: 80%;
   width: 100%;
 }
 

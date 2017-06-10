@@ -214,7 +214,7 @@ $(function () {
       $tr.append($('<td/>').append($checkBox));
 
       // Add an interactive image thumbnail to $tr
-      var $img = $('<img class="mdl-list__item-icon"/>').attr({
+      var $img = $('<img class="thumb mdl-list__item-icon"/>').attr({
         src: url,
         title: url
       }).on('load', function () {

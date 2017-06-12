@@ -17,7 +17,6 @@ npm-debug.log*
 /bower_components/
 
 # Local netbeans config files #
-/nbproject/private/
 /deploy/
 
 # Misc PNG images (should be exported from SVG)
@@ -28,9 +27,6 @@ npm-debug.log*
 pids
 *.pid
 *.seed
-
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
 
 # Optional npm cache directory
 .npm

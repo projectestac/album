@@ -1,4 +1,4 @@
-﻿#Album
+# Album
 http://projectestac.github.io/album
 
 [![Available in the Chrome Web Store](https://raw.githubusercontent.com/projectestac/album/master/misc/chrome-store/ChromeWebStore_Badge_v2_206x58.png)](https://chrome.google.com/webstore/detail/album/obknigmaekkacdkckfeegcfiefdaeked)  [![Available in Firefox Add-Ons](https://raw.githubusercontent.com/projectestac/album/master/misc/firefox-addons/amo_badge.png)](https://addons.mozilla.org/firefox/addon/photo-album/)

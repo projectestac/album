@@ -1,7 +1,7 @@
 ﻿#Album
 http://projectestac.github.io/album
 
-[![Available in the Chrome Web Store](https://raw.githubusercontent.com/projectestac/album/master/misc/chrome-store/ChromeWebStore_Badge_v2_206x58.png)](https://chrome.google.com/webstore/detail/album/obknigmaekkacdkckfeegcfiefdaeked)
+[![Available in the Chrome Web Store](https://raw.githubusercontent.com/projectestac/album/master/misc/chrome-store/ChromeWebStore_Badge_v2_206x58.png)](https://chrome.google.com/webstore/detail/album/obknigmaekkacdkckfeegcfiefdaeked)  [![Available in Firefox Add-Ons](https://raw.githubusercontent.com/projectestac/album/master/misc/firefox-addons/amo_badge.png)](https://addons.mozilla.org/firefox/addon/photo-album/)
 
 _Album_ is a browser extension that detects the images on the current page and shows them in a list that can be exported in three different formats:
 
@@ -15,7 +15,7 @@ In all cases, the data is copied into the clipboard and can be inserted into any
 
 This is a free software project. You can contribute to improving this browser extension by reporting [issues](https://github.com/projectestac/album/issues), translating it into other languages or sending [pull requests](https://github.com/projectestac/album/pulls). Thanks in advance!
 
-_Album_ is currently implemented and tested for Chrome/Chromium, Opera and Firefox. It is currently published on the **[Chrome Web Store](https://chrome.google.com/webstore/detail/album/obknigmaekkacdkckfeegcfiefdaeked)**.
+_Album_ is currently implemented and tested for Chrome/Chromium, Opera and Firefox. It is currently published on the **[Chrome Web Store](https://chrome.google.com/webstore/detail/album/obknigmaekkacdkckfeegcfiefdaeked)** and on the **[Firefox Add-ons](https://addons.mozilla.org/ca/firefox/addon/photo-album/)** library.
 
 Special thanks to the excellent work done by **[Galleria.io](http://galleria.io)**, the open source engine beneath the image carousel. In addition to the basic free theme used by _Album_, they provide also with other nice and featured themes at cheap prices.
 

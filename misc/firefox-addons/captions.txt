@@ -1,0 +1,36 @@
+
+https://addons.mozilla.org/ca/firefox/addon/photo-album
+
+------------
+
+This is Album detecting images on the current page. In some sites (like Google Photos) pictures are dynamically loaded, so it's advisable to scroll down with the mouse wheel until the end of the page is reached. Observe how the detected image counter increases as you travel down in the page.
+
+Aquí podeu veure l'extensió Àlbum detectant les imatges de la pàgina actual. En alguns llocs (com ara a Google Photos) les imatges es carreguen dinàmicament, per això és recomanable desplaçar la pàgina cap avall amb la rodeta del ratolí fins que arribeu al final. A mida que aneu baixant veureu com el comptador de fotos detectades va augmentant.
+
+Aquí se observa la extensión Álbum detectando las imágenes de la página actual. En algunos sitios (como Google Photos) las imágenes se cargan dinámicamente, por lo que es recomendable desplazar la página hacia abajo con la ruedecita del ratón hasta llegar al final. Observad como a medida que os desplazáis hacia abajo se incrementa el contador de fotos detectadas.
+
+------------
+
+Click on the list thumbnails to enlarge it and have direct access to the URLs of the image and its linked page (if any)
+
+Feu clic a les miniatures per ampliar-les i tenir accés als URL de la imatge i la seva pàgina enllaçada (en cas d'haver-n'hi alguna)
+
+Haz clic en las miniaturas para ampliarlas y tener acceso a los URL de la imagen y su página enlazada (en caso de tener alguna)
+
+------------
+
+Click on the bottom-right wheel to adjust the preferred image sizes and other miscellaneous settings of the extension
+
+Feu clic a la rodeta dentada d'abaix a la dreta per ajustar les dimensions de les imatges i altres paràmetres de funcionament de l'extensió
+
+Haz clic en la rueda dentada situada abajo a la derecha para ajustar las dimensiones de las imágenes y otros parámetros de funcionamiento de la extensión
+
+------------
+
+This a Galleria.io photo carousel generated with Album and running on a WordPress site. It contains references to pictures that are stored in Flickr
+
+Aquest és un carrusel de fotos Galeria.io generat amb l'extensió Àlbum i funcionant en un blog WordPress. Conté referències a imatges que estan emmagatzemades a Flickr.
+
+Este es un carrusel de fotos Galeria.io generado con la extensión Álbum y funcionando en un blog WordPress. Contiene referencias a imágenes que están almacenadas en Filckr.
+
+

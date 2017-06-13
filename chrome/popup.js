@@ -293,11 +293,20 @@ $(function () {
    */
   var copyAndNotify = function (txt) {
     clipboard.copy(txt);
+    chrome.notifications.onButtonClicked.addListener(function(){
+      chrome.tabs.create({
+        url: 'data:text/html;base64,' + btoa(txt)
+      });
+    });
     chrome.notifications.create({
       type: 'basic',
       title: chrome.i18n.getMessage('extName'),
       message: chrome.i18n.getMessage('msgDataCopied'),
-      iconUrl: 'icons/icon192.png'});
+      iconUrl: 'icons/icon192.png',
+      buttons: [{
+        title: chrome.i18n.getMessage('previewWidget'),
+        iconUrl: 'icons/preview.svg'}]
+    });
   };
 
   /**

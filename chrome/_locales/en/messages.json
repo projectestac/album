@@ -121,5 +121,9 @@
   "unknownSize": {
     "message": "unknown size",
     "description": "Message to show in preview dialog when the image size is unknown"
+  },
+  "previewWidget": {
+    "message": "Preview",
+    "description": "Caption of the 'preview' button displayed on the notification area"
   }
 }

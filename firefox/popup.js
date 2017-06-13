@@ -402,7 +402,7 @@ $(function () {
       '<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>' +
       '<script>\n' +
       '(MyGalleries=(typeof MyGalleries === \'undefined\' ? [] : MyGalleries)).push({' +
-      'gallId:\'#' + id + '\',autoplay:true,lightbox:true,popupLinks:' + popupLinks + '});\n' +
+      'gallId:\'#' + id + '\',autoplay:true,lightbox:true,debug:false,popupLinks:' + popupLinks + '});\n' +
       'if(typeof GalleryLoaded === \'undefined\'){\n' +
       ' GalleryLoaded = jQuery(function(){\n' +
       '  jQuery.ajax({url:\'https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js\',dataType:\'script\',cache:true}).done(function(){\n' +

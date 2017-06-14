@@ -22,7 +22,7 @@
  */
 $(function () {
 
-  $('dialog').each(function(n, el){
+  $('dialog').each(function (n, el) {
     dialogPolyfill.registerDialog(el);
   });
 
@@ -330,12 +330,6 @@ $(function () {
    */
   var copyAndNotify = function (txt) {
     clipboard.copy(txt);
-    browser.notifications.onClicked.addListener(function(){
-      browser.tabs.create({
-        url: 'data:text/html;base64,' + btoa(txt)
-      });
-    });
-
     browser.notifications.create({
       type: 'basic',
       title: browser.i18n.getMessage('extName'),

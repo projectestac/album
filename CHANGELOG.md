@@ -1,3 +1,8 @@
+### v1.0.11 (2018-01-06)
+#### Improvements
+- Updated components to the latest versions available in bower ([jQuery](https://jquery.com/) 3.2.1, [clipboard.js](https://github.com/lgarron/clipboard-polyfill) 2.3.0, [MDL](https://getmdl.io/) 1.3.0, [dialog-polyfill](https://github.com/GoogleChrome/dialog-polyfill) 0.4.9).
+- Use of a [polyfill](https://github.com/lgarron/clipboard-polyfill) to write to the system clipboard, thanks to [Lucas Garron](https://github.com/lgarron).
+
 ### v1.0.10 (2017-06-13)
 #### Improvements
 - Debug mode disabled in the Galleria.io HTML snippet. This prevents annoying messages displaying over the images when any error occurs.

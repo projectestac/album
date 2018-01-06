@@ -292,7 +292,7 @@ $(function () {
    * @param {String} txt - The text to copy to the clipboard
    */
   var copyAndNotify = function (txt) {
-    clipboard.copy(txt);
+    clipboard.writeText(txt);
     chrome.notifications.onButtonClicked.addListener(function(){
       chrome.tabs.create({
         url: 'data:text/html;base64,' + btoa(txt)

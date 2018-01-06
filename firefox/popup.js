@@ -329,7 +329,7 @@ $(function () {
    * @param {String} txt - The text to copy to the clipboard
    */
   var copyAndNotify = function (txt) {
-    clipboard.copy(txt);
+    clipboard.writeText(txt);
     browser.notifications.create({
       type: 'basic',
       title: browser.i18n.getMessage('extName'),

@@ -173,14 +173,14 @@ if (typeof window.__ListImages === 'undefined') {
     listScannedImages: function () {
       this.reporting = true
       this.allImages.forEach((img, p) => {
-        const obj = { imgurl: img };
+        const obj = { imgurl: img }
         if (this.allLinks[p])
           obj.imglink = this.allLinks[p]
         chrome.runtime.sendMessage(obj)
       })
       this.reporting = false
     }
-  };
+  }
 
   // UTILITY FUNCTIONS:
 
@@ -202,7 +202,7 @@ if (typeof window.__ListImages === 'undefined') {
     }
     if (alreadyLooked.indexOf(obj) === -1)
       alreadyLooked.push(obj)
-    var parent = obj.parentElement
+    const parent = obj.parentElement
     return parent ? findLinkUp(parent) : null
   }
 
@@ -212,19 +212,16 @@ if (typeof window.__ListImages === 'undefined') {
    * desired type, the search will continue with its children.
    */
   const findLinkDown = function (obj) {
-    if (obj.nodeName.toLowerCase() === 'a') {
-      if (obj.getAttribute('href'))
-        return absoluteLink(obj)
+    if (obj.nodeName.toLowerCase() === 'a' && obj.getAttribute('href')) {
+      return absoluteLink(obj)
     }
-    for (var i = 0; i < obj.children.length; i++) {
-      var child = obj.children.item(i)
-      if (child) {
-        var link = findLinkDown(child)
-        if (link)
-          return link
-      }
-    }
-    return null
+
+    let result = null;
+    [...obj.children].some(child => {
+      result = findLinkDown(child)
+      return result !== null
+    })
+    return result
   }
 
   /**

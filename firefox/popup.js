@@ -379,13 +379,7 @@ $(function () {
 ${listImages(true, galLinks, galLinks)}</div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>
 <script>
- (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({
-  gallId:'#${id}',
-  autoplay:true,
-  lightbox:true,
-  debug:false,
-  popupLinks:${popupLinks}
- });
+ (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId:'#${id}',autoplay:true,lightbox:true,debug:false,popupLinks:${popupLinks}});
  if(typeof GalleryLoaded === 'undefined'){
   GalleryLoaded = jQuery(function(){
    jQuery.ajax({url:'https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js',dataType:'script',cache:true}).done(function(){

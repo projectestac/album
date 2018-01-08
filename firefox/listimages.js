@@ -6,7 +6,7 @@
  * Album (Firefox version)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2018 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -210,7 +210,7 @@ var findLinkUp = function (obj) {
   if (alreadyLooked.indexOf(obj) === -1)
     alreadyLooked.push(obj);
   var parent = obj.parentElement;
-  return parent ? this.findLinkUp(parent) : null;
+  return parent ? findLinkUp(parent) : null;
 };
 
 /**

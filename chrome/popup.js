@@ -6,7 +6,7 @@
  * Album (version for Chrome/Chromium)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2018 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -159,7 +159,7 @@ $(function () {
   $table.find('thead .mdl-data-table__select input').on('change', event => {
     $tbody.find('.mdl-data-table__select').get().forEach((box, i) => {
       selected[i] = event.target.checked
-      bx.MaterialCheckbox[event.target.checked ? 'check' : 'uncheck']()
+      box.MaterialCheckbox[event.target.checked ? 'check' : 'uncheck']()
     })
     $numSel.html(updateNumSelected())
   })
@@ -274,9 +274,9 @@ $(function () {
    * @param {String} txt - The text to copy to the clipboard
    */
   const copyAndNotify = function (txt) {
-    clipboard.writeText(txt)
+    clipboard.writeText(txt || '')
     chrome.notifications.onButtonClicked.addListener(() => {
-      chrome.tabs.create({ url: `data:text/html;base64,${btoa(txt)}` })
+      chrome.tabs.create({ url: `data:text/html;base64,${btoa(txt || '')}` })
     })
     chrome.notifications.create({
       type: 'basic',
@@ -299,146 +299,138 @@ $(function () {
    * @param {String} imgStyle - Optional style to be applied to the image tag
    * @returns {String} - The text with the requested list
    */
-  var listImages = function (withImg, withLinks, dataLink, targetBlank, imgStyle) {
-    var result = '';
-    var styleTag = imgStyle ? ' style="' + imgStyle + '"' : '';
-    var targetTag = targetBlank ? ' target="_blank"' : '';
+  const listImages = function (withImg, withLinks, dataLink, targetBlank, imgStyle) {
+    let result = ''
+    const styleTag = imgStyle ? ` style="${imgStyle}"` : ''
+    const targetTag = targetBlank ? ' target="_blank"' : ''
 
     $tbody.find('tr').each(function (index) {
       if (selected[index]) {
-        var txt = $(this).data('url');
+        let txt = $(this).data('url')
         if (withImg) {
-          txt = '<img src="' + txt + '"' + styleTag + '>';
+          txt = `<img src="${txt}"${styleTag}>`
         }
         if (withLinks) {
-          var link = $(this).data('link');
+          const link = $(this).data('link')
           if (link) {
             if (dataLink)
-              txt = txt.slice(0, -1) + ' data-link="' + link + '">';
+              txt = `${txt.slice(0, -1)} data-link="${link}">`
             else
-              txt = '<a href="' + link + '"' + targetTag + '>' + txt + '</a>';
+              txt = `<a href="${link}"${targetTag}>${txt}</a>`
           }
         }
-        result = result + txt + '\n';
+        result = `${result}${txt}\n`
       }
-    });
-    return result;
-  };
+    })
+    return result
+  }
 
 
   /**
    * Sets action for the 'list' button
    */
-  $('#listBtn').click(function () {
-    copyAndNotify(listImages(false, false, false));
-  });
+  $('#listBtn').click(() => copyAndNotify(listImages(false, false, false)))
 
   /**
    * Sets action for the 'mosaic' button
    */
-  $('#mosaicBtn').click(function () {
-    var imgStyle = (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) ?
-      (mosaicMaxWidth > 0 ? 'max-width:' + mosaicMaxWidth + 'px;' : '') +
-      (mosaicMaxHeight > 0 ? 'max-height:' + mosaicMaxHeight + 'px;' : '') : null;
-    copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle));
-  });
+  $('#mosaicBtn').click(() => {
+    const imgStyle = (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) ?
+      (mosaicMaxWidth > 0 ? `max-width:${mosaicMaxWidth}px;` : '') +
+      (mosaicMaxHeight > 0 ? `max-height:${mosaicMaxHeight}px;` : '') : null
+    copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle))
+  })
 
   /**
    * Sets action for the 'galleria.io' button
    */
   $('#galleriaBtn').click(function () {
-    var id = getUniqueId();
-    var code = '<div id="' + id + '" style="width:' + galWidth + 'px; height:' + galHeight + 'px; display:none;">\n' +
-      listImages(true, galLinks, galLinks) +
-      '</div>\n' +
-      '<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>' +
-      '<script>\n' +
-      '(MyGalleries=(typeof MyGalleries === \'undefined\' ? [] : MyGalleries)).push({' +
-      'gallId:\'#' + id + '\',autoplay:true,lightbox:true,debug:false,popupLinks:' + popupLinks + '});\n' +
-      'if(typeof GalleryLoaded === \'undefined\'){\n' +
-      ' GalleryLoaded = jQuery(function(){\n' +
-      '  jQuery.ajax({url:\'https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js\',dataType:\'script\',cache:true}).done(function(){\n' +
-      '   Galleria.loadTheme(\'https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js\');\n' +
-      '   for(var n in MyGalleries){Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);jQuery(MyGalleries[n].gallId).css(\'display\',\'block\');}\n' +
-      '  });\n' +
-      ' });\n' +
-      '}\n' +
-      '</script>\n';
-    copyAndNotify(code);
+    const id = getUniqueId()
+    const code = `<div id="${id}" style="width:${galWidth}px; height:${galHeight}px; display:none;">
+${listImages(true, galLinks, galLinks)}</div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>
+<script>
+ (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({
+  gallId:'#${id}',
+  autoplay:true,
+  lightbox:true,
+  debug:false,
+  popupLinks:${popupLinks}
+ });
+ if(typeof GalleryLoaded === 'undefined'){
+  GalleryLoaded = jQuery(function(){
+   jQuery.ajax({url:'https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js',dataType:'script',cache:true}).done(function(){
+    Galleria.loadTheme('https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js');
+    for(var n in MyGalleries){
+     Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);
+     jQuery(MyGalleries[n].gallId).css('display','block');
+    }
+   });
   });
+ }
+</script>`
+    copyAndNotify(code)
+  })
 
   /**
    * Prepares the elements located on the settings dialog
    * (method detached from the global initialization process for performance reasons)
    */
-  var settingsInitialized = false;
-  var initSettings = function () {
+  let settingsInitialized = false
+  const initSettings = function () {
 
     // Localize UI components
-    $('#galleriaLb').html(chrome.i18n.getMessage('galleriaBtn'));
-    $('#galWidthLb').html(chrome.i18n.getMessage('galWidthLb'));
-    $('#galHeightLb').html(chrome.i18n.getMessage('galHeightLb'));
-    $('.numeric').html(chrome.i18n.getMessage('numberFormatWarning'));
-    $('.hyperlinks').html(chrome.i18n.getMessage('addHyperlinks'));
-    $('#mosaicLb').html(chrome.i18n.getMessage('mosaicBtn'));
-    $('#mosaicMaxWidthLb').html(chrome.i18n.getMessage('mosaicMaxWidthLb'));
-    $('#mosaicMaxHeightLb').html(chrome.i18n.getMessage('mosaicMaxHeightLb'));
-    $('#gpLb').html(chrome.i18n.getMessage('gpLb'));
-    $('#gpWidthLb').html(chrome.i18n.getMessage('gpWidthLb'));
-    $('#gpHeightLb').html(chrome.i18n.getMessage('gpHeightLb'));
-    $('#popupLinksLb').html(chrome.i18n.getMessage('popupLinks'));
+    $('#galleriaLb').html(chrome.i18n.getMessage('galleriaBtn'))
+    $('#galWidthLb').html(chrome.i18n.getMessage('galWidthLb'))
+    $('#galHeightLb').html(chrome.i18n.getMessage('galHeightLb'))
+    $('.numeric').html(chrome.i18n.getMessage('numberFormatWarning'))
+    $('.hyperlinks').html(chrome.i18n.getMessage('addHyperlinks'))
+    $('#mosaicLb').html(chrome.i18n.getMessage('mosaicBtn'))
+    $('#mosaicMaxWidthLb').html(chrome.i18n.getMessage('mosaicMaxWidthLb'))
+    $('#mosaicMaxHeightLb').html(chrome.i18n.getMessage('mosaicMaxHeightLb'))
+    $('#gpLb').html(chrome.i18n.getMessage('gpLb'))
+    $('#gpWidthLb').html(chrome.i18n.getMessage('gpWidthLb'))
+    $('#gpHeightLb').html(chrome.i18n.getMessage('gpHeightLb'))
+    $('#popupLinksLb').html(chrome.i18n.getMessage('popupLinks'))
 
     // Check if all numeric fields have a valid format
-    var checkSettingsDlg = function () {
-      return $('#settingsDlg').find('.is-invalid').length === 0;
-    };
+    const checkSettingsDlg = () => $('#settingsDlg').find('.is-invalid').length === 0
 
     // Disables the 'OK' button when some field has a non valid format
     // (delaying the check with 'window.setTimeout' because the 'disabled' attribute
     // is set at the end of the 'onInput' event)
-    $('#settingsDlg').find('input').on('input', function () {
-      window.setTimeout(function () {
-        $('#settingsOk').attr('disabled', !checkSettingsDlg());
-      }, 0);
-    });
+    $('#settingsDlg').find('input').on('input', () => window.setTimeout(() => $('#settingsOk').attr('disabled', !checkSettingsDlg()), 0))
 
     // Sets action for the 'OK' button
-    $('#settingsOk').html(chrome.i18n.getMessage('OK')).click(function () {
+    $('#settingsOk').html(chrome.i18n.getMessage('OK')).click(() => {
       if (checkSettingsDlg()) {
 
         // Collect data
-        galWidth = $('#galWidth').val();
-        galHeight = $('#galHeight').val();
-        galLinks = $('#galLinks').parent().hasClass('is-checked');
-        mosaicMaxWidth = $('#mosaicMaxWidth').val();
-        mosaicMaxHeight = $('#mosaicMaxHeight').val();
-        mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked');
-        gpWidth = $('#gpWidth').val();
-        gpHeight = $('#gpHeight').val();
-        popupLinks = $('#popupLinks').parent().hasClass('is-checked');
+        galWidth = $('#galWidth').val()
+        galHeight = $('#galHeight').val()
+        galLinks = $('#galLinks').parent().hasClass('is-checked')
+        mosaicMaxWidth = $('#mosaicMaxWidth').val()
+        mosaicMaxHeight = $('#mosaicMaxHeight').val()
+        mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked')
+        gpWidth = $('#gpWidth').val()
+        gpHeight = $('#gpHeight').val()
+        popupLinks = $('#popupLinks').parent().hasClass('is-checked')
 
         // Close dialog
-        $('#settingsDlg')[0].close();
+        $('#settingsDlg')[0].close()
 
         // Save values to persistent storage
         chrome.storage.sync.set({
-          galWidth: galWidth,
-          galHeight: galHeight,
-          galLinks: galLinks,
-          mosaicMaxWidth: mosaicMaxWidth,
-          mosaicMaxHeight: mosaicMaxHeight,
-          mosaicLinks: mosaicLinks,
-          gpWidth: gpWidth,
-          gpHeight: gpHeight,
-          popupLinks: popupLinks
-        });
+          galWidth, galHeight, galLinks,
+          mosaicMaxWidth, mosaicMaxHeight, mosaicLinks,
+          gpWidth, gpHeight,
+          popupLinks
+        })
       }
-    });
+    })
 
     // Sets action for the 'cancel' button
-    $('#settingsCancel').html(chrome.i18n.getMessage('Cancel')).click(function () {
-      $('#settingsDlg')[0].close();
-    });
+    $('#settingsCancel').html(chrome.i18n.getMessage('Cancel')).click(() => $('#settingsDlg')[0].close())
 
     settingsInitialized = true;
   };
@@ -448,44 +440,44 @@ $(function () {
 
     // Check if settings dialog has been initialized
     if (!settingsInitialized)
-      initSettings();
+      initSettings()
 
     // Load fields with values
-    $('#galWidth').val(galWidth);
-    $('#galHeight').val(galHeight);
+    $('#galWidth').val(galWidth)
+    $('#galHeight').val(galHeight)
     if (galLinks)
-      $('#galLinks').parent().addClass('is-checked');
+      $('#galLinks').parent().addClass('is-checked')
     else
-      $('#galLinks').parent().removeClass('is-checked');
+      $('#galLinks').parent().removeClass('is-checked')
 
-    $('#mosaicMaxWidth').val(mosaicMaxWidth);
-    $('#mosaicMaxHeight').val(mosaicMaxHeight);
+    $('#mosaicMaxWidth').val(mosaicMaxWidth)
+    $('#mosaicMaxHeight').val(mosaicMaxHeight)
     if (mosaicLinks)
-      $('#mosaicLinks').parent().addClass('is-checked');
+      $('#mosaicLinks').parent().addClass('is-checked')
     else
-      $('#mosaicLinks').parent().removeClass('is-checked');
+      $('#mosaicLinks').parent().removeClass('is-checked')
 
-    $('#gpWidth').val(gpWidth);
-    $('#gpHeight').val(gpHeight);
+    $('#gpWidth').val(gpWidth)
+    $('#gpHeight').val(gpHeight)
 
     if (popupLinks)
-      $('#popupLinks').parent().addClass('is-checked');
+      $('#popupLinks').parent().addClass('is-checked')
     else
-      $('#popupLinks').parent().removeClass('is-checked');
+      $('#popupLinks').parent().removeClass('is-checked')
 
-    $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty');
+    $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty')
 
     // Open dialog
-    $('#settingsDlg')[0].showModal();
-  });
+    $('#settingsDlg')[0].showModal()
+  })
 
   //
   // Main actions executed after all components have been initialized:
   // Enable the message listener, inject 'listimages.js' on the main document
   // remove the 'loading' curtain and... let's go!
-  chrome.runtime.onMessage.addListener(msgListener);
-  chrome.tabs.executeScript(null, { file: 'listimages.js' });
-  $('.loading').remove();
-  $('.mainContent').fadeIn();
+  chrome.runtime.onMessage.addListener(msgListener)
+  chrome.tabs.executeScript(null, { file: 'listimages.js' })
+  $('.loading').remove()
+  $('.mainContent').fadeIn()
 
-});
+})

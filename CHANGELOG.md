@@ -1,6 +1,7 @@
-### v1.0.11 (2018-01-06)
+### v1.0.11 (2018-01-16)
 #### Improvements
-- Updated components to their latest Bower versions: ([jQuery](https://jquery.com/) 3.2.1, [clipboard.js](https://github.com/lgarron/clipboard-polyfill) 2.3.0, [MDL](https://getmdl.io/) 1.3.0, [dialog-polyfill](https://github.com/GoogleChrome/dialog-polyfill) 0.4.9).
+- Moving from [Bower](https://bower.io) to [Yarn](https://yarnpkg.com/) for tracking components
+- Updated components to their latest versions: ([jQuery](https://jquery.com/) 3.2.1, [clipboard-polyfill](https://github.com/lgarron/clipboard-polyfill) 0.4.9, [MDL](https://getmdl.io/) 1.3.0, [dialog-polyfill](https://github.com/GoogleChrome/dialog-polyfill) 0.4.9).
 - Use of a [polyfill](https://github.com/lgarron/clipboard-polyfill) to write to the system clipboard, thanks to [Lucas Garron](https://github.com/lgarron).
 - Code updated and optimized for ECMAScript 6 (ES6)
 

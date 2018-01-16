@@ -1,0 +1,8 @@
+title: Album
+description: A browser plugin that builds a list with the images present on the current page and exports it as text, mosaic or carousel
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions

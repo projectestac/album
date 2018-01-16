@@ -1,1 +1,1 @@
-../../bower_components/clipboard.js/build/clipboard-polyfill.js
+../../node_modules/clipboard-polyfill/build/clipboard-polyfill.js

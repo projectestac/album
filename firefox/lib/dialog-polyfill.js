@@ -1,1 +1,1 @@
-../../bower_components/dialog-polyfill/dialog-polyfill.js
+../../node_modules/dialog-polyfill/dialog-polyfill.js

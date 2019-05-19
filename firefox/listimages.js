@@ -1,12 +1,13 @@
 /**
  * File    : firefox/listimages.js
  * Created : 08/06/2016
+ * Updated:  19/05/2019
  * By      : Francesc Busquets
  *
  * Album (Firefox version)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2016-2018 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2019 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without

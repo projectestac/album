@@ -1,12 +1,13 @@
 /**
  * File    : firefox/popup.js
  * Created : 20/03/2016
+ * Updated:  10/05/2019
  * By      : Francesc Busquets
  *
  * Album (Firefox version)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2016-2018 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2019 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -375,22 +376,23 @@ $(function () {
    */
   $('#galleriaBtn').click(function () {
     const id = getUniqueId()
-    const code = `<div id="${id}" style="width:${galWidth}px; height:${galHeight}px; display:none;">
+    const code = `
+<div id="${id}" style="width:100%;max-width:${galWidth}px;height:${galHeight}px;display:none;">
 ${listImages(true, galLinks, galLinks)}</div>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 <script>
- (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId:'#${id}',autoplay:true,lightbox:true,debug:false,popupLinks:${popupLinks}});
- if(typeof GalleryLoaded === 'undefined'){
-  GalleryLoaded = jQuery(function(){
-   jQuery.ajax({url:'https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js',dataType:'script',cache:true}).done(function(){
-    Galleria.loadTheme('https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js');
-    for(var n in MyGalleries){
-     Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);
-     jQuery(MyGalleries[n].gallId).css('display','block');
-    }
-   });
-  });
- }
+  (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId:'#${id}',autoplay:true,lightbox:true,debug:false,popupLinks:${popupLinks}});
+  if(typeof GalleryLoaded === 'undefined'){
+    GalleryLoaded = jQuery(function(){
+      jQuery.ajax({url:'https://cdn.jsdelivr.net/npm/galleria@1.5.7/dist/galleria.min.js',dataType:'script',cache:true}).done(function(){
+        Galleria.loadTheme('https://cdn.jsdelivr.net/npm/galleria@1.5.7/dist/themes/classic/galleria.classic.js');
+        for(var n in MyGalleries){
+          Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);
+          jQuery(MyGalleries[n].gallId).css('display','block');
+        }
+      });
+    });
+  }
 </script>`
     copyAndNotify(code)
   })
@@ -454,7 +456,7 @@ ${listImages(true, galLinks, galLinks)}</div>
             null,
             // reject
             err => console.log(`Album extension - Error saving user preferences: ${err}`)
-            )
+          )
         }
       }
     })

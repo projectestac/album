@@ -1,12 +1,13 @@
 /**
  * File    : chrome/popup.js
  * Created : 20/03/2016
+ * Updated:  19/05/2019
  * By      : Francesc Busquets
  *
  * Album (version for Chrome/Chromium)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2016-2018 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2019 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -27,40 +28,47 @@ $(function () {
    */
   if (screen.availHeight < 600) {
     const height = '470px';
-    $('html').css({ height: height, 'overflow-y': 'auto' })
-    $('body').css({ height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto' })
-    $('.description').css({ width: '280px' })
-    $('#imgTable tbody').css({ height: '270px' })
-    $('#settingsDlg .mdl-dialog__content').css({ height: '390px', 'overflow-y': 'auto' })
-    $('.dimInput').css({ width: '385px' })
+    $('html').css({ height: height, 'overflow-y': 'auto' });
+    $('body').css({ height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto' });
+    $('.description').css({ width: '280px' });
+    $('#imgTable tbody').css({ height: '270px' });
+    $('#settingsDlg .mdl-dialog__content').css({ height: '390px', 'overflow-y': 'auto' });
+    $('.dimInput').css({ width: '385px' });
   }
 
   /**
    * Number of images currently detected and selected
    * @type number
    */
-  let numImgs = 0, numSelected = 0
+  let numImgs = 0;
+  let numSelected = 0;
 
   /**
    * By default, images below this size (in pixels) will not be checked
    * @type number
    */
-  const MIN_WIDTH = 93, MIN_HEIGHT = 60
+  const MIN_WIDTH = 93;
+  const MIN_HEIGHT = 60;
 
   /**
    * Array of boolean values indicating the 'selected' state of each image
    * @type number[]
    */
-  let selected = []
+  let selected = [];
 
   /**
    * Default settings for Mosaic and Gallery.io
    * @type Number|boolean
    */
-  let galWidth = 600, galHeight = 400, galLinks = true,
-    mosaicMaxWidth = 800, mosaicMaxHeight = 400, mosaicLinks = true,
-    gpWidth = 800, gpHeight = 600,
-    popupLinks = true
+  let galWidth = 600;
+  let galHeight = 400;
+  let galLinks = true;
+  let mosaicMaxWidth = 800;
+  let mosaicMaxHeight = 400;
+  let mosaicLinks = true;
+  let gpWidth = 800;
+  let gpHeight = 600;
+  let popupLinks = true;
 
   /**
    * Known sources of app images, usually not wanted.
@@ -73,65 +81,65 @@ $(function () {
     /^https?:\/\/[\w-.]+\.yimg\.com\//,
     /^https?:\/\/[\w-.]+\.istockimg\.com\/static\//,
     /^https?:\/\/instagramstatic[\w-.]+\.akamaihd\.net\//
-  ]
+  ];
 
   /**
    * Variables frequently used, initialized with JQuery objects
    * @type $JQuery
    */
   const $table = $('#imgTable'), $tbody = $('#imgTableBody'),
-    $numSel = $('#numSel'), $numImgs = $('#numImgs')
+    $numSel = $('#numSel'), $numImgs = $('#numImgs');
 
   /**
    * Updates the selected images counter
    * @returns {number}
    */
   const updateNumSelected = function () {
-    numSelected = selected.reduce((n, sel) => n + (sel ? 1 : 0), 0)
-    return numSelected
+    numSelected = selected.reduce((n, sel) => n + (sel ? 1 : 0), 0);
+    return numSelected;
   }
 
   /**
    * Localize main UI elements
    */
-  $('#imgUrlLb').html(chrome.i18n.getMessage('imgUrlLb'))
-  $('.description').html(chrome.i18n.getMessage('extDescText'))
-  $('#listCaption').html(chrome.i18n.getMessage('listBtn'))
-  $('#listBtn').prop('title', chrome.i18n.getMessage('listBtnTooltip'))
-  $('#mosaicCaption').html(chrome.i18n.getMessage('mosaicBtn'))
-  $('#mosaicBtn').prop('title', chrome.i18n.getMessage('mosaicBtnTooltip'))
-  $('#galleriaCaption').html(chrome.i18n.getMessage('galleriaBtn'))
-  $('#galleriaBtn').prop('title', chrome.i18n.getMessage('galleriaBtnTooltip'))
-  $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip'))
+  $('#imgUrlLb').html(chrome.i18n.getMessage('imgUrlLb'));
+  $('.description').html(chrome.i18n.getMessage('extDescText'));
+  $('#listCaption').html(chrome.i18n.getMessage('listBtn'));
+  $('#listBtn').prop('title', chrome.i18n.getMessage('listBtnTooltip'));
+  $('#mosaicCaption').html(chrome.i18n.getMessage('mosaicBtn'));
+  $('#mosaicBtn').prop('title', chrome.i18n.getMessage('mosaicBtnTooltip'));
+  $('#galleriaCaption').html(chrome.i18n.getMessage('galleriaBtn'));
+  $('#galleriaBtn').prop('title', chrome.i18n.getMessage('galleriaBtnTooltip'));
+  $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip'));
 
   /**
    * Read current settings from chrome.storage.sync
    */
   chrome.storage.sync.get(function (items) {
     if (items.hasOwnProperty('galWidth'))
-      galWidth = Number(items.galWidth)
+      galWidth = Number(items.galWidth);
     if (items.hasOwnProperty('galHeight'))
-      galHeight = Number(items.galHeight)
+      galHeight = Number(items.galHeight);
     if (items.hasOwnProperty('galLinks'))
-      galLinks = (items.galLinks.toString() === 'true')
+      galLinks = (items.galLinks.toString() === 'true');
     if (items.hasOwnProperty('mosaicMaxWidth'))
-      mosaicMaxWidth = Number(items.mosaicMaxWidth)
+      mosaicMaxWidth = Number(items.mosaicMaxWidth);
     if (items.hasOwnProperty('mosaicMaxHeight'))
-      mosaicMaxHeight = Number(items.mosaicMaxHeight)
+      mosaicMaxHeight = Number(items.mosaicMaxHeight);
     if (items.hasOwnProperty('mosaicLinks'))
-      mosaicLinks = (items.mosaicLinks.toString() === 'true')
+      mosaicLinks = (items.mosaicLinks.toString() === 'true');
     if (items.hasOwnProperty('gpWidth'))
-      gpWidth = Number(items.gpWidth)
+      gpWidth = Number(items.gpWidth);
     if (items.hasOwnProperty('gpHeight'))
-      gpHeight = Number(items.gpHeight)
+      gpHeight = Number(items.gpHeight);
     if (items.hasOwnProperty('popupLinks'))
-      popupLinks = (items.popupLinks.toString() === 'true')
+      popupLinks = (items.popupLinks.toString() === 'true');
   })
 
   /**
    * This button stops and restarts image scanning on the main document
    */
-  let stopBtnStatus = true
+  let stopBtnStatus = true;
   $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip')).click(() => {
     if (stopBtnStatus) {
       chrome.tabs.executeScript(null, { code: 'window.__listImages.endScanning();' })
@@ -346,22 +354,23 @@ $(function () {
    */
   $('#galleriaBtn').click(function () {
     const id = getUniqueId()
-    const code = `<div id="${id}" style="width:${galWidth}px; height:${galHeight}px; display:none;">
+    const code = `
+<div id="${id}" style="width:100%;max-width:${galWidth}px;height:${galHeight}px;display:none;">
 ${listImages(true, galLinks, galLinks)}</div>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 <script>
- (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId:'#${id}',autoplay:true,lightbox:true,debug:false,popupLinks:${popupLinks}});
- if(typeof GalleryLoaded === 'undefined'){
-  GalleryLoaded = jQuery(function(){
-   jQuery.ajax({url:'https://cdn.jsdelivr.net/galleria/1.4.2/galleria.min.js',dataType:'script',cache:true}).done(function(){
-    Galleria.loadTheme('https://cdn.jsdelivr.net/galleria/1.4.2/themes/classic/galleria.classic.js');
-    for(var n in MyGalleries){
-     Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);
-     jQuery(MyGalleries[n].gallId).css('display','block');
-    }
-   });
-  });
- }
+  (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId:'#${id}',autoplay:true,lightbox:true,debug:false,popupLinks:${popupLinks}});
+  if(typeof GalleryLoaded === 'undefined'){
+    GalleryLoaded = jQuery(function(){
+      jQuery.ajax({url:'https://cdn.jsdelivr.net/npm/galleria@1.5.7/dist/galleria.min.js',dataType:'script',cache:true}).done(function(){
+        Galleria.loadTheme('https://cdn.jsdelivr.net/npm/galleria@1.5.7/dist/themes/classic/galleria.classic.js');
+        for(var n in MyGalleries){
+          Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);
+          jQuery(MyGalleries[n].gallId).css('display','block');
+        }
+      });
+    });
+  }
 </script>`
     copyAndNotify(code)
   })

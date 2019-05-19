@@ -1,3 +1,8 @@
+### v1.0.12 (2019-05-19)
+#### Improvements
+- Updated components to their latest versions: ([jQuery](https://jquery.com/) 3.4.1, [clipboard-polyfill](https://github.com/lgarron/clipboard-polyfill) 2.8.0, [MDL](https://getmdl.io/) 1.3.0, [dialog-polyfill](https://github.com/GoogleChrome/dialog-polyfill) 0.5.0).
+
+
 ### v1.0.11 (2018-01-16)
 #### Improvements
 - Moving from [Bower](https://bower.io) to [Yarn](https://yarnpkg.com/) for tracking components

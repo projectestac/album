@@ -1,12 +1,13 @@
 /**
  * File    : chrome/listimages.js
  * Created : 20/03/2016
- * By      : Francesc Busquets
+ * Updated:  19/05/2019
+ * By      : Francesc Busquets<francesc@gmail.com>
  *
  * Album (version for Chrome/Chromium)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2016-2018 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2019 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without

@@ -27,48 +27,41 @@ $(function () {
    * Adjust sizes in small screens
    */
   if (screen.availHeight < 600) {
-    const height = '470px';
-    $('html').css({ height: height, 'overflow-y': 'auto' });
-    $('body').css({ height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto' });
-    $('.description').css({ width: '280px' });
-    $('#imgTable tbody').css({ height: '270px' });
-    $('#settingsDlg .mdl-dialog__content').css({ height: '390px', 'overflow-y': 'auto' });
-    $('.dimInput').css({ width: '385px' });
+    const height = '470px'
+    $('html').css({ height: height, 'overflow-y': 'auto' })
+    $('body').css({ height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto' })
+    $('.description').css({ width: '280px' })
+    $('#imgTable tbody').css({ height: '270px' })
+    $('#settingsDlg .mdl-dialog__content').css({ height: '390px', 'overflow-y': 'auto' })
+    $('.dimInput').css({ width: '385px' })
   }
 
   /**
    * Number of images currently detected and selected
    * @type number
    */
-  let numImgs = 0;
-  let numSelected = 0;
+  let numImgs = 0, numSelected = 0
 
   /**
    * By default, images below this size (in pixels) will not be checked
    * @type number
    */
-  const MIN_WIDTH = 93;
-  const MIN_HEIGHT = 60;
+  const MIN_WIDTH = 93, MIN_HEIGHT = 60
 
   /**
    * Array of boolean values indicating the 'selected' state of each image
    * @type number[]
    */
-  let selected = [];
+  let selected = []
 
   /**
    * Default settings for Mosaic and Gallery.io
    * @type Number|boolean
    */
-  let galWidth = 600;
-  let galHeight = 400;
-  let galLinks = true;
-  let mosaicMaxWidth = 800;
-  let mosaicMaxHeight = 400;
-  let mosaicLinks = true;
-  let gpWidth = 800;
-  let gpHeight = 600;
-  let popupLinks = true;
+  let galWidth = 600, galHeight = 400, galLinks = true,
+    mosaicMaxWidth = 800, mosaicMaxHeight = 400, mosaicLinks = true,
+    gpWidth = 800, gpHeight = 600,
+    popupLinks = true
 
   /**
    * Known sources of app images, usually not wanted.
@@ -81,65 +74,65 @@ $(function () {
     /^https?:\/\/[\w-.]+\.yimg\.com\//,
     /^https?:\/\/[\w-.]+\.istockimg\.com\/static\//,
     /^https?:\/\/instagramstatic[\w-.]+\.akamaihd\.net\//
-  ];
+  ]
 
   /**
    * Variables frequently used, initialized with JQuery objects
    * @type $JQuery
    */
   const $table = $('#imgTable'), $tbody = $('#imgTableBody'),
-    $numSel = $('#numSel'), $numImgs = $('#numImgs');
+    $numSel = $('#numSel'), $numImgs = $('#numImgs')
 
   /**
    * Updates the selected images counter
    * @returns {number}
    */
   const updateNumSelected = function () {
-    numSelected = selected.reduce((n, sel) => n + (sel ? 1 : 0), 0);
-    return numSelected;
+    numSelected = selected.reduce((n, sel) => n + (sel ? 1 : 0), 0)
+    return numSelected
   }
 
   /**
    * Localize main UI elements
    */
-  $('#imgUrlLb').html(chrome.i18n.getMessage('imgUrlLb'));
-  $('.description').html(chrome.i18n.getMessage('extDescText'));
-  $('#listCaption').html(chrome.i18n.getMessage('listBtn'));
-  $('#listBtn').prop('title', chrome.i18n.getMessage('listBtnTooltip'));
-  $('#mosaicCaption').html(chrome.i18n.getMessage('mosaicBtn'));
-  $('#mosaicBtn').prop('title', chrome.i18n.getMessage('mosaicBtnTooltip'));
-  $('#galleriaCaption').html(chrome.i18n.getMessage('galleriaBtn'));
-  $('#galleriaBtn').prop('title', chrome.i18n.getMessage('galleriaBtnTooltip'));
-  $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip'));
+  $('#imgUrlLb').html(chrome.i18n.getMessage('imgUrlLb'))
+  $('.description').html(chrome.i18n.getMessage('extDescText'))
+  $('#listCaption').html(chrome.i18n.getMessage('listBtn'))
+  $('#listBtn').prop('title', chrome.i18n.getMessage('listBtnTooltip'))
+  $('#mosaicCaption').html(chrome.i18n.getMessage('mosaicBtn'))
+  $('#mosaicBtn').prop('title', chrome.i18n.getMessage('mosaicBtnTooltip'))
+  $('#galleriaCaption').html(chrome.i18n.getMessage('galleriaBtn'))
+  $('#galleriaBtn').prop('title', chrome.i18n.getMessage('galleriaBtnTooltip'))
+  $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip'))
 
   /**
    * Read current settings from chrome.storage.sync
    */
   chrome.storage.sync.get(function (items) {
     if (items.hasOwnProperty('galWidth'))
-      galWidth = Number(items.galWidth);
+      galWidth = Number(items.galWidth)
     if (items.hasOwnProperty('galHeight'))
-      galHeight = Number(items.galHeight);
+      galHeight = Number(items.galHeight)
     if (items.hasOwnProperty('galLinks'))
-      galLinks = (items.galLinks.toString() === 'true');
+      galLinks = (items.galLinks.toString() === 'true')
     if (items.hasOwnProperty('mosaicMaxWidth'))
-      mosaicMaxWidth = Number(items.mosaicMaxWidth);
+      mosaicMaxWidth = Number(items.mosaicMaxWidth)
     if (items.hasOwnProperty('mosaicMaxHeight'))
-      mosaicMaxHeight = Number(items.mosaicMaxHeight);
+      mosaicMaxHeight = Number(items.mosaicMaxHeight)
     if (items.hasOwnProperty('mosaicLinks'))
-      mosaicLinks = (items.mosaicLinks.toString() === 'true');
+      mosaicLinks = (items.mosaicLinks.toString() === 'true')
     if (items.hasOwnProperty('gpWidth'))
-      gpWidth = Number(items.gpWidth);
+      gpWidth = Number(items.gpWidth)
     if (items.hasOwnProperty('gpHeight'))
-      gpHeight = Number(items.gpHeight);
+      gpHeight = Number(items.gpHeight)
     if (items.hasOwnProperty('popupLinks'))
-      popupLinks = (items.popupLinks.toString() === 'true');
+      popupLinks = (items.popupLinks.toString() === 'true')
   })
 
   /**
    * This button stops and restarts image scanning on the main document
    */
-  let stopBtnStatus = true;
+  let stopBtnStatus = true
   $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip')).click(() => {
     if (stopBtnStatus) {
       chrome.tabs.executeScript(null, { code: 'window.__listImages.endScanning();' })
@@ -435,8 +428,8 @@ ${listImages(true, galLinks, galLinks)}</div>
     // Sets action for the 'cancel' button
     $('#settingsCancel').html(chrome.i18n.getMessage('Cancel')).click(() => $('#settingsDlg')[0].close())
 
-    settingsInitialized = true;
-  };
+    settingsInitialized = true
+  }
 
   // Sets action for the 'settings' button
   $('#settingsBtn').click(function () {

@@ -1,5 +1,6 @@
 ### v1.0.12 (2019-05-19)
 #### Improvements
+- Make exported Galleria divs more responsive, using max-width instead of fixed width.
 - Updated components to their latest versions: ([jQuery](https://jquery.com/) 3.4.1, [clipboard-polyfill](https://github.com/lgarron/clipboard-polyfill) 2.8.0, [MDL](https://getmdl.io/) 1.3.0, [dialog-polyfill](https://github.com/GoogleChrome/dialog-polyfill) 0.5.0).
 
 

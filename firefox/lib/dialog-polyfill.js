@@ -1,1 +1,1 @@
-../../node_modules/dialog-polyfill/dialog-polyfill.js
+../../node_modules/dialog-polyfill/dist/dialog-polyfill.js

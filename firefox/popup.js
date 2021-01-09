@@ -383,8 +383,8 @@ ${listImages(true, galLinks, galLinks)}</div>
   (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId:'#${id}',autoplay:true,lightbox:true,debug:false,popupLinks:${popupLinks}});
   if(typeof GalleryLoaded === 'undefined'){
     GalleryLoaded = jQuery(function(){
-      jQuery.ajax({url:'https://cdn.jsdelivr.net/npm/galleria@1.5.7/dist/galleria.min.js',dataType:'script',cache:true}).done(function(){
-        Galleria.loadTheme('https://cdn.jsdelivr.net/npm/galleria@1.5.7/dist/themes/classic/galleria.classic.js');
+      jQuery.ajax({url:'https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/galleria.min.js',dataType:'script',cache:true}).done(function(){
+        Galleria.loadTheme('https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/classic/galleria.classic.js');
         for(var n in MyGalleries){
           Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);
           jQuery(MyGalleries[n].gallId).css('display','block');

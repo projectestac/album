@@ -22,16 +22,20 @@ Note that _Album_ does not copy images nor any type of files: it just deals with
 This project was developed in HTML5, CSS and JavaScript. It makes use of three open-source libraries:
 
 * [JQuery](http://jquery.com) by The JQuery Foundation
-* [clipboard-polyfill](https://github.com/lgarron/clipboard-polyfill) by Lucas Garron
 * [Material Design Lite](https://www.getmdl.io) by Google
 
 In browsers that don't currently support the [`<dialog>`](https://developer.mozilla.org/ca/docs/Web/HTML/Element/dialog) HTML element (like Firefox), this polyfill is also used:
 
 * [dialog-polyfill](https://github.com/GoogleChrome/dialog-polyfill) by The Chromium Authors
 
-All these components can be obtained with [Yarn](https://yarnpkg.com/). To download its latest releases [install Yarn](https://yarnpkg.com/en/docs/install) on your system and launch `yarn` from the project's root folder. Components will then be placed into `/node_modules` and referenced by symbolic links from `/chrome/lib` and `/firefox/lib`.
+All these components can be obtained with `npm`:
+
+```bash
+$ npm ci
+```
+
+Components will then be placed into `/node_modules` and referenced by symbolic links from `/chrome/lib` and `/firefox/lib`.
 
 For more information on how to build Chrome & Chromium extensions, refer to [Chrome Developers'](https://developer.chrome.com/extensions) site.
 
 For more information on how to build web extensions for Firefox and other browsers, refer to the [WebExtensions page on MDN](https://developer.mozilla.org/en-US/Add-ons/WebExtensions).
-

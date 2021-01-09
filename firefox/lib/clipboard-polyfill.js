@@ -1,1 +1,0 @@
-../../node_modules/clipboard-polyfill/build/clipboard-polyfill.js

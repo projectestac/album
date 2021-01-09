@@ -7,7 +7,7 @@
  * Album (version for Chrome/Chromium)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2016-2019 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2021 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -16,7 +16,7 @@
  * Public License along with this program. If not, see [http://www.gnu.org/licenses/].
  */
 
-/* global window, document, chrome */
+/* global chrome */
 
 // Declare the main object just once
 if (typeof window.__ListImages === 'undefined') {

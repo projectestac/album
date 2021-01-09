@@ -1,13 +1,13 @@
 /**
  * File    : chrome/popup.js
  * Created : 20/03/2016
- * Updated:  19/05/2019
+ * Updated:  08/01/2021
  * By      : Francesc Busquets
  *
  * Album (version for Chrome/Chromium)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2016-2019 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2021 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -16,7 +16,7 @@
  * Public License along with this program. If not, see [http://www.gnu.org/licenses/].
  */
 
-/* global $, chrome, clipboard, componentHandler */
+/* global $, chrome, componentHandler */
 
 /**
  * Main script loads when DOM is ready to be used
@@ -56,12 +56,25 @@ $(function () {
 
   /**
    * Default settings for Mosaic and Gallery.io
-   * @type Number|boolean
+   * @type object
    */
-  let galWidth = 600, galHeight = 400, galLinks = true,
-    mosaicMaxWidth = 800, mosaicMaxHeight = 400, mosaicLinks = true,
-    gpWidth = 800, gpHeight = 600,
-    popupLinks = true
+  const DEFAULT_SETTINGS = {
+    galWidth: 600,
+    galHeight: 400,
+    galLinks: true,
+    mosaicMaxWidth: 800,
+    mosaicMaxHeight: 400,
+    mosaicLinks: true,
+    gpWidth: 800,
+    gpHeight: 600,
+    popupLinks: true,
+  }
+
+  /**
+   * Current settings
+   * @type object
+   */
+  let settings = { ...DEFAULT_SETTINGS }
 
   /**
    * Known sources of app images, usually not wanted.
@@ -80,8 +93,10 @@ $(function () {
    * Variables frequently used, initialized with JQuery objects
    * @type $JQuery
    */
-  const $table = $('#imgTable'), $tbody = $('#imgTableBody'),
-    $numSel = $('#numSel'), $numImgs = $('#numImgs')
+  const $table = $('#imgTable')
+  const $tbody = $('#imgTableBody')
+  const $numSel = $('#numSel')
+  const $numImgs = $('#numImgs')
 
   /**
    * Updates the selected images counter
@@ -108,51 +123,36 @@ $(function () {
   /**
    * Read current settings from chrome.storage.sync
    */
-  chrome.storage.sync.get(function (items) {
-    if (items.hasOwnProperty('galWidth'))
-      galWidth = Number(items.galWidth)
-    if (items.hasOwnProperty('galHeight'))
-      galHeight = Number(items.galHeight)
-    if (items.hasOwnProperty('galLinks'))
-      galLinks = (items.galLinks.toString() === 'true')
-    if (items.hasOwnProperty('mosaicMaxWidth'))
-      mosaicMaxWidth = Number(items.mosaicMaxWidth)
-    if (items.hasOwnProperty('mosaicMaxHeight'))
-      mosaicMaxHeight = Number(items.mosaicMaxHeight)
-    if (items.hasOwnProperty('mosaicLinks'))
-      mosaicLinks = (items.mosaicLinks.toString() === 'true')
-    if (items.hasOwnProperty('gpWidth'))
-      gpWidth = Number(items.gpWidth)
-    if (items.hasOwnProperty('gpHeight'))
-      gpHeight = Number(items.gpHeight)
-    if (items.hasOwnProperty('popupLinks'))
-      popupLinks = (items.popupLinks.toString() === 'true')
-  })
+  chrome.storage.sync.get(DEFAULT_SETTINGS, items => settings = { ...settings, ...items })
 
   /**
    * This button stops and restarts image scanning on the main document
    */
   let stopBtnStatus = true
-  $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip')).click(() => {
-    if (stopBtnStatus) {
-      chrome.tabs.executeScript(null, { code: 'window.__listImages.endScanning();' })
-      $('#progressBar').removeClass('mdl-progress__indeterminate')
-      $('#stopIcon').html('play_arrow')
-      $('#stopBtn').prop('title', chrome.i18n.getMessage('playBtnTooltip'))
-      stopBtnStatus = false
-    } else {
-      chrome.tabs.executeScript(null, { code: 'window.__listImages.startScanning();' })
-      $('#progressBar').addClass('mdl-progress__indeterminate')
-      $('#stopIcon').html('pause')
-      $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip'))
-      stopBtnStatus = true
-    }
-  })
+  $('#stopBtn')
+    .prop('title', chrome.i18n.getMessage('stopBtnTooltip'))
+    .on('click', () => {
+      if (stopBtnStatus) {
+        chrome.tabs.executeScript(null, { code: 'window.__listImages.endScanning();' })
+        $('#progressBar').removeClass('mdl-progress__indeterminate')
+        $('#stopIcon').html('play_arrow')
+        $('#stopBtn').prop('title', chrome.i18n.getMessage('playBtnTooltip'))
+        stopBtnStatus = false
+      } else {
+        chrome.tabs.executeScript(null, { code: 'window.__listImages.startScanning();' })
+        $('#progressBar').addClass('mdl-progress__indeterminate')
+        $('#stopIcon').html('pause')
+        $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip'))
+        stopBtnStatus = true
+      }
+    })
 
   /**
    * Localize and set action for the 'close' button in the preview dialog
    */
-  $('#previewClose').prop('title', chrome.i18n.getMessage('Close')).click(() => $('#previewDlg')[0].close())
+  $('#previewClose')
+    .prop('title', chrome.i18n.getMessage('Close'))
+    .on('click', () => $('#previewDlg')[0].close())
 
   /**
    * Sets action for the global checkbox, located at the first column of the table header
@@ -170,6 +170,8 @@ $(function () {
    * on the main page. Each message contains the data associated to one image
    */
   const msgListener = function (request /*, sender, sendResponse*/) {
+
+    const { gpWidth, gpHeight } = settings;
 
     if (request.imgurl) {
       let url = request.imgurl
@@ -192,7 +194,7 @@ $(function () {
       // Add a checkbox to $tr
       const $checkBox = $(`<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[${numImgs + 1}]"/>`)
         .append($(`<input type="checkbox" id="row[${numImgs + 1}]" class="mdl-checkbox__input" ${selected[n] ? 'checked' : ''}/>`)
-          .change(event => {
+          .on('change', event => {
             selected[n] = event.target.checked ? true : false
             $numSel.html(updateNumSelected())
           }))
@@ -275,20 +277,22 @@ $(function () {
    * @param {String} txt - The text to copy to the clipboard
    */
   const copyAndNotify = function (txt) {
-    clipboard.writeText(txt || '')
-    chrome.notifications.onButtonClicked.addListener(() => {
-      chrome.tabs.create({ url: `data:text/html;base64,${btoa(txt || '')}` })
-    })
-    chrome.notifications.create({
-      type: 'basic',
-      title: chrome.i18n.getMessage('extName'),
-      message: chrome.i18n.getMessage('msgDataCopied'),
-      iconUrl: 'icons/icon192.png',
-      buttons: [{
-        title: chrome.i18n.getMessage('previewWidget'),
-        iconUrl: 'icons/preview.svg'
-      }]
-    })
+    navigator.clipboard.writeText(txt || '')
+      .then(() => {
+        chrome.notifications.onButtonClicked.addListener(() => {
+          chrome.tabs.create({ url: `data:text/html;base64,${btoa(txt || '')}` })
+        })
+        chrome.notifications.create({
+          type: 'basic',
+          title: chrome.i18n.getMessage('extName'),
+          message: chrome.i18n.getMessage('msgDataCopied'),
+          iconUrl: 'icons/icon192.png',
+          buttons: [{
+            title: chrome.i18n.getMessage('previewWidget'),
+            iconUrl: 'icons/preview.svg'
+          }]
+        })
+      })
   }
 
   /**
@@ -330,12 +334,13 @@ $(function () {
   /**
    * Sets action for the 'list' button
    */
-  $('#listBtn').click(() => copyAndNotify(listImages(false, false, false)))
+  $('#listBtn').on('click', () => copyAndNotify(listImages(false, false, false)))
 
   /**
    * Sets action for the 'mosaic' button
    */
-  $('#mosaicBtn').click(() => {
+  $('#mosaicBtn').on('click', () => {
+    const { mosaicMaxWidth, mosaicMaxHeight, mosaicLinks, popupLinks } = settings;
     const imgStyle = (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) ?
       (mosaicMaxWidth > 0 ? `max-width:${mosaicMaxWidth}px;` : '') +
       (mosaicMaxHeight > 0 ? `max-height:${mosaicMaxHeight}px;` : '') : null
@@ -345,12 +350,13 @@ $(function () {
   /**
    * Sets action for the 'galleria.io' button
    */
-  $('#galleriaBtn').click(function () {
+  $('#galleriaBtn').on('click', () => {
+    const { galWidth, galHeight, galLinks, popupLinks } = settings;
     const id = getUniqueId()
     const code = `
 <div id="${id}" style="width:100%;max-width:${galWidth}px;height:${galHeight}px;display:none;">
 ${listImages(true, galLinks, galLinks)}</div>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script>
   (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId:'#${id}',autoplay:true,lightbox:true,debug:false,popupLinks:${popupLinks}});
   if(typeof GalleryLoaded === 'undefined'){
@@ -395,44 +401,50 @@ ${listImages(true, galLinks, galLinks)}</div>
     // Disables the 'OK' button when some field has a non valid format
     // (delaying the check with 'window.setTimeout' because the 'disabled' attribute
     // is set at the end of the 'onInput' event)
-    $('#settingsDlg').find('input').on('input', () => window.setTimeout(() => $('#settingsOk').attr('disabled', !checkSettingsDlg()), 0))
+    $('#settingsDlg')
+      .find('input')
+      .on('input', () => window.setTimeout(() => $('#settingsOk').attr('disabled', !checkSettingsDlg()), 0))
 
     // Sets action for the 'OK' button
-    $('#settingsOk').html(chrome.i18n.getMessage('OK')).click(() => {
-      if (checkSettingsDlg()) {
+    $('#settingsOk')
+      .html(chrome.i18n.getMessage('OK'))
+      .on('click', () => {
+        if (checkSettingsDlg()) {
 
-        // Collect data
-        galWidth = $('#galWidth').val()
-        galHeight = $('#galHeight').val()
-        galLinks = $('#galLinks').parent().hasClass('is-checked')
-        mosaicMaxWidth = $('#mosaicMaxWidth').val()
-        mosaicMaxHeight = $('#mosaicMaxHeight').val()
-        mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked')
-        gpWidth = $('#gpWidth').val()
-        gpHeight = $('#gpHeight').val()
-        popupLinks = $('#popupLinks').parent().hasClass('is-checked')
+          // Collect data
+          settings.galWidth = Number($('#galWidth').val()) || DEFAULT_SETTINGS.galWidth
+          settings.galHeight = Number($('#galHeight').val()) || DEFAULT_SETTINGS.galHeight
+          settings.galLinks = $('#galLinks').parent().hasClass('is-checked')
+          settings.mosaicMaxWidth = Number($('#mosaicMaxWidth').val()) || DEFAULT_SETTINGS.mosaicMaxWidth
+          settings.mosaicMaxHeight = Number($('#mosaicMaxHeight').val()) || DEFAULT_SETTINGS.mosaicMaxHeight
+          settings.mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked')
+          settings.gpWidth = Number($('#gpWidth').val()) || DEFAULT_SETTINGS.gpWidth
+          settings.gpHeight = Number($('#gpHeight').val()) || DEFAULT_SETTINGS.gpHeight
+          settings.popupLinks = $('#popupLinks').parent().hasClass('is-checked')
 
-        // Close dialog
-        $('#settingsDlg')[0].close()
+          // Close dialog
+          $('#settingsDlg')[0].close()
 
-        // Save values to persistent storage
-        chrome.storage.sync.set({
-          galWidth, galHeight, galLinks,
-          mosaicMaxWidth, mosaicMaxHeight, mosaicLinks,
-          gpWidth, gpHeight,
-          popupLinks
-        })
-      }
-    })
+          // Save values to persistent storage
+          chrome.storage.sync.set(settings)
+        }
+      })
 
     // Sets action for the 'cancel' button
-    $('#settingsCancel').html(chrome.i18n.getMessage('Cancel')).click(() => $('#settingsDlg')[0].close())
+    $('#settingsCancel')
+      .html(chrome.i18n.getMessage('Cancel'))
+      .on('click', () => $('#settingsDlg')[0].close())
 
     settingsInitialized = true
   }
 
   // Sets action for the 'settings' button
-  $('#settingsBtn').click(function () {
+  $('#settingsBtn').on('click', () => {
+
+    const {
+      galWidth, galHeight, galLinks,
+      mosaicMaxWidth, mosaicMaxHeight, mosaicLinks,
+      gpWidth, gpHeight, popupLinks } = settings
 
     // Check if settings dialog has been initialized
     if (!settingsInitialized)

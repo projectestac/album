@@ -1,3 +1,11 @@
+### v1.1.0 (2021-01-08)
+#### Improvements
+- All dependencies are now managed with `npm`, instead of Yarn.
+- Updated [jQuery](https://www.npmjs.com/package/jquery) to 3.5.1.
+- Updated [Material Design Lite](https://www.npmjs.com/package/material-design-lite) to 1.3.0.
+- Since all major browsers support the [Clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard), [Clipboard Polyfill](https://www.npmjs.com/package/clipboard-polyfill) is no longer used.
+- Code syntax checked with [ESLint](https://eslint.org/)
+
 ### v1.0.12 (2019-05-19)
 #### Improvements
 - Make exported Galleria divs more responsive, using max-width instead of fixed width.

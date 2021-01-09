@@ -27,32 +27,34 @@ $(function () {
    * Adjust sizes in small screens
    */
   if (screen.availHeight < 600) {
-    const height = '470px'
-    $('html').css({ height: height, 'overflow-y': 'auto' })
-    $('body').css({ height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto' })
-    $('.description').css({ width: '280px' })
-    $('#imgTable tbody').css({ height: '270px' })
-    $('#settingsDlg .mdl-dialog__content').css({ height: '390px', 'overflow-y': 'auto' })
-    $('.dimInput').css({ width: '385px' })
+    const height = '470px';
+    $('html').css({ height: height, 'overflow-y': 'auto' });
+    $('body').css({ height: height, 'max-height': height, 'min-height': height, 'overflow-y': 'auto' });
+    $('.description').css({ width: '280px' });
+    $('#imgTable tbody').css({ height: '270px' });
+    $('#settingsDlg .mdl-dialog__content').css({ height: '390px', 'overflow-y': 'auto' });
+    $('.dimInput').css({ width: '385px' });
   }
 
   /**
    * Number of images currently detected and selected
    * @type number
    */
-  let numImgs = 0, numSelected = 0
+  let numImgs = 0;
+  let numSelected = 0;
 
   /**
    * By default, images below this size (in pixels) will not be checked
    * @type number
    */
-  const MIN_WIDTH = 93, MIN_HEIGHT = 60
+  const MIN_WIDTH = 93;
+  const MIN_HEIGHT = 60;
 
   /**
    * Array of boolean values indicating the 'selected' state of each image
    * @type number[]
    */
-  let selected = []
+  let selected = [];
 
   /**
    * Default settings for Mosaic and Gallery.io
@@ -68,13 +70,13 @@ $(function () {
     gpWidth: 800,
     gpHeight: 600,
     popupLinks: true,
-  }
+  };
 
   /**
    * Current settings
    * @type object
    */
-  let settings = { ...DEFAULT_SETTINGS }
+  let settings = { ...DEFAULT_SETTINGS };
 
   /**
    * Known sources of app images, usually not wanted.
@@ -86,84 +88,85 @@ $(function () {
     /^https?:\/\/[\w-.]+\.gstatic\.com\//,
     /^https?:\/\/[\w-.]+\.yimg\.com\//,
     /^https?:\/\/[\w-.]+\.istockimg\.com\/static\//,
-    /^https?:\/\/instagramstatic[\w-.]+\.akamaihd\.net\//
-  ]
+    /^https?:\/\/instagramstatic[\w-.]+\.akamaihd\.net\//,
+  ];
 
   /**
    * Variables frequently used, initialized with JQuery objects
    * @type $JQuery
    */
-  const $table = $('#imgTable')
-  const $tbody = $('#imgTableBody')
-  const $numSel = $('#numSel')
-  const $numImgs = $('#numImgs')
+  const $table = $('#imgTable');
+  const $tbody = $('#imgTableBody');
+  const $numSel = $('#numSel');
+  const $numImgs = $('#numImgs');
 
   /**
    * Updates the selected images counter
    * @returns {number}
    */
   const updateNumSelected = function () {
-    numSelected = selected.reduce((n, sel) => n + (sel ? 1 : 0), 0)
-    return numSelected
-  }
+    numSelected = selected.reduce((n, sel) => n + (sel ? 1 : 0), 0);
+    return numSelected;
+  };
 
   /**
    * Localize main UI elements
    */
-  $('#imgUrlLb').html(chrome.i18n.getMessage('imgUrlLb'))
-  $('.description').html(chrome.i18n.getMessage('extDescText'))
-  $('#listCaption').html(chrome.i18n.getMessage('listBtn'))
-  $('#listBtn').prop('title', chrome.i18n.getMessage('listBtnTooltip'))
-  $('#mosaicCaption').html(chrome.i18n.getMessage('mosaicBtn'))
-  $('#mosaicBtn').prop('title', chrome.i18n.getMessage('mosaicBtnTooltip'))
-  $('#galleriaCaption').html(chrome.i18n.getMessage('galleriaBtn'))
-  $('#galleriaBtn').prop('title', chrome.i18n.getMessage('galleriaBtnTooltip'))
-  $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip'))
+  $('#imgUrlLb').html(chrome.i18n.getMessage('imgUrlLb'));
+  $('.description').html(chrome.i18n.getMessage('extDescText'));
+  $('#listCaption').html(chrome.i18n.getMessage('listBtn'));
+  $('#listBtn').prop('title', chrome.i18n.getMessage('listBtnTooltip'));
+  $('#mosaicCaption').html(chrome.i18n.getMessage('mosaicBtn'));
+  $('#mosaicBtn').prop('title', chrome.i18n.getMessage('mosaicBtnTooltip'));
+  $('#galleriaCaption').html(chrome.i18n.getMessage('galleriaBtn'));
+  $('#galleriaBtn').prop('title', chrome.i18n.getMessage('galleriaBtnTooltip'));
+  $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip'));
 
   /**
    * Read current settings from chrome.storage.sync
    */
-  chrome.storage.sync.get(DEFAULT_SETTINGS, items => settings = { ...settings, ...items })
+  chrome.storage.sync.get(DEFAULT_SETTINGS, items => settings = { ...settings, ...items });
 
   /**
    * This button stops and restarts image scanning on the main document
    */
-  let stopBtnStatus = true
+  let stopBtnStatus = true;
   $('#stopBtn')
     .prop('title', chrome.i18n.getMessage('stopBtnTooltip'))
     .on('click', () => {
       if (stopBtnStatus) {
-        chrome.tabs.executeScript(null, { code: 'window.__listImages.endScanning();' })
-        $('#progressBar').removeClass('mdl-progress__indeterminate')
-        $('#stopIcon').html('play_arrow')
-        $('#stopBtn').prop('title', chrome.i18n.getMessage('playBtnTooltip'))
-        stopBtnStatus = false
+        chrome.tabs.executeScript(null, { code: 'window.__listImages.endScanning();' });
+        $('#progressBar').removeClass('mdl-progress__indeterminate');
+        $('#stopIcon').html('play_arrow');
+        $('#stopBtn').prop('title', chrome.i18n.getMessage('playBtnTooltip'));
+        stopBtnStatus = false;
       } else {
-        chrome.tabs.executeScript(null, { code: 'window.__listImages.startScanning();' })
-        $('#progressBar').addClass('mdl-progress__indeterminate')
-        $('#stopIcon').html('pause')
-        $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip'))
-        stopBtnStatus = true
+        chrome.tabs.executeScript(null, { code: 'window.__listImages.startScanning();' });
+        $('#progressBar').addClass('mdl-progress__indeterminate');
+        $('#stopIcon').html('pause');
+        $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip'));
+        stopBtnStatus = true;
       }
-    })
+    });
 
   /**
    * Localize and set action for the 'close' button in the preview dialog
    */
   $('#previewClose')
     .prop('title', chrome.i18n.getMessage('Close'))
-    .on('click', () => $('#previewDlg')[0].close())
+    .on('click', () => $('#previewDlg')[0].close());
 
   /**
    * Sets action for the global checkbox, located at the first column of the table header
    */
-  $table.find('thead .mdl-data-table__select input').on('change', event => {
-    $tbody.find('.mdl-data-table__select').get().forEach((box, i) => {
-      selected[i] = event.target.checked
-      box.MaterialCheckbox[event.target.checked ? 'check' : 'uncheck']()
-    })
-    $numSel.html(updateNumSelected())
-  })
+  $table.find('thead .mdl-data-table__select input')
+    .on('change', event => {
+      $tbody.find('.mdl-data-table__select').get().forEach((box, i) => {
+        selected[i] = event.target.checked;
+        box.MaterialCheckbox[event.target.checked ? 'check' : 'uncheck']();
+      });
+      $numSel.html(updateNumSelected());
+    });
 
   /**
    * This function listens to messages sent by the 'listimages' script running
@@ -174,102 +177,102 @@ $(function () {
     const { gpWidth, gpHeight } = settings;
 
     if (request.imgurl) {
-      let url = request.imgurl
-      const n = numImgs
-      selected[n] = true
+      let url = request.imgurl;
+      const n = numImgs;
+      selected[n] = true;
 
       // Check if we are in Google Photos and request a specific size if needed
       if ((gpWidth || gpHeight) && /^https:\/\/[\w.]+\.googleusercontent\.com\//.test(url)) {
-        const exp = `=${gpWidth ? `w${gpWidth}-` : ''}${gpHeight ? `h${gpHeight}-` : ''}no`
-        url = url.replace(/=(w\d+)?-?(h\d+)?(-[\w-+?&]*)?$/, exp)
+        const exp = `=${gpWidth ? `w${gpWidth}-` : ''}${gpHeight ? `h${gpHeight}-` : ''}no`;
+        url = url.replace(/=(w\d+)?-?(h\d+)?(-[\w-+?&]*)?$/, exp);
       }
       // Check if this image falls in the category of unwanted
       else if (unwantedImages.some(uw => uw.test(url)))
-        selected[n] = false
+        selected[n] = false;
 
       // Build a new <tr> element with the image URL as a data attribute
-      const $tr = $('<tr/>')
-      $tr.data('url', url)
+      const $tr = $('<tr/>');
+      $tr.data('url', url);
 
       // Add a checkbox to $tr
       const $checkBox = $(`<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[${numImgs + 1}]"/>`)
         .append($(`<input type="checkbox" id="row[${numImgs + 1}]" class="mdl-checkbox__input" ${selected[n] ? 'checked' : ''}/>`)
           .on('change', event => {
-            selected[n] = event.target.checked ? true : false
-            $numSel.html(updateNumSelected())
-          }))
-      $tr.append($('<td/>').append($checkBox))
+            selected[n] = event.target.checked ? true : false;
+            $numSel.html(updateNumSelected());
+          }));
+      $tr.append($('<td/>').append($checkBox));
 
       // Add an interactive image thumbnail to $tr
       const $img = $('<img class="thumb mdl-list__item-icon"/>').attr({
         src: url,
-        title: url
+        title: url,
       }).on('load', () => {
         // Images sized below MIN_WIDH x MIN_HEIGHT will be unchecked by default
         if ($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT) {
-          $checkBox[0].MaterialCheckbox.uncheck()
-          selected[n] = false
-          $numSel.html(updateNumSelected())
+          $checkBox[0].MaterialCheckbox.uncheck();
+          selected[n] = false;
+          $numSel.html(updateNumSelected());
         }
       }).on('click', () => {
-        const img = $img.get(0)
+        const img = $img.get(0);
         $('.infoSize').html((img &&
           typeof img.naturalWidth !== 'undefined' &&
           typeof img.naturalHeight !== 'undefined' &&
           img.naturalWidth > 0 &&
           img.naturalHeight > 0) ?
           img.naturalWidth + ' x ' + img.naturalHeight :
-          chrome.i18n.getMessage('unknownSize'))
+          chrome.i18n.getMessage('unknownSize'));
 
-        $('.previewImgUrl').attr({ href: url, title: url })
-        $('.previewImgUrl .urltext').html(url)
-        $('#previewImg').attr({ 'src': url })
+        $('.previewImgUrl').attr({ href: url, title: url });
+        $('.previewImgUrl .urltext').html(url);
+        $('#previewImg').attr({ 'src': url });
 
-        const link = request.imglink || ''
-        $('.previewImgLink').attr({ href: link, title: link })
-        $('.previewImgLink .urltext').html(link)
-        $('#previewLink').css('visibility', request.imglink ? 'visible' : 'hidden')
+        const link = request.imglink || '';
+        $('.previewImgLink').attr({ href: link, title: link });
+        $('.previewImgLink .urltext').html(link);
+        $('#previewLink').css('visibility', request.imglink ? 'visible' : 'hidden');
 
-        $('#previewDlg')[0].showModal()
-      })
-      $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($img))
+        $('#previewDlg')[0].showModal();
+      });
+      $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($img));
 
       // Add the URL text to $tr
-      const $urlText = $(`<span class="urltext">${url}</span>`)
-      $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($urlText))
+      const $urlText = $(`<span class="urltext">${url}</span>`);
+      $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($urlText));
 
       // Add the image link to $tr, if any
-      let $link = $('<span/>')
+      let $link = $('<span/>');
       if (request.imglink) {
         $link = $(`<a id="link[${numImgs + 1}]" class="urllink"/>`)
           .attr({ href: request.imglink, target: '_blank', title: request.imglink })
-          .append($('<i class="material-icons"/>').html('link'))
-        $tr.data('link', request.imglink)
+          .append($('<i class="material-icons"/>').html('link'));
+        $tr.data('link', request.imglink);
       } else
-        $link = $('')
-      $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($link))
+        $link = $('');
+      $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($link));
 
       // Add $tr to table body and refresh MDL components
-      $tbody.append($tr)
-      componentHandler.upgradeElements($table.get())
+      $tbody.append($tr);
+      componentHandler.upgradeElements($table.get());
 
       // Update the image counter, resizing it if needed
       if (numImgs === 99) {
-        $('.counter').css('width', '64px')
-        $('.description').css('width', '270px')
+        $('.counter').css('width', '64px');
+        $('.description').css('width', '270px');
       }
-      $numImgs.html(++numImgs)
+      $numImgs.html(++numImgs);
       if (selected[n])
-        $numSel.html(++numSelected)
+        $numSel.html(++numSelected);
     }
-  }
+  };
 
   /**
    * Builds a unique identifier, used in scripts to refer to the image container
    * (useful when multiple galleries will coexist in the same document)
    * @returns {String}
    */
-  const getUniqueId = () => (65536 + Math.floor(Math.random() * 120000)).toString(16).toUpperCase()
+  const getUniqueId = () => (65536 + Math.floor(Math.random() * 120000)).toString(16).toUpperCase();
 
   /**
    * Copies the provided text to the system clipboard and notifies the user about
@@ -280,8 +283,8 @@ $(function () {
     navigator.clipboard.writeText(txt || '')
       .then(() => {
         chrome.notifications.onButtonClicked.addListener(() => {
-          chrome.tabs.create({ url: `data:text/html;base64,${btoa(txt || '')}` })
-        })
+          chrome.tabs.create({ url: `data:text/html;base64,${btoa(txt || '')}` });
+        });
         chrome.notifications.create({
           type: 'basic',
           title: chrome.i18n.getMessage('extName'),
@@ -289,11 +292,11 @@ $(function () {
           iconUrl: 'icons/icon192.png',
           buttons: [{
             title: chrome.i18n.getMessage('previewWidget'),
-            iconUrl: 'icons/preview.svg'
-          }]
-        })
-      })
-  }
+            iconUrl: 'icons/preview.svg',
+          }],
+        });
+      });
+  };
 
   /**
    * Builds a list with the URL of all the images currently selected
@@ -305,36 +308,34 @@ $(function () {
    * @returns {String} - The text with the requested list
    */
   const listImages = function (withImg, withLinks, dataLink, targetBlank, imgStyle) {
-    let result = ''
-    const styleTag = imgStyle ? ` style="${imgStyle}"` : ''
-    const targetTag = targetBlank ? ' target="_blank"' : ''
+    let result = '';
+    const styleTag = imgStyle ? ` style="${imgStyle}"` : '';
+    const targetTag = targetBlank ? ' target="_blank"' : '';
 
     $tbody.find('tr').each(function (index) {
       if (selected[index]) {
-        let txt = $(this).data('url')
-        if (withImg) {
-          txt = `<img src="${txt}"${styleTag}>`
-        }
+        let txt = $(this).data('url');
+        if (withImg)
+          txt = `<img src="${txt}"${styleTag}>`;
         if (withLinks) {
-          const link = $(this).data('link')
+          const link = $(this).data('link');
           if (link) {
             if (dataLink)
-              txt = `${txt.slice(0, -1)} data-link="${link}">`
+              txt = `${txt.slice(0, -1)} data-link="${link}">`;
             else
-              txt = `<a href="${link}"${targetTag}>${txt}</a>`
+              txt = `<a href="${link}"${targetTag}>${txt}</a>`;
           }
         }
-        result = `${result}${txt}\n`
+        result = `${result}${txt}\n`;
       }
-    })
-    return result
-  }
-
+    });
+    return result;
+  };
 
   /**
    * Sets action for the 'list' button
    */
-  $('#listBtn').on('click', () => copyAndNotify(listImages(false, false, false)))
+  $('#listBtn').on('click', () => copyAndNotify(listImages(false, false, false)));
 
   /**
    * Sets action for the 'mosaic' button
@@ -343,16 +344,16 @@ $(function () {
     const { mosaicMaxWidth, mosaicMaxHeight, mosaicLinks, popupLinks } = settings;
     const imgStyle = (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) ?
       (mosaicMaxWidth > 0 ? `max-width:${mosaicMaxWidth}px;` : '') +
-      (mosaicMaxHeight > 0 ? `max-height:${mosaicMaxHeight}px;` : '') : null
-    copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle))
-  })
+      (mosaicMaxHeight > 0 ? `max-height:${mosaicMaxHeight}px;` : '') : null;
+    copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle));
+  });
 
   /**
    * Sets action for the 'galleria.io' button
    */
   $('#galleriaBtn').on('click', () => {
     const { galWidth, galHeight, galLinks, popupLinks } = settings;
-    const id = getUniqueId()
+    const id = getUniqueId();
     const code = `
 <div id="${id}" style="width:100%;max-width:${galWidth}px;height:${galHeight}px;display:none;">
 ${listImages(true, galLinks, galLinks)}</div>
@@ -370,40 +371,40 @@ ${listImages(true, galLinks, galLinks)}</div>
       });
     });
   }
-</script>`
-    copyAndNotify(code)
-  })
+</script>`;
+    copyAndNotify(code);
+  });
 
   /**
    * Prepares the elements located on the settings dialog
    * (method detached from the global initialization process for performance reasons)
    */
-  let settingsInitialized = false
+  let settingsInitialized = false;
   const initSettings = function () {
 
     // Localize UI components
-    $('#galleriaLb').html(chrome.i18n.getMessage('galleriaBtn'))
-    $('#galWidthLb').html(chrome.i18n.getMessage('galWidthLb'))
-    $('#galHeightLb').html(chrome.i18n.getMessage('galHeightLb'))
-    $('.numeric').html(chrome.i18n.getMessage('numberFormatWarning'))
-    $('.hyperlinks').html(chrome.i18n.getMessage('addHyperlinks'))
-    $('#mosaicLb').html(chrome.i18n.getMessage('mosaicBtn'))
-    $('#mosaicMaxWidthLb').html(chrome.i18n.getMessage('mosaicMaxWidthLb'))
-    $('#mosaicMaxHeightLb').html(chrome.i18n.getMessage('mosaicMaxHeightLb'))
-    $('#gpLb').html(chrome.i18n.getMessage('gpLb'))
-    $('#gpWidthLb').html(chrome.i18n.getMessage('gpWidthLb'))
-    $('#gpHeightLb').html(chrome.i18n.getMessage('gpHeightLb'))
-    $('#popupLinksLb').html(chrome.i18n.getMessage('popupLinks'))
+    $('#galleriaLb').html(chrome.i18n.getMessage('galleriaBtn'));
+    $('#galWidthLb').html(chrome.i18n.getMessage('galWidthLb'));
+    $('#galHeightLb').html(chrome.i18n.getMessage('galHeightLb'));
+    $('.numeric').html(chrome.i18n.getMessage('numberFormatWarning'));
+    $('.hyperlinks').html(chrome.i18n.getMessage('addHyperlinks'));
+    $('#mosaicLb').html(chrome.i18n.getMessage('mosaicBtn'));
+    $('#mosaicMaxWidthLb').html(chrome.i18n.getMessage('mosaicMaxWidthLb'));
+    $('#mosaicMaxHeightLb').html(chrome.i18n.getMessage('mosaicMaxHeightLb'));
+    $('#gpLb').html(chrome.i18n.getMessage('gpLb'));
+    $('#gpWidthLb').html(chrome.i18n.getMessage('gpWidthLb'));
+    $('#gpHeightLb').html(chrome.i18n.getMessage('gpHeightLb'));
+    $('#popupLinksLb').html(chrome.i18n.getMessage('popupLinks'));
 
     // Check if all numeric fields have a valid format
-    const checkSettingsDlg = () => $('#settingsDlg').find('.is-invalid').length === 0
+    const checkSettingsDlg = () => $('#settingsDlg').find('.is-invalid').length === 0;
 
     // Disables the 'OK' button when some field has a non valid format
     // (delaying the check with 'window.setTimeout' because the 'disabled' attribute
     // is set at the end of the 'onInput' event)
     $('#settingsDlg')
       .find('input')
-      .on('input', () => window.setTimeout(() => $('#settingsOk').attr('disabled', !checkSettingsDlg()), 0))
+      .on('input', () => window.setTimeout(() => $('#settingsOk').attr('disabled', !checkSettingsDlg()), 0));
 
     // Sets action for the 'OK' button
     $('#settingsOk')
@@ -412,31 +413,31 @@ ${listImages(true, galLinks, galLinks)}</div>
         if (checkSettingsDlg()) {
 
           // Collect data
-          settings.galWidth = Number($('#galWidth').val()) || DEFAULT_SETTINGS.galWidth
-          settings.galHeight = Number($('#galHeight').val()) || DEFAULT_SETTINGS.galHeight
-          settings.galLinks = $('#galLinks').parent().hasClass('is-checked')
-          settings.mosaicMaxWidth = Number($('#mosaicMaxWidth').val()) || DEFAULT_SETTINGS.mosaicMaxWidth
-          settings.mosaicMaxHeight = Number($('#mosaicMaxHeight').val()) || DEFAULT_SETTINGS.mosaicMaxHeight
-          settings.mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked')
-          settings.gpWidth = Number($('#gpWidth').val()) || DEFAULT_SETTINGS.gpWidth
-          settings.gpHeight = Number($('#gpHeight').val()) || DEFAULT_SETTINGS.gpHeight
-          settings.popupLinks = $('#popupLinks').parent().hasClass('is-checked')
+          settings.galWidth = Number($('#galWidth').val()) || DEFAULT_SETTINGS.galWidth;
+          settings.galHeight = Number($('#galHeight').val()) || DEFAULT_SETTINGS.galHeight;
+          settings.galLinks = $('#galLinks').parent().hasClass('is-checked');
+          settings.mosaicMaxWidth = Number($('#mosaicMaxWidth').val()) || DEFAULT_SETTINGS.mosaicMaxWidth;
+          settings.mosaicMaxHeight = Number($('#mosaicMaxHeight').val()) || DEFAULT_SETTINGS.mosaicMaxHeight;
+          settings.mosaicLinks = $('#mosaicLinks').parent().hasClass('is-checked');
+          settings.gpWidth = Number($('#gpWidth').val()) || DEFAULT_SETTINGS.gpWidth;
+          settings.gpHeight = Number($('#gpHeight').val()) || DEFAULT_SETTINGS.gpHeight;
+          settings.popupLinks = $('#popupLinks').parent().hasClass('is-checked');
 
           // Close dialog
-          $('#settingsDlg')[0].close()
+          $('#settingsDlg')[0].close();
 
           // Save values to persistent storage
-          chrome.storage.sync.set(settings)
+          chrome.storage.sync.set(settings);
         }
-      })
+      });
 
     // Sets action for the 'cancel' button
     $('#settingsCancel')
       .html(chrome.i18n.getMessage('Cancel'))
-      .on('click', () => $('#settingsDlg')[0].close())
+      .on('click', () => $('#settingsDlg')[0].close());
 
-    settingsInitialized = true
-  }
+    settingsInitialized = true;
+  };
 
   // Sets action for the 'settings' button
   $('#settingsBtn').on('click', () => {
@@ -444,48 +445,47 @@ ${listImages(true, galLinks, galLinks)}</div>
     const {
       galWidth, galHeight, galLinks,
       mosaicMaxWidth, mosaicMaxHeight, mosaicLinks,
-      gpWidth, gpHeight, popupLinks } = settings
+      gpWidth, gpHeight, popupLinks } = settings;
 
     // Check if settings dialog has been initialized
     if (!settingsInitialized)
-      initSettings()
+      initSettings();
 
     // Load fields with values
-    $('#galWidth').val(galWidth)
-    $('#galHeight').val(galHeight)
+    $('#galWidth').val(galWidth);
+    $('#galHeight').val(galHeight);
     if (galLinks)
-      $('#galLinks').parent().addClass('is-checked')
+      $('#galLinks').parent().addClass('is-checked');
     else
-      $('#galLinks').parent().removeClass('is-checked')
+      $('#galLinks').parent().removeClass('is-checked');
 
-    $('#mosaicMaxWidth').val(mosaicMaxWidth)
-    $('#mosaicMaxHeight').val(mosaicMaxHeight)
+    $('#mosaicMaxWidth').val(mosaicMaxWidth);
+    $('#mosaicMaxHeight').val(mosaicMaxHeight);
     if (mosaicLinks)
-      $('#mosaicLinks').parent().addClass('is-checked')
+      $('#mosaicLinks').parent().addClass('is-checked');
     else
-      $('#mosaicLinks').parent().removeClass('is-checked')
+      $('#mosaicLinks').parent().removeClass('is-checked');
 
-    $('#gpWidth').val(gpWidth)
-    $('#gpHeight').val(gpHeight)
+    $('#gpWidth').val(gpWidth);
+    $('#gpHeight').val(gpHeight);
 
     if (popupLinks)
-      $('#popupLinks').parent().addClass('is-checked')
+      $('#popupLinks').parent().addClass('is-checked');
     else
-      $('#popupLinks').parent().removeClass('is-checked')
+      $('#popupLinks').parent().removeClass('is-checked');
 
-    $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty')
+    $('#settingsDlg').find('.mdl-textfield').addClass('is-dirty');
 
     // Open dialog
-    $('#settingsDlg')[0].showModal()
-  })
+    $('#settingsDlg')[0].showModal();
+  });
 
   //
   // Main actions executed after all components have been initialized:
   // Enable the message listener, inject 'listimages.js' on the main document
   // remove the 'loading' curtain and... let's go!
-  chrome.runtime.onMessage.addListener(msgListener)
-  chrome.tabs.executeScript(null, { file: 'listimages.js' })
-  $('.loading').remove()
-  $('.mainContent').fadeIn()
-
-})
+  chrome.runtime.onMessage.addListener(msgListener);
+  chrome.tabs.executeScript(null, { file: 'listimages.js' });
+  $('.loading').remove();
+  $('.mainContent').fadeIn();
+});

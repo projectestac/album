@@ -13,6 +13,7 @@
             {
                 "argsIgnorePattern": "^_"
             }
-        ]
+        ],
+        "semi": "warn"
     }
 }

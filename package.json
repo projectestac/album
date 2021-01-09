@@ -28,5 +28,9 @@
   },
   "devDependencies": {
     "eslint": "^7.17.0"
+  },
+  "scripts": {
+    "build": "./build.sh",
+    "lint": "eslint \"**/*.js\""
   }
 }

@@ -27,9 +27,9 @@ if (typeof window.__ListImages === 'undefined') {
    */
   window.__ListImages = function () {
     // Initialize arrays for images and links
-    this.allImages = []
-    this.allLinks = []
-  }
+    this.allImages = [];
+    this.allLinks = [];
+  };
 
   window.__ListImages.prototype = {
     constructor: window.__ListImages,
@@ -70,118 +70,118 @@ if (typeof window.__ListImages === 'undefined') {
     scanImages: function () {
       // Avoid re-entrant processing
       if (this.scanning || this.reporting)
-        return
-      this.scanning = true
+        return;
+      this.scanning = true;
 
       // Temporary arrays used to store newly discovered data
-      const imgList = []
-      const objList = []
+      const imgList = [];
+      const objList = [];
 
       // Check 'img' objects
       document.querySelectorAll('img').forEach(img => {
         if (img.src) {
-          objList.push(img)
-          imgList.push(img.src)
+          objList.push(img);
+          imgList.push(img.src);
         }
-      })
+      });
 
       // Inspect all objects in DOM
       document.body.querySelectorAll('*').forEach(obj => {
         // Check if object has style property 'background-image' starting by 'url('
-        let bg = window.getComputedStyle(obj).getPropertyValue('background-image').trim()
+        let bg = window.getComputedStyle(obj).getPropertyValue('background-image').trim();
         if (bg && bg.trim().toLowerCase().substring(0, 4) === 'url(') {
           // Find first 'non-whitespace' character after open parenthesis
-          let leftP = 4
+          let leftP = 4;
           while (bg.charAt(leftP) === ' ' && leftP < bg.length)
-            leftP++
-          let first = bg.charAt(leftP)
+            leftP++;
+          let first = bg.charAt(leftP);
           // Decide what character should close the expression
           // default without quotes is ')'
-          let rightDelim = ')'
+          let rightDelim = ')';
           if (first === '"')
-            rightDelim = '"'
+            rightDelim = '"';
           else if (first === '\'')
-            rightDelim = '\''
+            rightDelim = '\'';
           else
             // No special delimiter, so leftP must point to the open parenthesis
-            leftP--
+            leftP--;
           // Find closing character
-          let rightP = bg.indexOf(rightDelim, leftP + 1)
+          let rightP = bg.indexOf(rightDelim, leftP + 1);
           if (rightP < 0)
-            rightP = bg.length
+            rightP = bg.length;
 
           // Get the fragment between (but not including) delimiters
-          bg = bg.substring(leftP + 1, rightP).trim()
+          bg = bg.substring(leftP + 1, rightP).trim();
 
           // Save URL and element
-          imgList.push(bg)
-          objList.push(obj)
+          imgList.push(bg);
+          objList.push(obj);
         }
-      })
+      });
 
       // Filter invalid URLs
       imgList.forEach((exp, img) => {
         try {
-          const url = new URL(exp)
+          const url = new URL(exp);
           if (url && this.allImages.indexOf(exp) === -1 && url.protocol &&
             (url.protocol === 'http:' || url.protocol === 'https:')) {
 
             // Save the discovered image into the 'allImages' array
-            this.allImages.push(exp)
+            this.allImages.push(exp);
 
             // object used to communicate with the extension popup
-            const msg = { imgurl: exp }
+            const msg = { imgurl: exp };
 
             // Try to find links associated to this image, walking up and down
             // the DOM tree
-            const link = findLinkUp(objList[img]) || findLinkDown(objList[img])
+            const link = findLinkUp(objList[img]) || findLinkDown(objList[img]);
             // If found, save link
             if (link) {
-              this.allLinks[this.allImages.length - 1] = link
-              msg.imglink = link
+              this.allLinks[this.allImages.length - 1] = link;
+              msg.imglink = link;
             }
 
             // Notify the existence of a new image to the extension popup
-            chrome.runtime.sendMessage(msg)
+            chrome.runtime.sendMessage(msg);
           }
         } catch (ex) {
           // Something bad has happened
-          console.log(`Album extension: Error processing element ${img}:\n${exp} - ${ex}`)
+          console.log(`Album extension: Error processing element ${img}:\n${exp} - ${ex}`);
         }
-      })
-      this.scanning = false
+      });
+      this.scanning = false;
     },
     /**
      * Starts the scanning process as a daemon
      */
     startScanning: function () {
       if (this.scanProcess)
-        this.endScanning()
-      this.scanProcess = window.setInterval(() => this.scanImages(), this.SCAN_INTERVAL)
+        this.endScanning();
+      this.scanProcess = window.setInterval(() => this.scanImages(), this.SCAN_INTERVAL);
     },
     /**
      * Stops the scanning daemon
      */
     endScanning: function () {
       if (this.scanProcess) {
-        window.clearInterval(this.scanProcess)
-        this.scanProcess = null
+        window.clearInterval(this.scanProcess);
+        this.scanProcess = null;
       }
     },
     /**
      * Reports all the detected images, sending messages to the extension popup
      */
     listScannedImages: function () {
-      this.reporting = true
+      this.reporting = true;
       this.allImages.forEach((img, p) => {
-        const obj = { imgurl: img }
+        const obj = { imgurl: img };
         if (this.allLinks[p])
-          obj.imglink = this.allLinks[p]
-        chrome.runtime.sendMessage(obj)
-      })
-      this.reporting = false
+          obj.imglink = this.allLinks[p];
+        chrome.runtime.sendMessage(obj);
+      });
+      this.reporting = false;
     }
-  }
+  };
 
   // UTILITY FUNCTIONS:
 
@@ -189,7 +189,7 @@ if (typeof window.__ListImages === 'undefined') {
    * Array of objects already examined when searching for links
    * @type Object[]
    */
-  const alreadyLooked = []
+  const alreadyLooked = [];
 
   /**
    * Walks up on the DOM tree searching for objects of type 'a' with 'href'
@@ -199,13 +199,13 @@ if (typeof window.__ListImages === 'undefined') {
   const findLinkUp = function (obj) {
     if (obj.nodeName.toLowerCase() === 'a') {
       if (obj.getAttribute('href'))
-        return absoluteLink(obj)
+        return absoluteLink(obj);
     }
     if (alreadyLooked.indexOf(obj) === -1)
-      alreadyLooked.push(obj)
-    const parent = obj.parentElement
-    return parent ? findLinkUp(parent) : null
-  }
+      alreadyLooked.push(obj);
+    const parent = obj.parentElement;
+    return parent ? findLinkUp(parent) : null;
+  };
 
   /**
    * Walks down on the DOM tree searching for objects of type 'a' with 'href'
@@ -214,23 +214,23 @@ if (typeof window.__ListImages === 'undefined') {
    */
   const findLinkDown = function (obj) {
     if (obj.nodeName.toLowerCase() === 'a' && obj.getAttribute('href')) {
-      return absoluteLink(obj)
+      return absoluteLink(obj);
     }
 
     let result = null;
     [...obj.children].some(child => {
-      result = findLinkDown(child)
-      return result !== null
-    })
-    return result
-  }
+      result = findLinkDown(child);
+      return result !== null;
+    });
+    return result;
+  };
 
   /**
    * Builds a link with the absolute URL of the provided link
    * @param {URL} link
    * @returns {String}
    */
-  const absoluteLink = link => link.protocol ? `${link.protocol}//${link.host}${link.pathname}${link.search}${link.hash}` : null
+  const absoluteLink = link => link.protocol ? `${link.protocol}//${link.host}${link.pathname}${link.search}${link.hash}` : null;
 }
 
 // MAIN:
@@ -240,9 +240,9 @@ if (typeof window.__ListImages === 'undefined') {
 // Otherwise, if '__listImagesObj' already exists, report the detected images to
 // the extension popup
 if (typeof window.__listImagesObj === 'undefined')
-  window.__listImagesObj = new window.__ListImages()
+  window.__listImagesObj = new window.__ListImages();
 else
-  window.__listImagesObj.listScannedImages()
+  window.__listImagesObj.listScannedImages();
 
 // Instruct '__listImages' to start the scanning daemon
-window.__listImagesObj.startScanning()
+window.__listImagesObj.startScanning();

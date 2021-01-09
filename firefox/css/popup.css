@@ -191,3 +191,10 @@ body {
 .mdl-textfield__error {
   line-height: normal;  
 }
+
+.mdl-list__item-icon {
+  width: unset;
+  height: unset;
+  max-width: 24px;
+  max-height: 24px;
+}

@@ -1,3 +1,7 @@
+### v1.1.0 for Microsoft Edge (2021-09-25)
+#### Improvements
+- Make the extension also available for Microsoft Edge
+
 ### v1.1.0 (2021-01-08)
 #### Improvements
 - All dependencies are now managed with `npm`, instead of Yarn.

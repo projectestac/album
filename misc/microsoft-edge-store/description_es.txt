@@ -1,0 +1,16 @@
+﻿Esta extensión detecta las imágenes existentes en la página actual y las muestra en una lista que puede ser exportada a tres formatos distintos:
+
+- Una relación de las direcciones de las imágenes (URL).
+
+- Un fragmento de código HTML con etiquetas de tipo "img" que formarán un mosaico de imágenes. Los enlaces asociados a las imágenes, en caso de haberlos, también se pueden exportar.
+
+- Un fragmento de código HTML que genera un carrusel de Galleria.io (http://galleria.io)
+
+En todos los casos los datos se copian al portapapeles y pueden insertarse en cualquier editor con [Ctrl+V]. Los mosaicos y carruseles pueden insertarse en documentos, artículos de blogs, entornos virtuales de aprendizaje o cualquier otra aplicación que utilice contenido HTML. Antes de pegar el código en un editor de texto enriquecido asegúrese de que éste se encuentre en modo de "texto plano" (usualmente representado por un botón con los símbolos "<>" o "html").
+
+"Álbum" es un proyecto de software libre. Puede contribuir a mejorarlo informando de errores, aportando traducciones a otros idiomas o enviando propuestas de código a https://github.com/projectestac/album. ¡Gracias por avanzado!
+
+Hay que agradecer especialmente el excelente trabajo de Galleria.io (http://galleria.io), el motor de código abierto sobre el cual funciona el carrusel de imágenes. Además del tema visual básico utilizado por "Álbum", que es gratuito, Galleria.io ofrece a buen precio temas adicionales con más funcionalidades y diseños atractivos.
+
+Tenga en cuenta que "Álbum" no realiza copias de las imágenes ni de ningún otro tipo de fichero: únicamente gestiona direcciones URL que apuntan a recursos remotos. Los problemas con la visualización de los contenidos (carga lenta, archivo no encontrado...) acostumbran a ser debidos a incidencias con el origen de las imágenes.
+

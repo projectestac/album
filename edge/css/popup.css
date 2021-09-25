@@ -1,0 +1,199 @@
+/**
+ * File    : edge/css/popup.css  
+ * Created : 20/03/2016  
+ * By      : Francesc Busquets  
+ * 
+ * Album (version for Microsoft Edge)  
+ * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab  
+ * https://github.com/projectestac/album  
+ * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)  
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation, version. This
+ * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see [http://www.gnu.org/licenses/].  
+ */
+
+body {
+  min-height: 500px;
+  background-color: #fafafa;
+}
+
+.loading {
+  display: table;
+  width: 490px;
+  height: 577px;
+  text-align: center;
+}
+
+.loading > * {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.mainContent {
+  display: none;
+}
+
+#imgTable {
+  margin: 5px;
+  min-width: 479px;
+}
+
+#imgTable tbody,
+#imgTable thead {
+  display: block;
+}
+
+#imgTable tbody {
+  height: 400px;
+  overflow-y: auto;  
+  overflow-x: hidden;
+}
+
+#imgTable thead {
+  background-color: #f0f0f0;
+}
+
+.urltext {
+  display: block;
+  font-size: 80%;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#imgTable .urltext {
+  width: 250px;
+}
+
+.thumb {
+  cursor: pointer;
+}
+
+.urllink {
+  text-decoration: none;
+}
+
+.controls {
+  margin: 5px;
+  padding: 5px 15px;
+}
+
+.controls > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.counter {
+  width: 50px;
+}
+
+.nums {
+  font-weight: bolder;
+  text-align: center;
+  width: 100%;
+}
+
+#progressBar {
+  width: 100%;
+}
+
+.description {
+  margin: 10px;
+  line-height: normal;
+  width: 300px;
+  font-size: 90%;
+}
+
+.centered {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.buttons {
+  min-width: 400px;
+  display: inline-block; 
+}
+
+.buttons * {
+  vertical-align: middle;
+  margin: 5px;
+}
+
+#previewDlg {
+  width: 400px;
+}
+
+#previewDlg .mdl-dialog__content {
+  background-color: #fafafa;
+  padding-bottom: 0;
+}
+
+#previewDlg .infoSize {
+  text-align: center;
+  font-size: 80%;
+}
+
+#previewDlg table {
+  margin: 0px auto;
+}
+
+#previewDlg .material-icons {
+  vertical-align: text-top;
+}
+
+#previewImg {
+  display: block;
+  max-width: 260px;
+  max-height: 260px;
+  margin: auto;
+  border: 0;
+}
+
+#settingsDlg {
+  min-width: 430px;
+  padding: 0;
+}
+
+#settingsDlg .mdl-dialog__content {
+  padding: 10px;
+}
+
+.dimInput {
+  width: 410px;
+  margin-bottom: 12px;
+  background-color: #fafafa;  
+}
+
+.dimInput > div {
+  width: 100px;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.dimInput > p {
+  font-weight: bold;
+  font-size: 110%;
+  padding-left: 15px;
+  padding-top: 5px;
+  margin-bottom: 0;
+}
+
+.dimInput > label {
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.mdl-textfield__error {
+  line-height: normal;  
+}
+
+.mdl-list__item-icon {
+  width: unset;
+  height: unset;
+  max-width: 24px;
+  max-height: 24px;
+}

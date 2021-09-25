@@ -43,3 +43,20 @@ echo
 echo -------------------------------------------------------------------------
 echo File dist/$fname successfully created
 echo -------------------------------------------------------------------------
+
+# Build Edge version
+fname=album-edge-$v.zip
+
+echo Generating $fname
+
+# Zip all contents of 'edge' and leave the file in 'dist'
+cd edge
+zip -r $fname *
+mkdir -p ../dist
+mv $fname ../dist
+cd ..
+
+echo
+echo -------------------------------------------------------------------------
+echo File dist/$fname successfully created
+echo -------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+When the extension is activated, it searches for all the images on the webpage being viewed, displaying a list. It's a dynamic list, which grows if you make more images appear on the page (for example, by scrolling down)
+
+Clicking on an item in the list displays its properties. This lets you know the absolute URL of any image.
+
+The cogwheel button allows you to change the default settings of the extension.
+
+After selecting the images to be included on the final document, click on one of the three buttons below (List, Mosaic or Galleria.io). The resulting HTML code will be copied to the clipboard, so you can paste it (Ctrl + V) on your blog or website. You can also preview the final result.
+
+This is how the Galleria.io carousel will look embedded in a blog.
+

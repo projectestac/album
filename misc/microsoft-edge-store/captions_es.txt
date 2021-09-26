@@ -1,0 +1,9 @@
+Al activar la extensión, ésta busca todas las imágenes de la página web actual, mostrando una lista. Es una lista dinámica, que crece si aparecen más imágenes en la página (por ejemplo, al desplazarse hacia abajo).
+
+Al hacer clic en un elemento de la lista se muestran sus propiedades. Esto le permite conocer la URL absoluta de cualquier imagen.
+
+El botón de rueda dentada le permite cambiar la configuración predeterminada de la extensión.
+
+Después de seleccionar las imágenes que se incluirán en el documento final, haga clic en uno de los tres botones de la parte inferior (Lista, Mosaico o Galleria.io). El código HTML resultante se copiará en el portapapeles, para que pueda pegarlo (Ctrl + V) en su blog o sitio web. También puede previsualizar el resultado final.
+
+Así es como se visualiza un carrusel de Galleria.io incrustado en un blog.

@@ -1,0 +1,11 @@
+En activar l'extensió, es busquen totes les imatges de la pàgina web que s'està visualitzant, i es mostra la llista. És una llista dinàmica, que va creixent si feu aparèixer més imatges a la pàgina (per exemple, fent-la córrer cap avall)
+
+En fer clic sobre un element de la llista es mostren les seves propietats. Això us permet saber l'URL absolut de qualsevol imatge.
+
+El botó amb la roda dentada us permet canviar els paràmetres per defecte de l'extensió.
+
+Quan tingueu marcades les imatges que realment us interessen, feu clic a un dels tres botons inferiors (Llista, Mosaic o Galleria.io). El codi HTML resultant es copiarà al porta-papers, i el podreu enganxar amb Ctrl+V al vostre blog o pàgina web. També es pot previsualitzar el resultat en una altra pestanya.
+
+Així és com es veurà el carrusel de Galleria.io encastat en un blog.
+
+

@@ -15,5 +15,6 @@
             }
         ],
         "semi": "warn"
-    }
+    },
+    "ignorePatterns": ["node_modules/", "lib/"]
 }

@@ -41,7 +41,5 @@ Components will then be placed into `/node_modules` and referenced by symbolic l
 For more information on how to develop browser extensions, refer to:
 
 - [Chrome Developers'](https://developer.chrome.com/extensions) site.
-
 - [WebExtensions page on MDN](https://developer.mozilla.org/en-US/Add-ons/WebExtensions).
-
 - [Develop extensions for Microsoft Edge](https://developer.microsoft.com/en-us/microsoft-edge/extensions/)

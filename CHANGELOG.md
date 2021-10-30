@@ -1,3 +1,7 @@
+### v1.2.0 (2021-30-10)
+#### Bug fixes
+- Update the regexp used to set the desired picture width and height in Google Photos
+
 ### v1.1.0 for Microsoft Edge (2021-09-25)
 #### Improvements
 - Make the extension also available for Microsoft Edge

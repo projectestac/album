@@ -210,7 +210,7 @@ $(function () {
       // Check if we are in Google Photos and request a specific size if needed
       if ((gpWidth || gpHeight) && /^https:\/\/[\w.]+\.googleusercontent\.com\//.test(url)) {
         const exp = `=${gpWidth ? `w${gpWidth}-` : ''}${gpHeight ? `h${gpHeight}-` : ''}no`;
-        url = url.replace(/=(w\d+)?-?(h\d+)?(-[\w-+?&]*)?$/, exp);
+        url = url.replace(/=(w\d+)?-?(h\d+)?no/, exp);
       }
       // Check if this image falls in the category of unwanted
       else if (unwantedImages.some(uw => uw.test(url)))

@@ -1,23 +1,32 @@
 {
-  "manifest_version": 2,
-  "version": "1.2.0",
+  "manifest_version": 3,
+  "version": "2.0.1",
   "default_locale": "en",
   "name": "__MSG_extName__",
   "short_name": "__MSG_extShortName__",
   "description": "__MSG_extDescription__",
-  "browser_action": {
-    "default_popup": "popup.html",
+  "action": {
+    "default_popup": "./popup/index.html",
     "default_title": "Album",
     "default_icon": {
+      "16": "icons/icon16.png",
       "19": "icons/icon19.png",
+      "24": "icons/icon24.png",
       "32": "icons/icon32.png",
-      "38": "icons/icon38.png"
+      "38": "icons/icon38.png",
+      "48": "icons/icon48.png"
     }
+  },
+  "background": {
+    "service_worker": "./sw/background.js",
+    "type": "module"
   },
   "permissions": [
     "activeTab",
+    "tabs",
     "notifications",
-    "storage"
+    "storage",
+    "scripting"
   ],
   "icons": {
     "16": "icons/icon16.png",

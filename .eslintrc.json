@@ -16,5 +16,18 @@
         ],
         "semi": "warn"
     },
-    "ignorePatterns": ["node_modules/", "lib/"]
+    "ignorePatterns": [
+        "node_modules/",
+        "lib/"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "chrome/sw/*.js"
+            ],
+            "parserOptions": {
+                "sourceType": "module"
+            }
+        }
+    ]
 }

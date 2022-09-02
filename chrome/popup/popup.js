@@ -1,13 +1,13 @@
 /**
- * File    : chrome/popup.js
+ * File    : chrome/popup/popup.js
  * Created : 20/03/2016
- * Updated:  08/01/2021
+ * Updated:  27/08/2022
  * By      : Francesc Busquets
  *
  * Album (version for Chrome/Chromium)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2016-2021 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2022 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -89,6 +89,10 @@ $(function () {
     /^https?:\/\/[\w-.]+\.yimg\.com\//,
     /^https?:\/\/[\w-.]+\.istockimg\.com\/static\//,
     /^https?:\/\/instagramstatic[\w-.]+\.akamaihd\.net\//,
+    /doubleclick\.net/,
+    /adsafeprotected\.com/,
+    /insightexpressai\.com/,
+    /adzerk\.net/,
   ];
 
   /**
@@ -123,9 +127,9 @@ $(function () {
   $('#settingsBtn').prop('title', chrome.i18n.getMessage('settingsBtnTooltip'));
 
   /**
-   * Read current settings from chrome.storage.sync
+   * Read current settings
    */
-  chrome.storage.sync.get(DEFAULT_SETTINGS, items => settings = { ...settings, ...items });
+  chrome.storage.sync.get(Object.keys(settings), values => { settings = { ...settings, ...values }; });
 
   /**
    * This button stops and restarts image scanning on the main document
@@ -133,21 +137,19 @@ $(function () {
   let stopBtnStatus = true;
   $('#stopBtn')
     .prop('title', chrome.i18n.getMessage('stopBtnTooltip'))
-    .on('click', () => {
-      if (stopBtnStatus) {
-        chrome.tabs.executeScript(null, { code: 'window.__listImages.endScanning();' });
-        $('#progressBar').removeClass('mdl-progress__indeterminate');
-        $('#stopIcon').html('play_arrow');
-        $('#stopBtn').prop('title', chrome.i18n.getMessage('playBtnTooltip'));
-        stopBtnStatus = false;
-      } else {
-        chrome.tabs.executeScript(null, { code: 'window.__listImages.startScanning();' });
-        $('#progressBar').addClass('mdl-progress__indeterminate');
-        $('#stopIcon').html('pause');
-        $('#stopBtn').prop('title', chrome.i18n.getMessage('stopBtnTooltip'));
-        stopBtnStatus = true;
-      }
-    });
+    .on('click', () => chrome.runtime.sendMessage({ message: stopBtnStatus ? 'stopScanning' : 'startScanning' })
+      .then(response => {
+        if (response.message !== 'OK')
+          throw new Error(response);
+        else {
+          $('#progressBar')[stopBtnStatus ? 'removeClass' : 'addClass']('mdl-progress__indeterminate');
+          $('#stopIcon').html(stopBtnStatus ? 'play_arrow' : 'pause');
+          $('#stopBtn').prop('title', chrome.i18n.getMessage(stopBtnStatus ? 'playBtnTooltip' : 'stopBtnTooltip'));
+          stopBtnStatus = !stopBtnStatus;
+        }
+      })
+      .catch(err => console.error('Error processing stop/start button:', err))
+    );
 
   /**
    * Localize and set action for the 'close' button in the preview dialog
@@ -169,26 +171,24 @@ $(function () {
     });
 
   /**
-   * This function listens to messages sent by the 'listimages' script running
+   * This function listens to messages sent by the background script running
    * on the main page. Each message contains the data associated to one image
    */
-  const msgListener = function (request /*, sender, sendResponse*/) {
+  const processImgData = (data) => {
 
     const { gpWidth, gpHeight } = settings;
 
-    if (request.imgurl) {
-      let url = request.imgurl;
+    if (data.imgurl) {
+      let url = data.imgurl;
       const n = numImgs;
-      selected[n] = true;
+      // Images will be unselected by default
+      selected[n] = false;
 
       // Check if we are in Google Photos and request a specific size if needed
       if ((gpWidth || gpHeight) && /^https:\/\/[\w.]+\.googleusercontent\.com\//.test(url)) {
         const exp = `=${gpWidth ? `w${gpWidth}-` : ''}${gpHeight ? `h${gpHeight}-` : ''}no`;
         url = url.replace(/=(w\d+)?-?(h\d+)?no/, exp);
       }
-      // Check if this image falls in the category of unwanted
-      else if (unwantedImages.some(uw => uw.test(url)))
-        selected[n] = false;
 
       // Build a new <tr> element with the image URL as a data attribute
       const $tr = $('<tr/>');
@@ -208,10 +208,12 @@ $(function () {
         src: url,
         title: url,
       }).on('load', () => {
-        // Images sized below MIN_WIDH x MIN_HEIGHT will be unchecked by default
-        if ($img.get(0).naturalWidth < MIN_WIDTH || $img.get(0).naturalHeight < MIN_HEIGHT) {
-          $checkBox[0].MaterialCheckbox.uncheck();
-          selected[n] = false;
+        // Check only real imges, not blacklisted and of siz equal or above MIN_WIDTH and MIN__HEIGHT
+        if (!unwantedImages.some(uw => uw.test(url))
+          && $img.get(0).naturalWidth >= MIN_WIDTH
+          && $img.get(0).naturalHeight >= MIN_HEIGHT) {
+          $checkBox[0].MaterialCheckbox.check();
+          selected[n] = true;
           $numSel.html(updateNumSelected());
         }
       }).on('click', () => {
@@ -228,10 +230,10 @@ $(function () {
         $('.previewImgUrl .urltext').html(url);
         $('#previewImg').attr({ 'src': url });
 
-        const link = request.imglink || '';
+        const link = data.imglink || '';
         $('.previewImgLink').attr({ href: link, title: link });
         $('.previewImgLink .urltext').html(link);
-        $('#previewLink').css('visibility', request.imglink ? 'visible' : 'hidden');
+        $('#previewLink').css('visibility', data.imglink ? 'visible' : 'hidden');
 
         $('#previewDlg')[0].showModal();
       });
@@ -243,11 +245,11 @@ $(function () {
 
       // Add the image link to $tr, if any
       let $link = $('<span/>');
-      if (request.imglink) {
+      if (data.imglink) {
         $link = $(`<a id="link[${numImgs + 1}]" class="urllink"/>`)
-          .attr({ href: request.imglink, target: '_blank', title: request.imglink })
+          .attr({ href: data.imglink, target: '_blank', title: data.imglink })
           .append($('<i class="material-icons"/>').html('link'));
-        $tr.data('link', request.imglink);
+        $tr.data('link', data.imglink);
       } else
         $link = $('');
       $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($link));
@@ -277,25 +279,18 @@ $(function () {
   /**
    * Copies the provided text to the system clipboard and notifies the user about
    * the completion of the requested operation
-   * @param {String} txt - The text to copy to the clipboard
+   * @param {String} txt - The text to write into the clipboard
    */
   const copyAndNotify = function (txt) {
     navigator.clipboard.writeText(txt || '')
-      .then(() => {
-        chrome.notifications.onButtonClicked.addListener(() => {
-          chrome.tabs.create({ url: `data:text/html;base64,${btoa(txt || '')}` });
-        });
-        chrome.notifications.create({
-          type: 'basic',
-          title: chrome.i18n.getMessage('extName'),
-          message: chrome.i18n.getMessage('msgDataCopied'),
-          iconUrl: 'icons/icon192.png',
-          buttons: [{
-            title: chrome.i18n.getMessage('previewWidget'),
-            iconUrl: 'icons/preview.svg',
-          }],
-        });
-      });
+      .then(() => chrome.runtime.sendMessage({
+        message: 'notify',
+        messageTitle: chrome.i18n.getMessage('extName'),
+        messageText: chrome.i18n.getMessage('msgDataCopied'),
+        url: `data:text/html;base64,${btoa(txt || '')}`,
+        buttonText: chrome.i18n.getMessage('previewWidget'),
+        buttonIcon: 'preview.png',
+      }));
   };
 
   /**
@@ -480,12 +475,18 @@ ${listImages(true, galLinks, galLinks)}</div>
     $('#settingsDlg')[0].showModal();
   });
 
-  //
-  // Main actions executed after all components have been initialized:
-  // Enable the message listener, inject 'listimages.js' on the main document
-  // remove the 'loading' curtain and... let's go!
-  chrome.runtime.onMessage.addListener(msgListener);
-  chrome.tabs.executeScript(null, { file: 'listimages.js' });
+  // Send the start message to the worker, remove the "loading" curtain and... let's go!
   $('.loading').remove();
   $('.mainContent').fadeIn();
+  chrome.runtime.sendMessage({ message: 'init' })
+    .then(response => {
+      console.log('Album extension initialized', response);
+      window.setInterval(() => {
+        chrome.runtime.sendMessage({ message: 'getImages' })
+          .then(response => {
+            if (response.message === 'OK')
+              response.result.forEach(processImgData);
+          });
+      }, 500);
+    });
 });

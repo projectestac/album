@@ -392,13 +392,13 @@ window.addEventListener('DOMContentLoaded', () => {
     const code = `
 <div id="${id}" style="width:100%;max-width:${galWidth}px;height:${galHeight}px;display:none;">
 ${listImages(true, galLinks, galLinks)}</div>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
   (MyGalleries=(typeof MyGalleries === 'undefined' ? [] : MyGalleries)).push({gallId:'#${id}',autoplay:true,lightbox:true,debug:false,popupLinks:${popupLinks}});
   if(typeof GalleryLoaded === 'undefined'){
     GalleryLoaded = jQuery(function(){
-      jQuery.ajax({url:'https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/galleria.min.js',dataType:'script',cache:true}).done(function(){
-        Galleria.loadTheme('https://cdn.jsdelivr.net/npm/galleria@1.6.1/dist/themes/classic/galleria.classic.js');
+      jQuery.ajax({url:'https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js',dataType:'script',cache:true}).done(function(){
+        Galleria.loadTheme('https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/classic/galleria.classic.js');
         for(var n in MyGalleries){
           Galleria.run(MyGalleries[n].gallId, MyGalleries[n]);
           jQuery(MyGalleries[n].gallId).css('display','block');

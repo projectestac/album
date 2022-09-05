@@ -1,3 +1,16 @@
+### v2.0.1 (2022-02-09)
+#### Breaking changes
+- Refactoring Chrome extension for [Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/):
+  - `manifest.json` updated to version 3, using now a service worker instead of directly injecting code on the current tab.
+  - Code has been split into two directories: `popup` and `sw`.
+  - Communication between components via messages has been completely updated.
+  - Extensive use of promises and asynchronous functions.
+  - [jQuery](https://jquery.com/) is no longer needed. The pop-up has been refactorized using just vanilla javascript.
+
+#### Improvements
+  - Updated galleria script
+  - Updated NPM components
+
 ### v1.2.0 (2021-30-10)
 #### Bug fixes
 - Update the regexp used to set the desired picture width and height in Google Photos

@@ -303,8 +303,6 @@ window.addEventListener('DOMContentLoaded', () => {
       imgTableBody.appendChild(tr);
       componentHandler.upgradeElements(imgTable);
 
-      // >>>>>>>>
-
       // Update the image counter, resizing it if needed
       if (numImages === 99) {
         document.querySelector('.counter').style.width = '64px';
@@ -503,14 +501,13 @@ ${listImages(true, galLinks, galLinks)}</div>
   document.querySelector('.mainContent').style.display = 'block';
   chrome.runtime.sendMessage({ message: 'init' })
     .then(response => {
-      console.log('Album extension initialized', response);
-      window.setInterval(() => {
-        chrome.runtime.sendMessage({ message: 'getImages' })
-          .then(response => {
-            if (response.message === 'OK')
-              response.result.forEach(processImgData);
-          });
-      }, 500);
+      if (response.message === 'OK')
+        window.setInterval(() => {
+          chrome.runtime.sendMessage({ message: 'getImages' })
+            .then(response => {
+              if (response.message === 'OK')
+                response.result.forEach(processImgData);
+            });
+        }, 1000);
     });
 });
-

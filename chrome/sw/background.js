@@ -71,6 +71,10 @@ async function processMessage(request, tabId) {
         getImgBuffer(tabId).push(request.data);
         break;
 
+      case 'allImages':
+        getImgBuffer(tabId).push(...request.data);
+        break;
+
       case 'getImages':
         result = [...getImgBuffer(tabId)];
         clearImgBuffer(tabId);

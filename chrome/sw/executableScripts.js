@@ -14,6 +14,9 @@
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see [http://www.gnu.org/licenses/].
+ * 
+ * Functions to be executed on the main document
+ * 
  */
 
 /* global chrome */
@@ -31,7 +34,7 @@ export function startScanning() {
  * Disable the 'album-scan-enabled' body attribute
  * @returns String
  */
- export function stopScanning() {
+export function stopScanning() {
   document.body.dataset.albumScanEnabled = 'off';
   return 'Scanner stopped';
 }
@@ -41,7 +44,7 @@ export function startScanning() {
  * The change will be detected on the next 'loop' cycle, starting the notifications
  * @returns String
  */
- export function listAllImages() {
+export function listAllImages() {
   document.body.dataset.albumListAllImages = 'on';
   return 'Requested list of all images';
 }
@@ -68,27 +71,19 @@ export function initEngine() {
   const absoluteLink = link => link.protocol ? `${link.protocol}//${link.host}${link.pathname}${link.search}${link.hash}` : null;
 
   /**
-   * setTimeout as a Promise, useful for async functions
+   * Call `setTimeout` as a Promise, useful for async functions
    * @param {number} ms - The amount of time to delay, in ms 
    * @returns Promise
    */
-  function delay(ms) {
-    return new Promise(resolve => window.setTimeout(resolve, ms));
-  }
+  const delay = ms => new Promise(resolve => window.setTimeout(resolve, ms));
 
   // VARIABLES USED BY THE ENGINE
 
   /**
    * Array containing all the detected images
-   * @type String[]
+   * @type Object[] - Array of objects of type "{imgurl, imglink}"
    */
   let allImages = [];
-
-  /**
-   * Array containing the link associated to each image (when any)
-   * @type String[]
-   */
-  let allLinks = [];
 
   /**
    * Array of objects already examined when searching for links
@@ -102,12 +97,6 @@ export function initEngine() {
    */
   let scanning = false;
 
-  /**
-   * When 'true', the script is reporting results to the extension popup.
-   * @type Boolean
-   */
-  let reporting = false;
-
   // AUXILIAR FUNCTIONS
 
   /**
@@ -115,7 +104,7 @@ export function initEngine() {
    * @param {HTMLElement} obj - The HTML element to check for. If it's not of the
    * desired type, the search will continue with its parent.
    */
-   function findLinkUp(obj) {
+  function findLinkUp(obj) {
     if (obj.nodeName.toLowerCase() === 'a' && obj.getAttribute('href'))
       return absoluteLink(obj);
     if (!alreadyLooked.includes(obj))
@@ -150,7 +139,7 @@ export function initEngine() {
   async function scanImages() {
 
     // Avoid re-entrant processing
-    if (scanning || reporting)
+    if (scanning)
       return;
 
     // Set the scanning flag
@@ -207,20 +196,18 @@ export function initEngine() {
     for (const [p, exp] of imgList.entries()) {
       try {
         const url = new URL(exp);
-        if (url && !allImages.includes(exp) && (url?.protocol === 'http:' || url?.protocol === 'https:')) {
-
-          // Save the discovered image into the 'allImages' array
-          allImages.push(exp);
+        if (url && !allImages.find(({ imgurl }) => imgurl === exp) && (url?.protocol === 'http:' || url?.protocol === 'https:')) {
 
           // Object used to communicate the discovering to the webservice
           const data = { imgurl: exp };
 
           // Try to find links associated to this image, walking up and down the DOM tree
           const link = findLinkUp(objList[p]) || findLinkDown(objList[p]);
-          if (link) {
-            allLinks[allImages.length - 1] = link;
+          if (link)
             data.imglink = link;
-          }
+
+          // Save the discovered image into the 'allImages' array
+          allImages.push(data);
 
           // Notify the existence of a new image to the extension popup
           const response = await chrome.runtime.sendMessage({
@@ -243,20 +230,12 @@ export function initEngine() {
    * Reports all the already detected images to background.js
    */
   async function listScannedImages() {
-    // Set the reporting flag, to avoid possible re-entrant scannings
-    reporting = true;
-    for (const [p, img] of allImages.entries()) {
-      const data = { imgurl: img };
-      if (allLinks[p])
-        data.imglink = allLinks[p];
-      const response = await chrome.runtime.sendMessage({
-        message: 'newImage',
-        data,
-      });
-      if (response.message !== 'OK')
-        console.error('Error reporting new image:', response);
-    }
-    reporting = false;
+    const response = await chrome.runtime.sendMessage({
+      message: 'allImages',
+      data: allImages,
+    });
+    if (response.message !== 'OK')
+      console.error('Error reporting `allImages`:', response);
   }
 
   // MAIN LOOP
@@ -264,8 +243,8 @@ export function initEngine() {
   const LOOP_INTERVAL = 1000;
 
   /**
-   * Will loop permanently, looking for actions to be performed,
-   * defined as "data-album-xxx" attributes in the 'body' element
+   * Start a permanent loop looking for actions to be performed.
+   * Actions to be taken are indicated by "data-album-xxx" attributes in `document.body`.
    * This was the only effective way of communication between the service worker
    * and a javascript service running on the main document
    */

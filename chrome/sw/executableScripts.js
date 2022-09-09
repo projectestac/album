@@ -56,8 +56,10 @@ export function listAllImages() {
 export function initEngine() {
 
   // Check 'data-album-scan-enabled' attribute in 'body'. If it's already set, the engine was already initialitzed
-  if (typeof document.body.dataset.albumScanEnabled !== 'undefined')
-    return 'ListImages daemon was already initialized in this document';
+  if (typeof document.body.dataset.albumScanEnabled !== 'undefined') {
+    document.body.dataset.albumListAllImages = 'on';
+    return 'Engine already initialized. Listing all detected images.';
+  }
 
   // UTILITY FUNCTIONS
   // Should be defined on this closure, because imported or global-defined functions are out of scope when
@@ -136,29 +138,28 @@ export function initEngine() {
    * This function scans the whole DOM structure, searching for images
    * both as "img" elements or declared as a "background-image" in CSS attributes
    */
-  async function scanImages() {
+  async function scanImages(element, deep = true) {
 
-    // Avoid re-entrant processing
-    if (scanning)
-      return;
-
-    // Set the scanning flag
-    scanning = true;
+    // Skip text elements and other artifacts
+    if (!element?.querySelectorAll)
+      return false;
 
     // Temporary arrays used to store new discovered data
     const imgList = [];
     const objList = [];
 
     // Step 1: Check all 'img' objects
-    document.querySelectorAll('img').forEach(img => {
+    const imgElements = (!deep || element.tagName === 'IMG') ? [element] : element.querySelectorAll('img');
+    imgElements.forEach(img => {
       if (img.src) {
         objList.push(img);
         imgList.push(img.src);
       }
     });
 
-    // Step 2: Inspect all objects in DOM
-    document.body.querySelectorAll('*').forEach(obj => {
+    // Step 2: Inspect the element and all its descendants
+    const otherElements = !deep ? [element] : element.querySelectorAll('*');
+    otherElements.forEach(obj => {
 
       // Check if object has style property 'background-image' starting by 'url('
       let bg = window.getComputedStyle(obj)?.getPropertyValue('background-image')?.trim();
@@ -221,9 +222,6 @@ export function initEngine() {
         console.error(`Album extension: Error processing "${exp}"`, exception);
       }
     }
-
-    // Remove the scanning flag
-    scanning = false;
   }
 
   /**
@@ -244,9 +242,6 @@ export function initEngine() {
 
   /**
    * Start a permanent loop looking for actions to be performed.
-   * Actions to be taken are indicated by "data-album-xxx" attributes in `document.body`.
-   * This was the only effective way of communication between the service worker
-   * and a javascript service running on the main document
    */
   async function loop() {
     while (loopEnabled) {
@@ -254,17 +249,40 @@ export function initEngine() {
         document.body.dataset.albumListAllImages = 'off';
         await listScannedImages();
       }
-      else if (document.body.dataset.albumScanEnabled === 'on') {
-        await scanImages();
-      }
       await delay(LOOP_INTERVAL);
     }
   }
 
-  // Set flags and launch the main loop on the next process cycle
-  document.body.dataset.albumScanEnabled = 'off';
+  async function firstScan() {
+
+    // Perform a full scan
+    await scanImages(document.body, true);
+
+    // Launch the mutation observer
+    new MutationObserver(async (mutations) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes)
+          await scanImages(node, true);
+        if (mutation.target)
+          await scanImages(mutation.target, false);
+      }
+    }).observe(document.body, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ['src', 'style', 'class', 'id'],
+    });
+
+    // launch main loop
+    window.setTimeout(loop, LOOP_INTERVAL);
+  }
+
+  // Init flags
+  document.body.dataset.albumScanEnabled = 'on';
   document.body.dataset.albumListAllImages = 'off';
-  window.setTimeout(loop, 0);
+
+  // Launch first scan on next loop cycle
+  window.setTimeout(firstScan, 0);
 
   return 'OK';
 }

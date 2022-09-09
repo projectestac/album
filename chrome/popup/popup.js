@@ -83,6 +83,7 @@ const unwantedImages = [
   /adsafeprotected\.com/,
   /insightexpressai\.com/,
   /adzerk\.net/,
+  /adserver/i,
 ];
 
 function createElement(tagName, attributes = {}) {

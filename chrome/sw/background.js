@@ -54,9 +54,7 @@ async function processMessage(request, tabId) {
 
     switch (request.message) {
       case 'init':
-        result = await chrome.scripting.executeScript({ target: { tabId }, func: initEngine })
-          && await chrome.scripting.executeScript({ target: { tabId }, func: listAllImages })
-          && await chrome.scripting.executeScript({ target: { tabId }, func: startScanning });
+        result = await chrome.scripting.executeScript({ target: { tabId }, func: initEngine });
         break;
 
       case 'startScanning':

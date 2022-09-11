@@ -10,6 +10,7 @@
 #### Improvements
   - Updated galleria script
   - Updated NPM components
+  - Use of a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) instead of continuously scanning, looking for changes in the main document.
 
 ### v1.2.0 (2021-30-10)
 #### Bug fixes

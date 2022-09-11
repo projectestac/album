@@ -22,24 +22,6 @@
 /* global chrome */
 
 /**
- * Enable the 'album-scan-enabled' body attribute
- * @returns String
- */
-export function startScanning() {
-  document.body.dataset.albumScanEnabled = 'on';
-  return 'Scanner running';
-}
-
-/**
- * Disable the 'album-scan-enabled' body attribute
- * @returns String
- */
-export function stopScanning() {
-  document.body.dataset.albumScanEnabled = 'off';
-  return 'Scanner stopped';
-}
-
-/**
  * Set the 'album-list-all-images' body attribute
  * The change will be detected on the next 'loop' cycle, starting the notifications
  * @returns String
@@ -55,8 +37,8 @@ export function listAllImages() {
  */
 export function initEngine() {
 
-  // Check 'data-album-scan-enabled' attribute in 'body'. If it's already set, the engine was already initialitzed
-  if (typeof document.body.dataset.albumScanEnabled !== 'undefined') {
+  // Check 'data-album-list-all-images' attribute in 'body'. If it's already set, the engine was already initialitzed
+  if (typeof document.body.dataset.albumListAllImages !== 'undefined') {
     document.body.dataset.albumListAllImages = 'on';
     return 'Engine already initialized. Listing all detected images.';
   }
@@ -92,12 +74,6 @@ export function initEngine() {
    * @type Object[]
    */
   let alreadyLooked = [];
-
-  /**
-   * Flag indicating that the scan process is currently running
-   * @type Boolean
-   */
-  let scanning = false;
 
   // AUXILIAR FUNCTIONS
 
@@ -277,8 +253,7 @@ export function initEngine() {
     window.setTimeout(loop, LOOP_INTERVAL);
   }
 
-  // Init flags
-  document.body.dataset.albumScanEnabled = 'on';
+  // Init flag
   document.body.dataset.albumListAllImages = 'off';
 
   // Launch first scan on next loop cycle

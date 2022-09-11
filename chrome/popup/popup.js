@@ -173,19 +173,12 @@ window.addEventListener('DOMContentLoaded', () => {
   const stopIcon = document.getElementById('stopIcon');
   const progressBar = document.getElementById('progressBar');
   stopBtn.setAttribute('title', chrome.i18n.getMessage('stopBtnTooltip'));
-  stopBtn.addEventListener('click', () => chrome.runtime.sendMessage({ message: stopBtnStatus ? 'stopScanning' : 'startScanning' })
-    .then(response => {
-      if (response.message !== 'OK')
-        throw new Error(response);
-      else {
-        progressBar.classList[stopBtnStatus ? 'remove' : 'add']('mdl-progress__indeterminate');
-        stopIcon.textContent = stopBtnStatus ? 'play_arrow' : 'pause';
-        stopBtn.setAttribute('title', chrome.i18n.getMessage(stopBtnStatus ? 'playBtnTooltip' : 'stopBtnTooltip'));
-        stopBtnStatus = !stopBtnStatus;
-      }
-    })
-    .catch(err => console.error('Error processing stop/start button:', err))
-  );
+  stopBtn.addEventListener('click', () => {
+    progressBar.classList[stopBtnStatus ? 'remove' : 'add']('mdl-progress__indeterminate');
+    stopIcon.textContent = stopBtnStatus ? 'play_arrow' : 'pause';
+    stopBtn.setAttribute('title', chrome.i18n.getMessage(stopBtnStatus ? 'playBtnTooltip' : 'stopBtnTooltip'));
+    stopBtnStatus = !stopBtnStatus;
+  });
 
   /**
    * Localize and set action for the 'close' button in the preview dialog
@@ -504,11 +497,12 @@ ${listImages(true, galLinks, galLinks)}</div>
     .then(response => {
       if (response.message === 'OK')
         window.setInterval(() => {
-          chrome.runtime.sendMessage({ message: 'getImages' })
-            .then(response => {
-              if (response.message === 'OK')
-                response.result.forEach(processImgData);
-            });
+          if (stopBtnStatus)
+            chrome.runtime.sendMessage({ message: 'getImages' })
+              .then(response => {
+                if (response.message === 'OK')
+                  response.result.forEach(processImgData);
+              });
         }, 1000);
     });
 });

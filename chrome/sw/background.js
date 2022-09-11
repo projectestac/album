@@ -19,7 +19,7 @@
 /* global chrome */
 
 import { getCurrentTabId } from "./utils.js";
-import { startScanning, stopScanning, listAllImages, initEngine } from "./executableScripts.js";
+import { initEngine } from "./executableScripts.js";
 
 // Collections of images pending to be reported to popup.js (one collection per tab)
 let imgBuffer = {};
@@ -55,14 +55,6 @@ async function processMessage(request, tabId) {
     switch (request.message) {
       case 'init':
         result = await chrome.scripting.executeScript({ target: { tabId }, func: initEngine });
-        break;
-
-      case 'startScanning':
-        result = await chrome.scripting.executeScript({ target: { tabId }, func: startScanning });
-        break;
-
-      case 'stopScanning':
-        result = await chrome.scripting.executeScript({ target: { tabId }, func: stopScanning });
         break;
 
       case 'newImage':

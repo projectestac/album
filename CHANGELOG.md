@@ -1,4 +1,4 @@
-### v2.0.1 (2022-02-09)
+### v2.0.2 (2022-11-09)
 #### Breaking changes
 - Refactoring Chrome extension for [Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/):
   - `manifest.json` updated to version 3, using now a service worker instead of directly injecting code on the current tab.

@@ -2,7 +2,7 @@
   "name": "album",
   "title": "Album",
   "description": "Find the URLs of all images included on the current page and export them as a list, mosaic or carousel",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "homepage": "https://github.com/projectestac/album",
   "keywords": [
     "util",
@@ -27,7 +27,7 @@
     "material-design-lite": "^1.3.0"
   },
   "devDependencies": {
-    "eslint": "^8.23.0"
+    "eslint": "^8.23.1"
   },
   "scripts": {
     "build": "./build.sh",

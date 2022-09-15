@@ -185,7 +185,7 @@ window.addEventListener('DOMContentLoaded', () => {
    */
   const previewClose = document.getElementById('previewClose');
   const previewDlg = document.getElementById('previewDlg');
-  const previewLink = document.getElementById('previewLink')
+  const previewLink = document.getElementById('previewLink');
 
   previewClose.setAttribute('title', chrome.i18n.getMessage('Close'));
   previewClose.addEventListener('click', () => previewDlg.close());
@@ -218,8 +218,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
       // Check if we are in Google Photos and request a specific size if needed
       if ((gpWidth || gpHeight) && /^https:\/\/[\w.]+\.googleusercontent\.com\//.test(url)) {
-        const exp = `=${gpWidth ? `w${gpWidth}-` : ''}${gpHeight ? `h${gpHeight}-` : ''}no`;
-        url = url.replace(/=(w\d+)?-?(h\d+)?no/, exp);
+        const exp = `=${gpWidth ? `w${gpWidth}-` : ''}${gpHeight ? `h${gpHeight}-` : ''}no-`;
+        url = url.replace(/=(w\d+)?-?(h\d+)?/, exp);
       }
 
       // Build a new <tr> element with the image URL as a data attribute

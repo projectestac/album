@@ -90,41 +90,50 @@ async function processMessage(request, tabId) {
 const NOTIFICATION_ID = 'ALBUM_EXTENSION_ID';
 let currentUrl = null;
 
+// Convert notifications API calls to promises
+const clearNotification = () => new Promise(resolve => chrome.notifications.clear(NOTIFICATION_ID, resolve));
+const createNotification = (options) => new Promise(resolve => chrome.notifications.create(NOTIFICATION_ID, options, resolve));
+
 chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
-  if (notificationId === NOTIFICATION_ID) {
-    switch (buttonIndex) {
-      case 0:
-        if (currentUrl)
+
+  if (notificationId !== NOTIFICATION_ID)
+    console.error(`Click noticed on unknown notification: "${notificationId}"`);
+
+  // Close existing notifications, if any
+  clearNotification()
+    .then(() => {
+      switch (buttonIndex) {
+        case 0: // Preview
           chrome.tabs.create({
             active: true,
             url: currentUrl,
           });
-        break;
-      default:
-        console.error(`Unknown notification button clicked: ${buttonIndex}`);
-    }
-  }
+          break;
+        case 1: // Close
+          // Notification already closed
+          break;
+        default:
+          console.error(`Unknown notification button clicked: ${buttonIndex}`);
+      }
+    });
 });
 
 async function showNotification(options) {
-  return new Promise((resolve, _reject) => {
-    const { messageTitle, messageText, contextMessage = '', url, buttonText, buttonIcon } = options;
-    currentUrl = url;
-    chrome.notifications.create(
-      NOTIFICATION_ID,
-      {
-        type: 'basic',
-        title: messageTitle,
-        message: messageText,
-        contextMessage,
-        iconUrl: '../icons/icon48.png',
-        requireInteraction: true,
-        buttons: url ? [{
-          title: buttonText,
-          iconUrl: `../icons/${buttonIcon}`,
-        }] : [],
-      },
-      result => resolve(`Notification ID is: ${result}`)
-    );
-  });
+  const { messageTitle, messageText, contextMessage = '', url, buttonText, buttonIcon, closeButtonText, closeButtonIcon } = options;
+  currentUrl = url;
+
+  return clearNotification()
+    .then(() => createNotification({
+      type: 'basic',
+      title: messageTitle,
+      message: messageText,
+      contextMessage,
+      iconUrl: '../icons/icon48.png',
+      requireInteraction: true,
+      buttons: url ? [
+        { title: buttonText, iconUrl: `../icons/${buttonIcon}` },
+        { title: closeButtonText, iconUrl: `../icons/${closeButtonIcon}` }
+      ] : []
+    }))
+    .then(result => `Notification ID is: ${result}`);
 }

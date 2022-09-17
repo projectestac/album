@@ -312,16 +312,19 @@ window.addEventListener('DOMContentLoaded', () => {
    * Copies the provided text to the system clipboard and notifies the user about
    * the completion of the requested operation
    * @param {String} txt - The text to write into the clipboard
+   * @param {Boolean} code - When `true`, txt will be previewed as code
    */
-  const copyAndNotify = function (txt) {
-    navigator.clipboard.writeText(txt || '')
+  const copyAndNotify = function (txt = '', code = false) {
+    navigator.clipboard.writeText(txt)
       .then(() => chrome.runtime.sendMessage({
         message: 'notify',
         messageTitle: chrome.i18n.getMessage('extName'),
         messageText: chrome.i18n.getMessage('msgDataCopied'),
-        url: `data:text/html;base64,${btoa(txt || '')}`,
+        url: `data:text/html;base64,${btoa(code ? `<pre>${txt}</pre>` : txt)}`,
         buttonText: chrome.i18n.getMessage('previewWidget'),
         buttonIcon: 'preview.png',
+        closeButtonText: chrome.i18n.getMessage('Close'),
+        closeButtonIcon: 'close.png',
       }));
   };
 
@@ -362,7 +365,7 @@ window.addEventListener('DOMContentLoaded', () => {
   /**
    * Sets action for the 'list' button
    */
-  document.getElementById('listBtn').addEventListener('click', () => copyAndNotify(listImages(false, false, false)));
+  document.getElementById('listBtn').addEventListener('click', () => copyAndNotify(listImages(false, false, false), true));
 
   /**
    * Sets action for the 'mosaic' button
@@ -372,7 +375,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const imgStyle = (mosaicMaxWidth > 0 || mosaicMaxHeight > 0) ?
       (mosaicMaxWidth > 0 ? `max-width:${mosaicMaxWidth}px;` : '') +
       (mosaicMaxHeight > 0 ? `max-height:${mosaicMaxHeight}px;` : '') : null;
-    copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle));
+    copyAndNotify(listImages(true, mosaicLinks, false, popupLinks, imgStyle), false);
   });
 
   /**
@@ -399,7 +402,7 @@ ${listImages(true, galLinks, galLinks)}</div>
     });
   }
 </script>`;
-    copyAndNotify(code);
+    copyAndNotify(code, false);
   });
 
   /**

@@ -1,4 +1,11 @@
-### v2.0.2 (2022-11-09)
+### v2.0.4 (2022-17-09)
+#### Improvements
+- Preview the list of images into a 'pre' HTML element 
+
+#### Bug fixes
+- Closing notifications, if any, before creating new ones. Required in Chrome OS to avoid creating a notification stack.
+
+### v2.0.3 (2022-11-09)
 #### Breaking changes
 - Refactoring Chrome extension for [Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/):
   - `manifest.json` updated to version 3, using now a service worker instead of directly injecting code on the current tab.
@@ -8,9 +15,9 @@
   - [jQuery](https://jquery.com/) is no longer needed. The pop-up has been refactorized using just vanilla javascript.
 
 #### Improvements
-  - Updated galleria script
-  - Updated NPM components
-  - Use of a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) instead of continuously scanning, looking for changes in the main document.
+- Updated galleria script
+- Updated NPM components
+- Use of a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) instead of continuously scanning, looking for changes in the main document.
 
 ### v1.2.0 (2021-30-10)
 #### Bug fixes

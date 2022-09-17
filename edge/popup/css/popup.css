@@ -1,12 +1,13 @@
 /**
  * File    : edge/css/popup.css  
  * Created : 20/03/2016  
+ * Updated : 17/09/2022
  * By      : Francesc Busquets  
  * 
- * Album (version for Microsoft Edge)  
+ * Album (version for Edge/Chromium)  
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab  
  * https://github.com/projectestac/album  
- * (c) 2000-2016 Catalan Educational Telematic Network (XTEC)  
+ * (c) 2016-2022 Catalan Educational Telematic Network (XTEC)  
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -27,7 +28,7 @@ body {
   text-align: center;
 }
 
-.loading > * {
+.loading>* {
   display: table-cell;
   vertical-align: middle;
 }
@@ -48,7 +49,7 @@ body {
 
 #imgTable tbody {
   height: 400px;
-  overflow-y: auto;  
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -82,7 +83,7 @@ body {
   padding: 5px 15px;
 }
 
-.controls > * {
+.controls>* {
   display: inline-block;
   vertical-align: middle;
 }
@@ -115,7 +116,7 @@ body {
 
 .buttons {
   min-width: 400px;
-  display: inline-block; 
+  display: inline-block;
 }
 
 .buttons * {
@@ -165,16 +166,16 @@ body {
 .dimInput {
   width: 410px;
   margin-bottom: 12px;
-  background-color: #fafafa;  
+  background-color: #fafafa;
 }
 
-.dimInput > div {
+.dimInput>div {
   width: 100px;
   margin-right: 15px;
   margin-left: 15px;
 }
 
-.dimInput > p {
+.dimInput>p {
   font-weight: bold;
   font-size: 110%;
   padding-left: 15px;
@@ -182,13 +183,13 @@ body {
   margin-bottom: 0;
 }
 
-.dimInput > label {
+.dimInput>label {
   margin-left: 15px;
   margin-bottom: 10px;
 }
 
 .mdl-textfield__error {
-  line-height: normal;  
+  line-height: normal;
 }
 
 .mdl-list__item-icon {
@@ -196,4 +197,36 @@ body {
   height: unset;
   max-width: 24px;
   max-height: 24px;
+}
+
+@media (max-height: 469px) {
+
+  html {
+    height: 470px;
+    overflow-y: auto;
+  }
+
+  body {
+    height: 470px;
+    max-height: 470px;
+    min-height: 470px;
+    overflow-y: auto;
+  }
+
+  .description {
+    width: 280px;
+  }
+
+  #imgTable tbody {
+    height: 270px;
+  }
+
+  #settingsDlg .mdl-dialog__content {
+    height: '390px';
+    overflow-y: 'auto';
+  }
+
+  .dimInput {
+    width: 385px;
+  }
 }

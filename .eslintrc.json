@@ -23,7 +23,8 @@
     "overrides": [
         {
             "files": [
-                "chrome/sw/*.js"
+                "chrome/sw/*.js",
+                "edge/sw/*.js"
             ],
             "parserOptions": {
                 "sourceType": "module"

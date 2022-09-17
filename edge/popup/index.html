@@ -1,14 +1,14 @@
 <!doctype html>
 <!--
- * File    : edge/popup.html
+ * File    : edge/popup/index.html
  * Created : 20/03/2016
- * Updated : 08/01/2021
+ * Updated : 17/09/2022
  * By      : Francesc Busquets
  *
- * Album (version for Microsoft Edge)
+ * Album (version for Edge/Chromium)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
- * (c) 2000-2021 Catalan Educational Telematic Network (XTEC)
+ * (c) 2016-2022 Catalan Educational Telematic Network (XTEC)
  * This program is free software: you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation, version. This
  * program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" type="text/css" href="lib/material.min.css">
     <link rel="stylesheet" type="text/css" href="css/popup.css"/>
-    <script src="lib/jquery.min.js"></script>
     <script src="lib/material.min.js"></script>
     <script src="popup.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,14 +62,14 @@
       </div>
       <div class="centered">
         <div class="buttons">
-          <button id="listBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-            <i class="material-icons">reorder</i> <span id="listCaption">List</span>
+          <button id="galleriaBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">view_carousel</i> <span id="galleriaCaption">galleria.io</span>
           </button>
           <button id="mosaicBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
             <i class="material-icons">view_quilt</i> <span id="mosaicCaption">Mosaic</span>
           </button>
-          <button id="galleriaBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-            <i class="material-icons">view_carousel</i> <span id="galleriaCaption">galleria.io</span>
+          <button id="listBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">reorder</i> <span id="listCaption">List</span>
           </button>
         </div>
       </div>

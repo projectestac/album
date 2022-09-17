@@ -1,10 +1,10 @@
 /**
- * File    : chrome/popup/popup.js
+ * File    : edge/popup/popup.js
  * Created : 20/03/2016
  * Updated:  17/09/2022
  * By      : Francesc Busquets
  *
- * Album (version for Chrome/Chromium)
+ * Album (version for Edge/Chromium)
  * Browser plugin that detects and lists the absolute URL of all images diplayed on the current tab
  * https://github.com/projectestac/album
  * (c) 2016-2022 Catalan Educational Telematic Network (XTEC)

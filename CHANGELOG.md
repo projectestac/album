@@ -1,3 +1,7 @@
+### v2.0.5 (2023-05-05)
+#### Bug fixes
+- Remove the "tabs" permission from Chrome and Edge versions. With the new version of Manifest V3 this permission is no longer needed to show previews in a new tab.
+
 ### v2.0.4 (2022-17-09)
 #### Improvements
 - Preview the list of images into a 'pre' HTML element 

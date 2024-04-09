@@ -21,6 +21,16 @@ Special thanks to the excellent work done by **[Galleria.io](http://galleria.io)
 
 Note that _Album_ does not copy images nor any type of files: it just deals with URLs pointing at remote resources. Issues with the images (slow loading, _File not found_ errors...) are often related to problems with the origin of the images.
 
+## Note for Google Photos users
+Due to changes in the way Google Photos works, the extension is not able to open some images when activated directly within the application.
+To solve this you must follow the following steps:
+1) Create a Google Photos album, name it, and add photos to it.
+2) Create a link to share the album using the "Share" button on the top right.
+3) Copy this public link and open it in a new tab or an incognito Chrome window.
+4) In this new tab or window, use the extension as normal.
+
+---
+
 This project was developed in HTML5, CSS and JavaScript. It makes use of three open-source libraries:
 
 * [JQuery](http://jquery.com) by The JQuery Foundation

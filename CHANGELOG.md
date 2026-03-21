@@ -1,3 +1,8 @@
+### v2.0.6 (2026-03-21)
+#### Improvements
+- Upgraded jQuery to v4.0
+- Upgraded ESLint to v10.0
+
 ### v2.0.5 (2023-05-05)
 #### Bug fixes
 - Remove the "tabs" permission from Chrome and Edge versions. With the new version of Manifest V3 this permission is no longer needed to show previews in a new tab.

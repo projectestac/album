@@ -93,7 +93,7 @@ function createElement(tagName, attributes = {}) {
 
 function setAttributes(element, attributes = {}) {
 
-  let elements = [];
+  let elements;
 
   if (typeof element === 'string')
     elements = document.querySelectorAll(element);

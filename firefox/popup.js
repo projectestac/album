@@ -268,7 +268,7 @@ $(function () {
       $tr.append($('<td class="mdl-data-table__cell--non-numeric"/>').append($urlText));
 
       // Add the image link to $tr, if any
-      let $link = $('<span/>');
+      let $link;
       if (request.imglink) {
         $link = $(`<a id="link[${numImgs + 1}]" class="urllink"/>`)
           .attr({ href: request.imglink, target: '_blank', title: request.imglink })
